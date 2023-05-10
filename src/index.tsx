@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
+import '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'
+import './fonts/fonts.css'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

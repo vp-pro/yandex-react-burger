@@ -1,0 +1,35 @@
+// src/components/Modal/Modal.js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+import ModalOverlay from '../ModalOverlay/ModalOverlay';
+import styles from './Modal.module.css'
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
+const Modal = ({ children, onClose, headerText }) => {
+
+  const handleCloseIconClick = (e) => {
+    onClose()
+  }
+
+  return ReactDOM.createPortal(
+    (
+      <ModalOverlay onClose={onClose}>
+        <div className={styles.modal}>
+          <div className={styles.header}>
+            <p className='text text_type_main-medium'>{headerText}</p>
+            <CloseIcon onClick={handleCloseIconClick}/>
+          </div>
+          {children}
+        </div>
+      </ModalOverlay>
+      ),
+    document.getElementById('react-modals'))
+}
+Modal.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClose: PropTypes.func.isRequired,
+  header: PropTypes.text,
+};
+
+export default Modal;

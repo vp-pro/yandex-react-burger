@@ -1,0 +1,36 @@
+.container {
+    display: block;
+    width: 600px;
+}
+
+.constructor_list{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.icon {
+    width: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.element_container {
+    position: relative;
+    display: inline-block;
+}
+
+.sum_container {
+    display: flex;
+    justify-content: end;
+    gap: 40px;
+    align-items: center;
+
+}
+
+.sum_and_icon{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}

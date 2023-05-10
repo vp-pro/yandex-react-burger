@@ -1,0 +1,24 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1140px;
+    margin: auto;
+  }
+
+  .left,
+  .center,
+  .right {
+    display: flex;
+    align-items: center;
+  }
+
+  .center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .button {
+    display: flex;
+  }

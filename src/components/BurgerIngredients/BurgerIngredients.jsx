@@ -1,12 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Tab, ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components'
+import styles from './BurgerIngredients.module.css'
+import IngredientDetails from '../IngredientDetails/IngredientDetails'
 
 const BurgerIngredients = () => {
 
   const [current, setCurrent] = React.useState('соусы')
+  const [isModalOpen, setIsModalOpen] = React.useState(false)
+
+  const handleIngredientOpen = React.useCallback(() => {
+    setIsModalOpen(true)
+  }
+  , [])
+
+  const handleIngredientClose = React.useCallback(() => {
+    setIsModalOpen(false)
+  }
+  , [])
+
   return (
-    <section >
+    <section className={styles.container}>
       <h1>Соберите бургер</h1>
       <div style={{ display: 'flex' }}>
         <Tab value="булки" active={current === 'булки'} onClick={setCurrent}>
@@ -20,7 +34,8 @@ const BurgerIngredients = () => {
         </Tab>
       </div>
       <div>
-        <h2>Булки</h2>
+        <button onClick={handleIngredientOpen}>CLICK ME PLEASE MY FRIEND</button>
+        {isModalOpen && <IngredientDetails onClose={handleIngredientClose}>IT IS THERE</IngredientDetails>}
         <div>
         </div>
       </div>

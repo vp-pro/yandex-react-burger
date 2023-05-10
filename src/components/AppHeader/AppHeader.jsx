@@ -2,11 +2,10 @@ import React from 'react'
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 import {Logo, BurgerIcon, InfoIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components'
-import styles from './app-header.module.css'
+import styles from './AppHeader.module.css'
 
 const HeaderButton = props => {
-   // const [textState, setTextState] = useState(props.active)
-    let textClass = props.active ? 'text text_type_main-default text_color_active' : 'text text_type_main-default text_color_inactive'
+  let textClass = props.active ? 'text text_type_main-default text_color_active' : 'text text_type_main-default text_color_inactive'
     let iconType = props.active ? 'primary' : 'secondary'
 
     return(
@@ -15,21 +14,25 @@ const HeaderButton = props => {
             <p className={textClass + ' ml-2'}>{props.text}</p>
         </div>
     )
-
 }
-
 
 const AppHeader = () => {
     let textList = ['Конструктор', 'Лента заказов', 'Личный кабинет']
     let iconList = [<BurgerIcon/>, <InfoIcon/>, <ProfileIcon/>]
 
   return (
-    <nav className={styles.header}>
-        <HeaderButton text={textList[0]} icon={iconList[0]} active={true}/>
-        <HeaderButton text={textList[1]} icon={iconList[1]} active={false}/>
-        <Logo/>
-        <HeaderButton text={textList[2]} icon={iconList[2]} active={false}/>
-    </nav>
+      <nav className={'pb-4 pt-4 ' + styles.header}>
+        <div className={styles.left}>
+          <HeaderButton text={textList[0]} icon={iconList[0]} active={true} />
+          <HeaderButton text={textList[1]} icon={iconList[1]} active={false} />
+        </div>
+        <div className={styles.center}>
+          <Logo />
+        </div>
+        <div className={styles.right}>
+          <HeaderButton text={textList[2]} icon={iconList[2]} active={false} />
+        </div>
+      </nav>
   )
 }
 
