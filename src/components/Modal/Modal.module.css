@@ -1,8 +1,8 @@
 .modal{
     overflow: hidden;
     position: fixed;
-    width: 50vw;
-    height: 70vh;
+    width: 600px;
+    height: fit-content;
     z-index: 1000;
     margin: auto;
 
@@ -23,4 +23,11 @@
     width:100%;
     align-items: center;
     justify-content: space-between;
+
+}
+
+.icon{
+    background-color: red;
+    cursor: pointer;
+    height: 0px;
 }
