@@ -4,7 +4,7 @@ import { Tab, ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-
 import styles from './BurgerIngredients.module.css'
 import IngredientDetails from '../IngredientDetails/IngredientDetails'
 
-const BurgerIngredients = () => {
+const BurgerIngredients = ({data}) => {
 
   const [current, setCurrent] = React.useState('соусы')
   const [isModalOpen, setIsModalOpen] = React.useState(false)
@@ -21,7 +21,7 @@ const BurgerIngredients = () => {
 
   return (
     <section className={styles.container}>
-      <h1>Соберите бургер</h1>
+      <header>Соберите бургер</header>
       <div style={{ display: 'flex' }}>
         <Tab value="булки" active={current === 'булки'} onClick={setCurrent}>
           Булки
@@ -35,7 +35,7 @@ const BurgerIngredients = () => {
       </div>
       <div>
         <button onClick={handleIngredientOpen}>CLICK ME PLEASE MY FRIEND</button>
-        {isModalOpen && <IngredientDetails onClose={handleIngredientClose}>IT IS THERE</IngredientDetails>}
+        {isModalOpen && <IngredientDetails ingredient={data[0]} onClose={handleIngredientClose}>{IngredientDetails}</IngredientDetails>}
         <div>
         </div>
       </div>

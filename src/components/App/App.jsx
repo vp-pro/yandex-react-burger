@@ -39,15 +39,11 @@ const App = () => {
         <AppHeader />
       </header>
       {fetchedData.length > 0 &&
-      <main className={styles.container}>
-        <div className={styles.scrollable_section}>
-          <BurgerIngredients data={fetchedData} />
-        </div>
-        <div className={styles.scrollable_section}>
-          <BurgerConstructor data={fetchedData} />
-        </div>
-      </main>
-}
+        <main className={styles.container}>
+            <BurgerIngredients data={fetchedData} />
+            <BurgerConstructor data={fetchedData} />
+        </main>
+      }
     </div>
 
   );
