@@ -19,15 +19,15 @@
 }
 
 .header{
-    display: flex;
-    width:100%;
-    align-items: center;
-    justify-content: space-between;
-
+    align-self: baseline;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 
 .icon{
-    background-color: red;
+    position: absolute;
+    right: 40px;
+    top: 60px;
     cursor: pointer;
-    height: 0px;
+    height: 24px;
 }

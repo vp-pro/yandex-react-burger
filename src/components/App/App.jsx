@@ -34,17 +34,17 @@ const App = () => {
     ,[])
 
   return (
-    <div className={styles.App}>
+    <>
       <header>
         <AppHeader />
       </header>
       {fetchedData.length > 0 &&
-        <main className={styles.container}>
+        <main className={styles.mainContainer}>
             <BurgerIngredients data={fetchedData} />
             <BurgerConstructor data={fetchedData} />
         </main>
       }
-    </div>
+</>
 
   );
 }

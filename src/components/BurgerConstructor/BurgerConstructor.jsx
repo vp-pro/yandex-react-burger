@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 
 import { ConstructorElement, DragIcon, Button, CurrencyIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './BurgerConstructor.module.css';
+import OrderDetails from '../OrderDetails/OrderDetails'
 
 const ConstructorElementBox = (props) => {
   return (
-    <div className={styles.element_container}>
+    <div className={styles.elementContainer}>
       {props.dndIcon && <div className={styles.icon} >
         <DragIcon type="primary" />
       </div>}
@@ -24,18 +25,27 @@ const ConstructorElementBox = (props) => {
 }
 
 const BurgerConstructor = ({data}) => {
+
   console.log(data)
   const topElement = data[0];
   const bottomElement = data[0];
   const middleElements = data.slice(1,);
+  const [isModalOpen, setIsModalOpen] = React.useState(false)
+
+  const handleModalClose = () => {
+    setIsModalOpen(false)
+  }
+  const handleModalOpen = () => {
+    setIsModalOpen(true)
+  }
 
   return (
-    <section className={`${styles.contrainer} pl-4 pr-4`}>
-      <div className={styles.constructor_list + ' mt-25 mb-10'}>
+    <section className={styles.container + ' pl-4 pr-4'}>
+      <div className={styles.constructorList + ' custom-scroll mt-25 mb-10'}>
         <ConstructorElementBox
           type="top"
           isLocked={true}
-          text={`${topElement.name} (верх)`}
+          text={topElement.name +' (верх)'}
           price={topElement.price}
           thumbnail={topElement.image}
         />
@@ -60,14 +70,16 @@ const BurgerConstructor = ({data}) => {
           thumbnail={bottomElement.image}
         />
       </div>
-      <div className={styles.sum_container}>
-        <div className={styles.sum_and_icon}>
+      <div className={styles.sumContainer}>
+        <div className={styles.sumAndIcon}>
           <p className="text text_type_digits-medium"> 610 </p>
           <CurrencyIcon/>
         </div>
-        <Button htmlType="button" type="primary" size="medium">
+        <Button htmlType="button" type="primary" size="medium" onClick={handleModalOpen}>
           Оформить заказ
         </Button>
+        {        isModalOpen &&
+          <OrderDetails ingredient={data[0]} onClose={handleModalClose}  />}
 
 
       </div>
