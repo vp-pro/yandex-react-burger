@@ -4,6 +4,22 @@ import { Tab, ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-
 import styles from './BurgerIngredients.module.css'
 import IngredientDetails from '../IngredientDetails/IngredientDetails'
 
+
+const IngredientCard = ({name, image, price}) => {
+  return(
+    <>
+      <img alt={name} src={image}/>
+      <p>{price}</p>
+      <p>{name}</p>
+    </>
+  )
+}
+
+image_large
+name
+price
+
+
 const BurgerIngredients = ({data}) => {
 
   const [current, setCurrent] = React.useState('соусы')
@@ -35,7 +51,7 @@ const BurgerIngredients = ({data}) => {
       </div>
       <div>
         <button onClick={handleIngredientOpen}>CLICK ME PLEASE MY FRIEND</button>
-        {isModalOpen && <IngredientDetails ingredient={data[0]} onClose={handleIngredientClose}>{IngredientDetails}</IngredientDetails>}
+        {isModalOpen && <IngredientDetails ingredient={data[0]} onClose={handleIngredientClose}/>}
         <div>
         </div>
       </div>

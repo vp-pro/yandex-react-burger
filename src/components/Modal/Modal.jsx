@@ -16,12 +16,10 @@ const Modal = ({ children, onClose, headerText }) => {
     (
       <ModalOverlay onClose={onClose}>
         <div className={styles.modal}>
-          <div className={styles.header}>
-            <p className='text text_type_main-medium'>{headerText}</p>
-            <div className={styles.icon}>
+          {headerText && <p className={styles.header + ' text text_type_main-large'}>{headerText}</p>}
+          <div className={styles.icon}>
               <CloseIcon onClick={handleCloseIconClick}/>
             </div>
-          </div>
           {children}
         </div>
       </ModalOverlay>

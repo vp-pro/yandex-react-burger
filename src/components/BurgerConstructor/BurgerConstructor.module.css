@@ -1,12 +1,16 @@
 .container {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     width: 600px;
 }
 
-.constructor_list{
+.constructorList{
     display: flex;
     flex-direction: column;
     gap: 16px;
+    overflow: auto;
+    /* height: 800px; */
 }
 
 .icon {
@@ -17,12 +21,12 @@
     cursor: pointer;
 }
 
-.element_container {
+.elementContainer {
     position: relative;
     display: inline-block;
 }
 
-.sum_container {
+.sumContainer {
     display: flex;
     justify-content: end;
     gap: 40px;
@@ -30,7 +34,7 @@
 
 }
 
-.sum_and_icon{
+.sumAndIcon{
     display: flex;
     gap: 8px;
     align-items: center;
