@@ -1,28 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Tab, ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components'
+import { Tab, ConstructorElement, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './BurgerIngredients.module.css'
 import IngredientDetails from '../IngredientDetails/IngredientDetails'
+import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 
+const IngredientCard = ({ingredient}) => {
 
-const IngredientCard = ({name, image, price}) => {
-  return(
-    <>
-      <img alt={name} src={image}/>
-      <p>{price}</p>
-      <p>{name}</p>
-    </>
-  )
-}
-
-image_large
-name
-price
-
-
-const BurgerIngredients = ({data}) => {
-
-  const [current, setCurrent] = React.useState('соусы')
   const [isModalOpen, setIsModalOpen] = React.useState(false)
 
   const handleIngredientOpen = React.useCallback(() => {
@@ -30,15 +14,39 @@ const BurgerIngredients = ({data}) => {
   }
   , [])
 
-  const handleIngredientClose = React.useCallback(() => {
+  const handleIngredientClose = React.useCallback((e) => {
+    e.stopPropagation();
     setIsModalOpen(false)
   }
   , [])
 
+  return(
+    <div onClick={handleIngredientOpen} className={styles.ignredientCard}>
+      <Counter count={5} extraClass={styles.counter}/>
+      <img className={styles.ingredientImage} alt={ingredient.name} src={ingredient.image}/>
+      <div className={styles.ingredientPriceContainer}>
+        <p className={styles.ingredientPrice}>{ingredient.price}</p>
+        <CurrencyIcon/>
+      </div>
+      <p className={styles.ingredientTitle}>{ingredient.name}</p>
+      {isModalOpen && <IngredientDetails ingredient={ingredient} onClose={handleIngredientClose}/>}
+    </div>
+  )
+}
+
+const BurgerIngredients = ({data}) => {
+
+  const [current, setCurrent] = React.useState('соусы')
+
+  const buns = data.filter(element => element.type=== "bun")
+  const sauces = data.filter(element => element.type==="sauce")
+  const mains = data.filter(element => element.type ==="main")
+
+
   return (
-    <section className={styles.container}>
-      <header>Соберите бургер</header>
-      <div style={{ display: 'flex' }}>
+    <section className={styles.sectionContainer}>
+      <header className={styles.header}>Соберите бургер</header>
+      <div className={styles.tabs}>
         <Tab value="булки" active={current === 'булки'} onClick={setCurrent}>
           Булки
         </Tab>
@@ -49,11 +57,24 @@ const BurgerIngredients = ({data}) => {
           Начинки
         </Tab>
       </div>
-      <div>
-        <button onClick={handleIngredientOpen}>CLICK ME PLEASE MY FRIEND</button>
-        {isModalOpen && <IngredientDetails ingredient={data[0]} onClose={handleIngredientClose}/>}
-        <div>
+
+      <div className={styles.allIngredientsContainer}>
+
+        <p className={styles.ingredientsTitle }>Булки</p>
+        <div className={styles.typeIngredientsContainer}>
+          {buns.map(ingredient => <IngredientCard ingredient={ingredient} />)}
         </div>
+
+        <p className={styles.ingredientsTitle }>Соусы</p>
+        <div className={styles.typeIngredientsContainer}>
+          {sauces.map(ingredient => <IngredientCard ingredient={ingredient} />)}
+        </div>
+
+        <p className={styles.ingredientsTitle }>Основное</p>
+        <div className={styles.typeIngredientsContainer}>
+          {mains.map(ingredient => <IngredientCard ingredient={ingredient} />)}
+        </div>
+
       </div>
     </section>
   )

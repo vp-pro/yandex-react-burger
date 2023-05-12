@@ -2,19 +2,21 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    width: 600px;
+    overflow: auto;
+    composes: custom-scroll from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'    ;
+    composes: mt-25 pl-4 pr-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'    ;
 }
 
 .constructorList{
     display: flex;
     flex-direction: column;
     gap: 16px;
-    overflow: auto;
     /* height: 800px; */
+    composes:  mb-10 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
 }
 
 .icon {
-    width: 0;
+    /* width: 0; */
     position: absolute;
     top: 50%;
     transform: translateY(-50%);

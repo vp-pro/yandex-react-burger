@@ -8,10 +8,10 @@
     display: flex;
     flex-direction: row;
     gap: 20px;
-    margin-bottom: 20px;
+    composes: mb-5 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
 }
 
 .ingredientTitle{
-    margin-top: 16px;
-    margin-bottom: 32px;
+    composes: mt-4 mb-8  from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+
 }
