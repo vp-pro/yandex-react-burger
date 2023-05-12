@@ -20,6 +20,11 @@ const OrderDetails = ({order, onClose, children}) => {
   )
 }
 
-OrderDetails.propTypes = {}
+OrderDetails.propTypes = {
+  order: PropTypes.object, // or further specify the shape if you know it
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.node,
+};
+
 
 export default OrderDetails

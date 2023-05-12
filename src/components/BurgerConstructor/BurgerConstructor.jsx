@@ -106,4 +106,13 @@ BurgerConstructor.propTypes = {
   ).isRequired,
 };
 
+ConstructorElementBox.propTypes = {
+  type: PropTypes.string,
+  isLocked: PropTypes.bool,
+  text: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  thumbnail: PropTypes.string.isRequired,
+  dndIcon: PropTypes.bool,
+};
+
 export default BurgerConstructor;
