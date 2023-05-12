@@ -9,14 +9,14 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 const Modal = ({ children, onClose, headerText }) => {
 
   const handleCloseIconClick = (e) => {
-    onClose()
+    onClose(e)
   }
 
   return ReactDOM.createPortal(
     (
-      <ModalOverlay onClose={onClose}>
+      <ModalOverlay onClose={(e) => onClose(e)}>
         <div className={styles.modal}>
-          {headerText && <p className={styles.header + ' text text_type_main-large'}>{headerText}</p>}
+          {headerText && <p className={styles.header}>{headerText}</p>}
           <div className={styles.icon}>
               <CloseIcon onClick={handleCloseIconClick}/>
             </div>
@@ -29,7 +29,7 @@ const Modal = ({ children, onClose, headerText }) => {
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
   onClose: PropTypes.func.isRequired,
-  header: PropTypes.text,
+  headerText: PropTypes.string,
 };
 
 export default Modal;

@@ -6,7 +6,7 @@ const ModalOverlay = ({ children, onClose }) => {
 
   const handleModalOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
-      onClose()
+      onClose(e)
     }
   }
   return <div className={styles.modalOverlay} onClick={handleModalOverlayClick}>

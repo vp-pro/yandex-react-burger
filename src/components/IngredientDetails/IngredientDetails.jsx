@@ -16,7 +16,7 @@ const Element = ({title, value}) => {
 const IngredientDetails = ({ingredient, onClose, children}) => {
 
   return (
-    <Modal onClose={onClose} headerText='Детали ингредиента'>
+    <Modal onClose={(e) => onClose(e)} headerText='Детали ингредиента'>
       <img alt={ingredient.name} src={ingredient.image_large}/>
       <p className={styles.ingredientTitle}>{ingredient.name}</p>
       <div className={styles.elements}>

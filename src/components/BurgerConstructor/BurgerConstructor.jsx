@@ -40,8 +40,8 @@ const BurgerConstructor = ({data}) => {
   }
 
   return (
-    <section className={styles.container + ' pl-4 pr-4'}>
-      <div className={styles.constructorList + ' custom-scroll mt-25 mb-10'}>
+    <section className={styles.container}>
+      <div className={styles.constructorList}>
         <ConstructorElementBox
           type="top"
           isLocked={true}
