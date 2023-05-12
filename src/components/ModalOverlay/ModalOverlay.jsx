@@ -17,9 +17,7 @@ const ModalOverlay = ({ children, onClose }) => {
   };
 
   React.useEffect(() => {
-    // Adding the event listener on component mount
     document.addEventListener('keydown', handleEscPress);
-    // Removing the event listener on component unmount
     return () => document.removeEventListener('keydown', handleEscPress);
   }, []);
 
