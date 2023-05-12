@@ -9,6 +9,21 @@ const ModalOverlay = ({ children, onClose }) => {
       onClose(e)
     }
   }
+
+  const handleEscPress = (e) => {
+    if (e.key === 'Escape') {
+      onClose(e);
+    }
+  };
+
+  React.useEffect(() => {
+    // Adding the event listener on component mount
+    document.addEventListener('keydown', handleEscPress);
+    // Removing the event listener on component unmount
+    return () => document.removeEventListener('keydown', handleEscPress);
+  }, []);
+
+
   return <div className={styles.modalOverlay} onClick={handleModalOverlayClick}>
     {children}
   </div>;

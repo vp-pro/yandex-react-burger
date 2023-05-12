@@ -33,7 +33,10 @@ const AppHeader = () => {
       </nav>
   )
 }
-
-AppHeader.propTypes = {}
+HeaderButton.propTypes = {
+  active: PropTypes.bool.isRequired,
+  text: PropTypes.string.isRequired,
+  icon: PropTypes.element.isRequired,
+};
 
 export default AppHeader

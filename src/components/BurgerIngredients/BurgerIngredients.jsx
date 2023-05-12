@@ -62,24 +62,57 @@ const BurgerIngredients = ({data}) => {
 
         <p className={styles.ingredientsTitle }>Булки</p>
         <div className={styles.typeIngredientsContainer}>
-          {buns.map(ingredient => <IngredientCard ingredient={ingredient} />)}
+          {buns.map(ingredient => <IngredientCard key={ingredient._id} ingredient={ingredient} />)}
         </div>
 
         <p className={styles.ingredientsTitle }>Соусы</p>
         <div className={styles.typeIngredientsContainer}>
-          {sauces.map(ingredient => <IngredientCard ingredient={ingredient} />)}
+          {sauces.map(ingredient => <IngredientCard key={ingredient._id} ingredient={ingredient} />)}
         </div>
 
         <p className={styles.ingredientsTitle }>Основное</p>
         <div className={styles.typeIngredientsContainer}>
-          {mains.map(ingredient => <IngredientCard ingredient={ingredient} />)}
+          {mains.map(ingredient => <IngredientCard key={ingredient._id} ingredient={ingredient} />)}
         </div>
 
       </div>
     </section>
   )
 }
+IngredientCard.propTypes = {
+  ingredient: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    proteins: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+    calories: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    image_mobile: PropTypes.string.isRequired,
+    image_large: PropTypes.string.isRequired,
+    __v: PropTypes.number.isRequired,
+  }).isRequired,
+};
 
-BurgerIngredients.propTypes = {}
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      proteins: PropTypes.number.isRequired,
+      fat: PropTypes.number.isRequired,
+      carbohydrates: PropTypes.number.isRequired,
+      calories: PropTypes.number.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+      image_mobile: PropTypes.string.isRequired,
+      image_large: PropTypes.string.isRequired,
+      __v: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+};
 
 export default BurgerIngredients
