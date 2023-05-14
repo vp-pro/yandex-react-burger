@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './BurgerConstructor.module.css';
 import OrderDetails from '../OrderDetails/OrderDetails'
+import ingredientPropTypes from '../../utils/prop-types'
 
 const ConstructorElementBox = (props) => {
   return (
@@ -18,6 +19,7 @@ const ConstructorElementBox = (props) => {
                   text={props.text}
                   price={props.price}
                   thumbnail={props.thumbnail}
+                  extraClass={props.extraClass}
                 />
       </div>
     </div>
@@ -41,14 +43,16 @@ const BurgerConstructor = ({data}) => {
 
   return (
     <section className={styles.container}>
-      <div className={styles.constructorList}>
-        <ConstructorElementBox
+      <ConstructorElementBox
           type="top"
           isLocked={true}
           text={topElement.name +' (верх)'}
           price={topElement.price}
           thumbnail={topElement.image}
+          extraClass={styles.topSide}
+
         />
+      <div className={styles.constructorList}>
         {middleElements.map((element) => {
           return(
                 <ConstructorElementBox
@@ -57,19 +61,19 @@ const BurgerConstructor = ({data}) => {
                 thumbnail={element.image}
                 key={element._id}
                 dndIcon
-              />
-
-)
-          }
+              />)}
         )}
-        <ConstructorElementBox
+
+      </div>
+      <ConstructorElementBox
           type="bottom"
           isLocked={true}
           text={`${bottomElement.name} (низ)`}
           price={bottomElement.price}
           thumbnail={bottomElement.image}
+          extraClass={styles.bottomSide}
+
         />
-      </div>
       <div className={styles.sumContainer}>
         <div className={styles.sumAndIcon}>
           <p className="text text_type_digits-medium"> 610 </p>
@@ -89,21 +93,7 @@ const BurgerConstructor = ({data}) => {
 
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      proteins: PropTypes.number.isRequired,
-      fat: PropTypes.number.isRequired,
-      carbohydrates: PropTypes.number.isRequired,
-      calories: PropTypes.number.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-      image_mobile: PropTypes.string.isRequired,
-      image_large: PropTypes.string.isRequired,
-      __v: PropTypes.number.isRequired,
-    })
-  ).isRequired,
+    ingredientPropTypes).isRequired,
 };
 
 ConstructorElementBox.propTypes = {

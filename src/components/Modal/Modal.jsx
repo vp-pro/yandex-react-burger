@@ -12,17 +12,30 @@ const Modal = ({ children, onClose, headerText }) => {
     onClose(e)
   }
 
+  const handleEscPress = (e) => {
+    if (e.key === 'Escape') {
+      onClose(e);
+    }
+  };
+
+  React.useEffect(() => {
+    document.addEventListener('keydown', handleEscPress);
+    return () => document.removeEventListener('keydown', handleEscPress);
+  }, []);
+
   return ReactDOM.createPortal(
     (
-      <ModalOverlay onClose={(e) => onClose(e)}>
-        <div className={styles.modal}>
+      <>
+      <ModalOverlay onClose={(e) => onClose(e)}/>
+      <div className={styles.modal}>
           {headerText && <p className={styles.header}>{headerText}</p>}
           <div className={styles.icon}>
               <CloseIcon onClick={handleCloseIconClick}/>
             </div>
           {children}
         </div>
-      </ModalOverlay>
+      </>
+
       ),
     document.getElementById('react-modals'))
 }

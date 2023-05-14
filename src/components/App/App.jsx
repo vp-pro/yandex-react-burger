@@ -14,7 +14,8 @@ const App = () => {
 
   const [fetchedData, setFetchedData] = useState([])
 
-  useEffect( () => {
+
+  function getIngredients() {
     fetch(url)
     .then( response => {
       if (!response.ok) {
@@ -25,11 +26,14 @@ const App = () => {
   })
     .then(data => {
       setFetchedData([...data.data])
-      console.log('[INFO] Fetched:', data.data)
     })
     .catch((error) => {
       throw new Error(`Something went wrong while fetching API. Error: ${error}`)
     })
+ }
+
+  useEffect( () => {
+    getIngredients()
   }
     ,[])
 
@@ -44,6 +48,10 @@ const App = () => {
             <BurgerConstructor data={fetchedData} />
         </main>
       }
+      {!(fetchedData.length>0) &&
+      <h1>
+        Загрузка...
+        </h1>}
 </>
 
   );
