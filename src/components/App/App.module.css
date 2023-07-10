@@ -1,0 +1,45 @@
+.mainContainer {
+  display:flex;
+
+  margin:auto;
+  justify-content: center;
+  width: fit-content;
+  gap: 40px;
+  flex-grow: 1;
+  /* height: 100vh; */
+
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  width: -moz-fit-content;
+  width: fit-content;
+
+  height: 0px;
+
+  composes: pb-10 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+
+}
+
+
+
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollable_section {
+  flex: 1;
+  overflow-y: scroll;
+
+  composes: p-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollable_section::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.scrollable_section {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}

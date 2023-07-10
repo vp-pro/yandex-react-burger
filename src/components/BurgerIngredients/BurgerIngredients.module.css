@@ -1,0 +1,92 @@
+.sectionContainer {
+    /* width: 50%; */
+    display: flex;
+    flex-direction: column;
+    width: min-content;
+    composes: mt-10 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+
+}
+
+.header {
+    display: flex;
+    composes:  text_type_main-large from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: mb-5 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+}
+
+.tabs {
+    display: flex;
+    composes: mb-10 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'    ;
+}
+
+.allIngredientsContainer {
+    /* height: 0; */
+    overflow-y: scroll;
+    overflow-x: hidden;
+    composes: custom-scroll     from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'    ;
+
+}
+.typeIngredientsContainer {
+    width: min-content;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 24px;
+    align-items: start;
+    /* width:100%; */
+    composes: pb-10  pl-4 pt-6 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+
+}
+
+.ingredientsTitle {
+    composes: text text_type_main-medium     from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'    ;
+}
+
+
+.ignredientCard {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+    width: min-content;
+    position: relative;
+}
+
+
+
+.ignredientCard:hover {
+    box-shadow: 0px 0px 10px var(--colors-interface-accent)
+}
+.ingredientImage {
+    composes: mr-4 ml-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+
+}
+.ingredientPriceContainer {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    composes: mb-1 mt-1 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+
+}
+.ingredientPrice{
+    padding-right: 8px;
+    composes: text text_type_digits-default  from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'    ;
+
+}
+.ingredientTitle {
+    text-align: center;
+    composes: text text_type_main-default  from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'    ;
+}
+
+.counter {
+    position: absolute;
+    /* height: 0; */
+    /* width: 0; */
+    right: 0px;
+    top: 0px;
+    z-index: 10;
+}
+
+
+

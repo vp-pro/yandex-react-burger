@@ -1,0 +1,28 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1140px;
+    margin: auto;
+
+    composes: pb-4 pt-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'
+  }
+
+  .left,
+  .center,
+  .right {
+    display: flex;
+    align-items: center;
+  }
+
+  .center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .button {
+    display: flex;
+    align-items: center;
+    composes: mt-2 mb-2 pl-5 pr-5 mr-2 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'
+  }
