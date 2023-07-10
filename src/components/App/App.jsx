@@ -6,6 +6,7 @@ import styles from './App.module.css'
 import AppHeader from '../AppHeader/AppHeader'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
+import IngredientContext from '../../contexts/IngredientContext'
 
 const url = 'https://norma.nomoreparties.space/api/ingredients'
 // trying to code as explicitly as possible as I am dumby:D
@@ -38,21 +39,22 @@ const App = () => {
     ,[])
 
   return (
-    <>
+    <IngredientContext.Provider value={fetchedData.slice(0,6)}> 
+    {/* ! HERE IS THE HARDCODE OF CONTEXT. TO BE UPDATED */}
       <header>
         <AppHeader />
       </header>
       {fetchedData.length > 0 &&
         <main className={styles.mainContainer}>
-            <BurgerIngredients data={fetchedData} />
-            <BurgerConstructor data={fetchedData} />
+            <BurgerIngredients data={fetchedData}/>
+            <BurgerConstructor/>
         </main>
       }
       {!(fetchedData.length>0) &&
       <h1>
         Загрузка...
         </h1>}
-</>
+    </IngredientContext.Provider>
 
   );
 }

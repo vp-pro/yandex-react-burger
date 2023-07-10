@@ -1,10 +1,15 @@
-import React from 'react';
+import React, {useContext, useReducer, useEffect} from 'react';
 import PropTypes from 'prop-types';
 
 import { ConstructorElement, DragIcon, Button, CurrencyIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './BurgerConstructor.module.css';
-import OrderDetails from '../OrderDetails/OrderDetails'
-import ingredientPropTypes from '../../utils/prop-types'
+import OrderDetails from '../OrderDetails/OrderDetails';
+import ingredientPropTypes from '../../utils/prop-types';
+import IngredientContext from '../../contexts/IngredientContext';
+
+
+
+
 
 const ConstructorElementBox = (props) => {
   return (
@@ -26,19 +31,66 @@ const ConstructorElementBox = (props) => {
   )
 }
 
-const BurgerConstructor = ({data}) => {
+const totalPriceReducer = (state, action) => {
+  switch (action.type){
+    case 'SET_TOTAL_PRICE':
+      return action.payload;
+  }
+}
 
-  console.log(data)
-  const topElement = data[0];
-  const bottomElement = data[0];
-  const middleElements = data.slice(1,);
+const BurgerConstructor = () => {
+
+  const urlToOrder = 'https://norma.nomoreparties.space/api/orders'
+  const fetchToOrder = (array) => {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "ingredients": array
+        
+      })
+    }
+
+    fetch(urlToOrder, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success === true) {
+          setOrderNumber(data.order.number)
+          setIsModalOpen(true)
+        }
+
+      })
+  } 
+
+  const [orderNumber, setOrderNumber] = React.useState(0)
+  const data = (useContext(IngredientContext))
+  const bunElement = Object.values(data).filter(element => element.type==='bun')[0];
+  const middleElements = Object.values(data).filter(element => element.type !== 'bun');
   const [isModalOpen, setIsModalOpen] = React.useState(false)
+  const [totalPrice, dispatch] = React.useReducer(totalPriceReducer, 0)
+
+  useEffect (() => {
+    let sum = 0
+
+    Object.values(data).forEach(ingredient => {
+      if (ingredient.type==='bun'){
+        sum = sum + ingredient.price*2
+      } else {
+        sum = sum + ingredient.price
+      }
+      
+    })
+    dispatch({type: 'SET_TOTAL_PRICE', payload: sum})
+
+  }, Object.values(IngredientContext))
 
   const handleModalClose = () => {
     setIsModalOpen(false)
   }
   const handleModalOpen = () => {
-    setIsModalOpen(true)
+    fetchToOrder(Object.values(data))
   }
 
   return (
@@ -46,9 +98,9 @@ const BurgerConstructor = ({data}) => {
       <ConstructorElementBox
           type="top"
           isLocked={true}
-          text={topElement.name +' (верх)'}
-          price={topElement.price}
-          thumbnail={topElement.image}
+          text={bunElement.name +' (верх)'}
+          price={bunElement.price}
+          thumbnail={bunElement.image}
           extraClass={styles.topSide}
 
         />
@@ -68,32 +120,25 @@ const BurgerConstructor = ({data}) => {
       <ConstructorElementBox
           type="bottom"
           isLocked={true}
-          text={`${bottomElement.name} (низ)`}
-          price={bottomElement.price}
-          thumbnail={bottomElement.image}
+          text={`${bunElement.name} (низ)`}
+          price={bunElement.price}
+          thumbnail={bunElement.image}
           extraClass={styles.bottomSide}
-
         />
       <div className={styles.sumContainer}>
         <div className={styles.sumAndIcon}>
-          <p className="text text_type_digits-medium"> 610 </p>
+          <p className="text text_type_digits-medium"> {totalPrice} </p>
           <CurrencyIcon/>
         </div>
         <Button htmlType="button" type="primary" size="medium" onClick={handleModalOpen}>
           Оформить заказ
         </Button>
         {        isModalOpen &&
-          <OrderDetails ingredient={data[0]} onClose={handleModalClose}  />}
-
+          <OrderDetails orderNumber={orderNumber} ingredient={data[0]} onClose={handleModalClose}  />}
 
       </div>
     </section>
   );
-};
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(
-    ingredientPropTypes).isRequired,
 };
 
 ConstructorElementBox.propTypes = {
