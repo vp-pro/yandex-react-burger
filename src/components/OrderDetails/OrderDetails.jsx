@@ -4,10 +4,10 @@ import Modal from '../Modal/Modal'
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from'./OrderDetails.module.css'
 
-const OrderDetails = ({order, onClose, children}) => {
+const OrderDetails = ({orderNumber, onClose, children}) => {
   return (
 <Modal onClose={onClose}>
-      <p className={styles.orderNumber}>341325</p>
+      <p className={styles.orderNumber}>{orderNumber}</p>
       <p className={styles.orderNumberTitle}>идентификатор заказа</p>
       <div className={styles.icon}>
           <CheckMarkIcon/>
@@ -21,7 +21,7 @@ const OrderDetails = ({order, onClose, children}) => {
 }
 
 OrderDetails.propTypes = {
-  order: PropTypes.object, // or further specify the shape if you know it
+  orderNumber: PropTypes.number, // or further specify the shape if you know it
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node,
 };

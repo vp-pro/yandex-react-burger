@@ -1,16 +1,19 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
 import { Tab, ConstructorElement, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './BurgerIngredients.module.css'
 import IngredientDetails from '../IngredientDetails/IngredientDetails'
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import ingredientPropTypes from '../../utils/prop-types.js'
+import IngredientContext from '../../contexts/IngredientContext'
+
 
 const IngredientCard = ({ingredient}) => {
 
   const [isModalOpen, setIsModalOpen] = React.useState(false)
 
   const handleIngredientOpen = React.useCallback(() => {
+    fetch();
     setIsModalOpen(true)
   }
   , [])
