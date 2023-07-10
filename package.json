@@ -19,7 +19,7 @@
   },
   "scripts": {
     "lstart": "WATCHPACK_POLLING=true react-scripts start",
-    "start": "react-scripts start",
+    "start": "react-scripts start -p 3005",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
