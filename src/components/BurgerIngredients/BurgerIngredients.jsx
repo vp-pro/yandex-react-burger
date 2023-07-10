@@ -1,42 +1,11 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Tab, ConstructorElement, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './BurgerIngredients.module.css'
-import IngredientDetails from '../IngredientDetails/IngredientDetails'
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import ingredientPropTypes from '../../utils/prop-types.js'
-import IngredientContext from '../../contexts/IngredientContext'
+import IngredientCard from '../IngredientCard/IngredientCard.jsx'
 
-
-const IngredientCard = ({ingredient}) => {
-
-  const [isModalOpen, setIsModalOpen] = React.useState(false)
-
-  const handleIngredientOpen = React.useCallback(() => {
-    fetch();
-    setIsModalOpen(true)
-  }
-  , [])
-
-  const handleIngredientClose = React.useCallback((e) => {
-    e.stopPropagation();
-    setIsModalOpen(false)
-  }
-  , [])
-
-  return(
-    <div onClick={handleIngredientOpen} className={styles.ignredientCard}>
-      <Counter count={5} extraClass={styles.counter}/>
-      <img className={styles.ingredientImage} alt={ingredient.name} src={ingredient.image}/>
-      <div className={styles.ingredientPriceContainer}>
-        <p className={styles.ingredientPrice}>{ingredient.price}</p>
-        <CurrencyIcon/>
-      </div>
-      <p className={styles.ingredientTitle}>{ingredient.name}</p>
-      {isModalOpen && <IngredientDetails ingredient={ingredient} onClose={handleIngredientClose}/>}
-    </div>
-  )
-}
 
 const BurgerIngredients = ({data}) => {
 
