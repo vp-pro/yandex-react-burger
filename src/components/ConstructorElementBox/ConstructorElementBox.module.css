@@ -1,3 +1,11 @@
+.elementContainer {
+    position: relative;
+    display: inline-block;
+    composes:  mr-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+
+}
+
+
 .container {
     display: flex;
     flex-direction: column;

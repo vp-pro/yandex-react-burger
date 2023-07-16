@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styles from './IngredientDetails.module.css'
 import Modal from '../Modal/Modal'
 import ingredientPropTypes from '../../utils/prop-types.js'
+import { useSelector } from 'react-redux'
 
 const Element = ({title, value}) => {
   return(
@@ -13,9 +14,11 @@ const Element = ({title, value}) => {
   )
 }
 
-const IngredientDetails = ({ingredient, onClose, children}) => {
-
+const IngredientDetails = ({onClose}) => {
+  const ingredient = useSelector((state)=> state.ingredients.watchingIngredient )
   return (
+    <>
+    {ingredient &&  
     <Modal onClose={(e) => onClose(e)} headerText='Детали ингредиента'>
       <img alt={ingredient.name} src={ingredient.image_large}/>
       <p className={styles.ingredientTitle}>{ingredient.name}</p>
@@ -25,8 +28,11 @@ const IngredientDetails = ({ingredient, onClose, children}) => {
         <Element title='Жиры,г' value={ingredient.fat}/>
         <Element title='Углеводы,г' value={ingredient.carbohydrates}/>
       </div>
+    </Modal>
+  }
 
-  </Modal>
+    </>
+
   )
 }
 
