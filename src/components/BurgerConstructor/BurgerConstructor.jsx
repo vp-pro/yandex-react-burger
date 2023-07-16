@@ -1,142 +1,112 @@
-import React, {useContext, useReducer, useEffect} from 'react';
+import React, { useContext, useReducer, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { ConstructorElement, DragIcon, Button, CurrencyIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './BurgerConstructor.module.css';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import ingredientPropTypes from '../../utils/prop-types';
-import IngredientContext from '../../contexts/IngredientContext';
+import { useSelector } from 'react-redux';
+import { orderURL } from '../../utils/api'
+import { setBun, addIngredient } from '../../services/slices/orderSlice';
+import ConstructorElementBox from '../ConstructorElementBox/ConstructorElementBox'
+import { useDispatch } from 'react-redux';
 
-
-
-
-
-const ConstructorElementBox = (props) => {
-  return (
-    <div className={styles.elementContainer}>
-      {props.dndIcon && <div className={styles.icon} >
-        <DragIcon type="primary" />
-      </div>}
-      <div className='pl-8'>
-        <ConstructorElement
-                  type={props.type}
-                  isLocked={props.isLocked}
-                  text={props.text}
-                  price={props.price}
-                  thumbnail={props.thumbnail}
-                  extraClass={props.extraClass}
-                />
-      </div>
-    </div>
-  )
-}
-
-const totalPriceReducer = (state, action) => {
-  switch (action.type){
-    case 'SET_TOTAL_PRICE':
-      return action.payload;
-  }
-}
+import { useDrop } from 'react-dnd';
 
 const BurgerConstructor = () => {
-
-  const urlToOrder = 'https://norma.nomoreparties.space/api/orders'
-  const fetchToOrder = (array) => {
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        "ingredients": array
-        
-      })
-    }
-
-    fetch(urlToOrder, requestOptions)
-      .then(response => response.json())
-      .then(data => {
-        if (data.success === true) {
-          setOrderNumber(data.order.number)
-          setIsModalOpen(true)
-        }
-
-      })
-  } 
-
-  const [orderNumber, setOrderNumber] = React.useState(0)
-  const data = (useContext(IngredientContext))
-  const bunElement = Object.values(data).filter(element => element.type==='bun')[0];
-  const middleElements = Object.values(data).filter(element => element.type !== 'bun');
+  const initialIngredients = useSelector((state) => state.ingredients.ingredients)
+  const ingredients = useSelector((state) => state.order.ingredients);
+  const loading = useSelector((state) => state.ingredients.loading)
+  const bun = useSelector((state) => state.order.bun)
   const [isModalOpen, setIsModalOpen] = React.useState(false)
-  const [totalPrice, dispatch] = React.useReducer(totalPriceReducer, 0)
+  const totalPrice = useSelector((state) => state.order.totalPrice)
+  const dispatch = useDispatch()
 
-  useEffect (() => {
-    let sum = 0
+  const [initialUseEffect, setInitialUseEffect] = useState(false)
+  const [orderNumber, setOrderNumber] = React.useState(0)
 
-    Object.values(data).forEach(ingredient => {
-      if (ingredient.type==='bun'){
-        sum = sum + ingredient.price*2
-      } else {
-        sum = sum + ingredient.price
+  useEffect(() => {
+
+    const handleSetBun = async () => {
+      if (initialIngredients.length > 0 && !initialUseEffect) {
+        const buns = initialIngredients.filter((element) => element.type === 'bun');
+        const randomBun = buns[Math.floor(Math.random() * buns.length)];
+        console.log(randomBun);
+        await dispatch(setBun(randomBun));
+        setInitialUseEffect(true);
       }
-      
-    })
-    dispatch({type: 'SET_TOTAL_PRICE', payload: sum})
+    };
 
-  }, Object.values(IngredientContext))
+    handleSetBun();
+  }, [initialIngredients]);
 
   const handleModalClose = () => {
     setIsModalOpen(false)
   }
   const handleModalOpen = () => {
-    fetchToOrder(Object.values(data))
+    // fetchToOrder(Object.values(data))
   }
 
-  return (
-    <section className={styles.container}>
-      <ConstructorElementBox
-          type="top"
-          isLocked={true}
-          text={bunElement.name +' (верх)'}
-          price={bunElement.price}
-          thumbnail={bunElement.image}
-          extraClass={styles.topSide}
+  const handleDrop = (item) => {
+    console.error('I TRY TO ')
+    dispatch(addIngredient(item))
+    // setBurgerIngredients((prevIngredients) => [
+    //   ...prevIngredients,
+    //   item.id,
+    // ]);
+  };
 
-        />
-      <div className={styles.constructorList}>
-        {middleElements.map((element) => {
-          return(
-                <ConstructorElementBox
+  const [, drop] = useDrop({
+    accept: 'ingredient',
+    drop: handleDrop,
+  });
+
+  return (
+    <section ref={drop} className={styles.container}>
+      {loading && <h1> Loading...</h1>}
+      {bun &&
+        <>
+          <ConstructorElementBox
+            type="top"
+            isLocked={true}
+            text={bun.name + ' (верх)'}
+            price={bun.price}
+            thumbnail={bun.image}
+            extraClass={styles.topSide}
+
+          />
+
+          <div className={styles.constructorList}>
+            {ingredients?.length > 0 && ingredients.map((element) =>
+              <ConstructorElementBox
                 text={element.name}
                 price={element.price}
                 thumbnail={element.image}
                 key={element._id}
                 dndIcon
               />)}
-        )}
-
-      </div>
-      <ConstructorElementBox
-          type="bottom"
-          isLocked={true}
-          text={`${bunElement.name} (низ)`}
-          price={bunElement.price}
-          thumbnail={bunElement.image}
-          extraClass={styles.bottomSide}
-        />
-      <div className={styles.sumContainer}>
-        <div className={styles.sumAndIcon}>
-          <p className="text text_type_digits-medium"> {totalPrice} </p>
-          <CurrencyIcon/>
-        </div>
-        <Button htmlType="button" type="primary" size="medium" onClick={handleModalOpen}>
-          Оформить заказ
-        </Button>
-        {        isModalOpen &&
-          <OrderDetails orderNumber={orderNumber} ingredient={data[0]} onClose={handleModalClose}  />}
-
-      </div>
+          </div>
+          <ConstructorElementBox
+            type="bottom"
+            isLocked={true}
+            text={bun.name + ' (низ)'}
+            price={bun.price}
+            thumbnail={bun.image}
+            extraClass={styles.bottomSide}
+          />
+          <div className={styles.sumContainer}>
+            <div className={styles.sumAndIcon}>
+              <p className="text text_type_digits-medium"> {totalPrice} </p>
+              <CurrencyIcon />
+            </div>
+            <Button htmlType="button" type="primary" size="medium" onClick={handleModalOpen}>
+              Оформить заказ
+            </Button>
+            {isModalOpen &&
+              <OrderDetails orderNumber={orderNumber} ingredient={bun} onClose={handleModalClose} />}
+          </div>
+        </>
+      }
     </section>
   );
 };
