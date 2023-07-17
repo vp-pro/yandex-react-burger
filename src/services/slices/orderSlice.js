@@ -17,26 +17,55 @@ export const orderSlice = createSlice({
             state.totalPrice = calculateTotalPrice(state);
         },
         addIngredient: (state, action) => {
-          const ingredientToAdd = action.payload;
-          console.log(action.payload)
-          // ingredientToAdd.order = state.ingredients.length + 1;
-          // ingredientToAdd.sequenceNumber = 0
-          state.ingredients.push(ingredientToAdd);
-          state.totalPrice = calculateTotalPrice(state);
-          console.log(state.ingredients)
+            const ingredientToAdd = action.payload;
+            const sequenceNumber = action.payload.sequenceNumber;
+          
+            let updatedIngredient = { ...ingredientToAdd };
+          
+            if (typeof sequenceNumber === 'number' && sequenceNumber >= 0 && sequenceNumber <= state.ingredients.length) {
+              // If a valid sequence number is provided, insert the new ingredient at that position
+              state.ingredients.splice(sequenceNumber, 0, updatedIngredient);
+            } else {
+              // If no or an invalid sequence number is provided, add the ingredient at the end
+              state.ingredients.push(updatedIngredient);
+            }
+          
+            // Update sequence numbers of all ingredients
+            state.ingredients.forEach((ingredient, index) => {
+              ingredient.sequenceNumber = index;
+              console.log(ingredient.sequenceNumber)
+            });
+
+            state.totalPrice = calculateTotalPrice(state);
         },
         removeIngredient: (state, action) => {
-          const ingredientToRemove = action.payload;
-          // state.ingredients ingredientToRemove._id;
-
+          const sequenceNumberToRemove = action.payload;
+          const indexToRemove = state.ingredients.findIndex(
+            (ingredient) => ingredient.sequenceNumber === sequenceNumberToRemove
+          );
+        
+          if (indexToRemove !== -1) {
+            state.ingredients.splice(indexToRemove, 1);
+        
+            // Update sequence numbers of all remaining ingredients
+            state.ingredients.forEach((ingredient, index) => {
+              ingredient.sequenceNumber = index + 1;
+            });
+          }
+        
+          state.totalPrice = calculateTotalPrice(state);
         },
+        changeBun: (state, action) => {
+          const newBun = action.payload;
+          state.bun = newBun
+          state.totalPrice = calculateTotalPrice(state);
+        }
     },
     extraReducers: (builder) => {
 
     }
 
 })
-
 
 const calculateTotalPrice = (state) => {
   const totalPrice =
@@ -45,7 +74,7 @@ const calculateTotalPrice = (state) => {
   return totalPrice;
 }
 
-export const { setBun, addIngredient, removeIngredient } = orderSlice.actions;
+export const { setBun, addIngredient, removeIngredient, changeBun } = orderSlice.actions;
 
 
 

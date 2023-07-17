@@ -11,7 +11,7 @@ const HeaderButton = props => {
     return(
         <div className={styles.button}>
             {React.cloneElement(props.icon, { type: iconType})}
-            <p className={textClass + ' ml-2'}>{props.text}</p>
+            <a className={textClass + ' ml-2'}>{props.text}</a>
         </div>
     )
 }
