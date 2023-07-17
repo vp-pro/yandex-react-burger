@@ -11,20 +11,23 @@ const IngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch()
   const [numberToOrder, setNumberToOrder] = useState(0)
 
-  const id = ingredient ? ingredient._id : '';
 
   const ingredients = useSelector((state) => state.order.ingredients);
   const currentBun = useSelector((state) => state.order.bun)
 
   useEffect(() => {
+    const id = ingredient ? ingredient._id : '';
+
     if (ingredients && currentBun) {
       if (ingredient.type === 'bun') {
         if (id === currentBun._id) {
           setNumberToOrder(2);
+        } else {
+          setNumberToOrder(0)
         }
       } else {
         const n = Object.values(ingredients).reduce((count, element) => {
-          if (element.id === id) {
+          if (element._id === id) {
             return count + 1;
           }
           return count;
