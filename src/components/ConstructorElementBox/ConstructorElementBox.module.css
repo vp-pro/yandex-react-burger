@@ -1,35 +1,36 @@
 .elementContainer {
     position: relative;
     display: inline-block;
-    composes:  mr-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+    composes: mr-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
 
 }
+
 
 
 .container {
     display: flex;
     flex-direction: column;
 
-    composes: mt-25 pl-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'    ;
+    composes: mt-25 pl-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
 }
 
-.constructorList{
+.constructorList {
     display: flex;
     flex-direction: column;
     gap: 16px;
     /* height: 800px; */
     overflow: auto;
     flex-grow: 1;
-    composes: custom-scroll from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'    ;
-    composes:  mb-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+    composes: custom-scroll from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: mb-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
 }
 
 .topSide {
-    composes:  mb-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+    composes: mb-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
 }
 
 .bottomSide {
-    composes:  mb-10 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+    composes: mb-10 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
 }
 
 .icon {
@@ -44,14 +45,14 @@
 
 .sumContainer {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     gap: 40px;
     align-items: center;
-    composes:  mr-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+    composes: mr-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
 
 }
 
-.sumAndIcon{
+.sumAndIcon {
     display: flex;
     gap: 8px;
     align-items: center;

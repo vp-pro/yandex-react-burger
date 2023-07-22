@@ -1,7 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {ingredientsURL} from '../../utils/api.js';
-import {setBun} from './orderSlice'
-import { useDispatch } from "react-redux";
+import {ingredientsURL, request} from '../../utils/api.js';
+
 export const ingredientsSlice = createSlice({
     name: 'ingredients',
     initialState: {
@@ -43,13 +42,9 @@ export const {removeWatchingIngredient, setWatchingIngredient} = ingredientsSlic
 export const fetchIngredients = createAsyncThunk('ingredients/fetchIngredients', 
 async () => {
     try {
-        const response = await fetch(ingredientsURL);
-        if (!response.ok) {
-            throw new Error('Failed to fetch ingredients');
-        }
+        const response = await request(ingredientsURL);
         const data = await response.json();
         const ingredients = data.data
-
 
         return ingredients;
     } catch (error) {
