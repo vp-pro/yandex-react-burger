@@ -1,11 +1,12 @@
-import { createSlice} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { urlToOrder, request } from '../../utils/api'
 
 export const orderSlice = createSlice({
     name: 'order',
     initialState: {
         ingredients: [],
         bun: null,
-        orderNumber: '',
+        orderNumber: null,
         totalPrice: 0,
         loading: false,
         error: null,
@@ -17,55 +18,82 @@ export const orderSlice = createSlice({
             state.totalPrice = calculateTotalPrice(state);
         },
         addIngredient: (state, action) => {
-            const ingredientToAdd = action.payload;
-            const sequenceNumber = action.payload.sequenceNumber;
-          
-            let updatedIngredient = { ...ingredientToAdd };
-          
-            if (typeof sequenceNumber === 'number' && sequenceNumber >= 0 && sequenceNumber <= state.ingredients.length) {
-              // If a valid sequence number is provided, insert the new ingredient at that position
-              state.ingredients.splice(sequenceNumber, 0, updatedIngredient);
-            } else {
-              // If no or an invalid sequence number is provided, add the ingredient at the end
-              state.ingredients.push(updatedIngredient);
-            }
-          
-            // Update sequence numbers of all ingredients
-            state.ingredients.forEach((ingredient, index) => {
-              ingredient.sequenceNumber = index;
-              console.log(ingredient.sequenceNumber)
-            });
+            const ingredientToAdd = action.payload.ingredient;
+            const id = action.payload.uuid;
+
+            let updatedIngredient = { ...ingredientToAdd, id };
+            state.ingredients.push(updatedIngredient);
 
             state.totalPrice = calculateTotalPrice(state);
         },
         removeIngredient: (state, action) => {
-          const sequenceNumberToRemove = action.payload;
-          const indexToRemove = state.ingredients.findIndex(
-            (ingredient) => ingredient.sequenceNumber === sequenceNumberToRemove
-          );
-        
-          if (indexToRemove !== -1) {
-            state.ingredients.splice(indexToRemove, 1);
-        
-            // Update sequence numbers of all remaining ingredients
-            state.ingredients.forEach((ingredient, index) => {
-              ingredient.sequenceNumber = index + 1;
-            });
-          }
-        
+          const id = action.payload;
+          state.ingredients = state.ingredients.filter((ingredient)=> ingredient.id !== id)
           state.totalPrice = calculateTotalPrice(state);
         },
-        changeBun: (state, action) => {
-          const newBun = action.payload;
-          state.bun = newBun
-          state.totalPrice = calculateTotalPrice(state);
+        setIngredients: (state, action)=> {
+          state.ingredients = action.payload;
+          state.totalPrice = calculateTotalPrice(state)
+        },
+        cleanOrder: (state) => {
+          state.orderNumber = null
+          state.ingredients = []
+          state.bun = null
         }
     },
     extraReducers: (builder) => {
-
+      builder.addCase(fetchOrderNumber.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        const orderNumber = action.payload;
+        state.orderNumber = orderNumber;
+      });
+  
+      builder.addCase(fetchOrderNumber.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      });
+  
+      builder.addCase(fetchOrderNumber.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      });
     }
 
 })
+
+export const fetchOrderNumber = createAsyncThunk('order/fetchOrderNumber', 
+async (_, {getState}) => {
+    try {
+      const state = getState()
+      
+      const ids = state.order.ingredients.map(ingredient => ingredient._id)
+      ids.push(state.order.bun._id)
+
+      console.log('AGAIN;,', ids)
+      const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ingredients: ids
+          })
+        };
+        
+        const response = await request(urlToOrder, requestOptions);
+        const data = await response.json();
+        console.log(data)
+
+        const orderNumber = data.order.number
+
+        return orderNumber;
+    } catch (error) {
+        throw new Error(error.message)
+    }
+})
+
+
 
 const calculateTotalPrice = (state) => {
   const totalPrice =
@@ -74,7 +102,8 @@ const calculateTotalPrice = (state) => {
   return totalPrice;
 }
 
-export const { setBun, addIngredient, removeIngredient, changeBun } = orderSlice.actions;
+export const { setBun, addIngredient, removeIngredient, setIngredients, cleanOrder } = orderSlice.actions;
+
 
 
 
@@ -101,18 +130,3 @@ export const { setBun, addIngredient, removeIngredient, changeBun } = orderSlice
 
 //     }).catch(error => {throw new Error('Something wrong with fetching Order')})
 // }
-
-
-// useEffect(() => {
-//   let sum = 0
-
-//   Object.values(data).forEach(ingredient => {
-//     if (ingredient.type === 'bun') {
-//       sum = sum + ingredient.price * 2
-//     } else {
-//       sum = sum + ingredient.price
-//     }
-
-//   })
-//   // dispatch({type: 'SET_TOTAL_PRICE', payload: sum})
-// }, data)

@@ -7,6 +7,9 @@ import IngredientDetails from '../IngredientDetails/IngredientDetails.jsx'
 import { useDrag } from 'react-dnd';
 import { useSelector, useDispatch } from 'react-redux'
 import { setWatchingIngredient, removeWatchingIngredient } from '../../services/slices/ingredientsSlice'
+import ingredientPropTypes from '../../utils/prop-types.js'
+
+
 const IngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch()
   const [numberToOrder, setNumberToOrder] = useState(0)
@@ -36,7 +39,7 @@ const IngredientCard = ({ ingredient }) => {
       }
     }
 
-  }, [ingredients, currentBun])
+  }, [ingredients, currentBun, ingredient])
 
 
 
@@ -51,26 +54,25 @@ const IngredientCard = ({ ingredient }) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false)
 
   const handleIngredientOpen = React.useCallback(() => {
-    console.log('trying to click')
     dispatch(setWatchingIngredient(ingredient))
     setIsModalOpen(true)
-  }
-    , [])
+  }, [dispatch, ingredient])
 
   const handleIngredientClose = React.useCallback((e) => {
     e.stopPropagation();
     dispatch(removeWatchingIngredient())
 
     setIsModalOpen(false)
-  }
-    , [])
+  }, [dispatch])
 
   return (
     <div
       style={{
         opacity: isDrag ? 0.5 : 1,
         cursor: 'move',
-      }} ref={dragRef}
+      }}
+
+      ref={currentBun || ingredient.type === 'bun' ? dragRef : null}
 
       onClick={handleIngredientOpen} className={styles.ignredientCard}>
       {
@@ -91,5 +93,11 @@ const IngredientCard = ({ ingredient }) => {
     </div>
   )
 }
+
+IngredientCard.propTypes = {
+  ingredient: PropTypes.arrayOf(
+    ingredientPropTypes
+  ).isRequired,
+};
 
 export default IngredientCard;

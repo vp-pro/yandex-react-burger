@@ -1,4 +1,3 @@
-// src/components/Modal/Modal.js
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
@@ -12,30 +11,29 @@ const Modal = ({ children, onClose, headerText }) => {
     onClose(e)
   }
 
-  const handleEscPress = (e) => {
+  const handleEscPress = React.useCallback((e) => {
     if (e.key === 'Escape') {
       onClose(e);
     }
-  };
+  }, [onClose]);
 
   React.useEffect(() => {
     document.addEventListener('keydown', handleEscPress);
     return () => document.removeEventListener('keydown', handleEscPress);
-  }, []);
+  }, [handleEscPress]);
 
   return ReactDOM.createPortal(
     (
       <>
-      <ModalOverlay onClose={(e) => onClose(e)}/>
-      <div className={styles.modal}>
-          {headerText && <p className={styles.header}>{headerText}</p>}
-          <div className={styles.icon}>
-              <CloseIcon onClick={handleCloseIconClick}/>
-            </div>
-          {children}
-        </div>
+        <ModalOverlay onClose={(e) => onClose(e)}/>
+        <div className={styles.modal}>
+            {headerText && <p className={styles.header}>{headerText}</p>}
+            <div className={styles.icon}>
+                <CloseIcon onClick={handleCloseIconClick}/>
+              </div>
+            {children}
+          </div>
       </>
-
       ),
     document.getElementById('react-modals'))
 }
