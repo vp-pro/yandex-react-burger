@@ -48,13 +48,11 @@ const BurgerIngredients = () => {
 
   useEffect(() => {
     const scrollContainer = sectionsRef.allIngredientsContainer.current;
-
     scrollContainer.addEventListener('scroll', handleScroll);
-
     return () => {
       scrollContainer.removeEventListener('scroll', handleScroll);
     };
-  });
+  }, []);
 
 
   const handleScroll = () => {
@@ -129,9 +127,9 @@ const BurgerIngredients = () => {
 
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(
+  ingredients: PropTypes.arrayOf(
     ingredientPropTypes
-  ).isRequired,
+  ),
 };
 
 export default BurgerIngredients
