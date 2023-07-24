@@ -77,8 +77,7 @@ export const fetchOrderNumber = createAsyncThunk('order/fetchOrderNumber',
         })
       };
       const response = await request(urlToOrder, requestOptions);
-      const data = await response.json();
-      const orderNumber = data.order.number
+      const orderNumber = response.order.number
 
       return orderNumber;
     } catch (error) {
