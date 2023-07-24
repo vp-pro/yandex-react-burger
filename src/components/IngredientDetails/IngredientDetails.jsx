@@ -14,12 +14,12 @@ const Element = ({title, value}) => {
   )
 }
 
-const IngredientDetails = ({onClose}) => {
+const IngredientDetails = () => {
   const ingredient = useSelector((state)=> state.ingredients.watchingIngredient )
   return (
     <>
     {ingredient &&  
-    <Modal onClose={(e) => onClose(e)} headerText='Детали ингредиента'>
+    <>
       <img alt={ingredient.name} src={ingredient.image_large}/>
       <p className={styles.ingredientTitle}>{ingredient.name}</p>
       <div className={styles.elements}>
@@ -28,7 +28,7 @@ const IngredientDetails = ({onClose}) => {
         <Element title='Жиры,г' value={ingredient.fat}/>
         <Element title='Углеводы,г' value={ingredient.carbohydrates}/>
       </div>
-    </Modal>
+      </>
   }
 
     </>
@@ -42,14 +42,6 @@ Element.propTypes = {
     PropTypes.string,
     PropTypes.number
   ]).isRequired
-};
-
-IngredientDetails.propTypes = {
-  ingredient: PropTypes.shape({
-    ingredientPropTypes
-  }).isRequired,
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.node
 };
 
 

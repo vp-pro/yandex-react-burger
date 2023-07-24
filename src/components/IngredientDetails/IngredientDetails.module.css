@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    composes: mr-5 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
 }
 
 .elements {
@@ -11,7 +12,12 @@
     composes: mb-5 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
 }
 
-.ingredientTitle{
-    composes: mt-4 mb-8  from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+.elements > :last-child {
+    margin-right: 0;
+  }
 
+.ingredientTitle{
+    composes: mt-4 mb-8 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+    composes: text_type_main-medium from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'    ;
 }
+
