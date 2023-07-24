@@ -8,6 +8,7 @@ import { useDrag } from 'react-dnd';
 import { useSelector, useDispatch } from 'react-redux'
 import { setWatchingIngredient, removeWatchingIngredient } from '../../services/slices/ingredientsSlice'
 import ingredientPropTypes from '../../utils/prop-types.js'
+import Modal from '../Modal/Modal'
 
 
 const IngredientCard = ({ ingredient }) => {
@@ -17,10 +18,11 @@ const IngredientCard = ({ ingredient }) => {
 
   const ingredients = useSelector((state) => state.order.ingredients);
   const currentBun = useSelector((state) => state.order.bun)
+  const orderNumber = useSelector((state) => state.order.orderNumber)
 
   useEffect(() => {
     const id = ingredient ? ingredient._id : '';
-
+  
     if (ingredients && currentBun) {
       if (ingredient.type === 'bun') {
         if (id === currentBun._id) {
@@ -37,10 +39,10 @@ const IngredientCard = ({ ingredient }) => {
         }, 0);
         setNumberToOrder(n)
       }
+    } else {
+      setNumberToOrder(0);
     }
-
-  }, [ingredients, currentBun, ingredient])
-
+  }, [ingredients, currentBun, dispatch, ingredient]);
 
 
   const [{ isDrag }, dragRef] = useDrag({
@@ -89,15 +91,18 @@ const IngredientCard = ({ ingredient }) => {
         <CurrencyIcon />
       </div>
       <p className={styles.ingredientTitle}>{ingredient.name}</p>
-      {isModalOpen && <IngredientDetails ingredient={ingredient} onClose={handleIngredientClose} />}
+      {isModalOpen && 
+        <Modal onClose={handleIngredientClose} headerText='Детали ингредиента'>
+          <IngredientDetails ingredient={ingredient}/>
+        </Modal>
+      }
     </div>
   )
 }
 
 IngredientCard.propTypes = {
-  ingredient: PropTypes.arrayOf(
-    ingredientPropTypes
-  ).isRequired,
+  ingredient: ingredientPropTypes.isRequired,
 };
+
 
 export default IngredientCard;
