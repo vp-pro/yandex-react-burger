@@ -43,8 +43,7 @@ export const fetchIngredients = createAsyncThunk('ingredients/fetchIngredients',
 async () => {
     try {
         const response = await request(ingredientsURL);
-        const data = await response.json();
-        const ingredients = data.data
+        const ingredients = response.data
 
         return ingredients;
     } catch (error) {

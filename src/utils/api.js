@@ -11,7 +11,7 @@ export const checkResponse = (response) => {
     if (!response.ok) {
       throw new Error(`Server Error: ${response.status} ${response.statusText}`);
     }
-    return response; // Return the response if it is ok
+    return response.json(); // Return the response if it is ok
   };
 
 export const request = (url, options) => {
