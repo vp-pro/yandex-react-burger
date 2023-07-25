@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styles from './IngredientDetails.module.css'
 import Modal from '../Modal/Modal'
 import ingredientPropTypes from '../../utils/prop-types.js'
+import { useSelector } from 'react-redux'
 
 const Element = ({title, value}) => {
   return(
@@ -13,10 +14,12 @@ const Element = ({title, value}) => {
   )
 }
 
-const IngredientDetails = ({ingredient, onClose, children}) => {
-
+const IngredientDetails = () => {
+  const ingredient = useSelector((state)=> state.ingredients.watchingIngredient )
   return (
-    <Modal onClose={(e) => onClose(e)} headerText='Детали ингредиента'>
+    <>
+    {ingredient &&  
+    <>
       <img alt={ingredient.name} src={ingredient.image_large}/>
       <p className={styles.ingredientTitle}>{ingredient.name}</p>
       <div className={styles.elements}>
@@ -25,8 +28,11 @@ const IngredientDetails = ({ingredient, onClose, children}) => {
         <Element title='Жиры,г' value={ingredient.fat}/>
         <Element title='Углеводы,г' value={ingredient.carbohydrates}/>
       </div>
+      </>
+  }
 
-  </Modal>
+    </>
+
   )
 }
 
@@ -36,14 +42,6 @@ Element.propTypes = {
     PropTypes.string,
     PropTypes.number
   ]).isRequired
-};
-
-IngredientDetails.propTypes = {
-  ingredient: PropTypes.shape({
-    ingredientPropTypes
-  }).isRequired,
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.node
 };
 
 

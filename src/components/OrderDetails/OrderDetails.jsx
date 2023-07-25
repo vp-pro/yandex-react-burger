@@ -1,29 +1,32 @@
-import React from 'react'
 import PropTypes from 'prop-types'
-import Modal from '../Modal/Modal'
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from'./OrderDetails.module.css'
+import { useSelector } from 'react-redux'
 
-const OrderDetails = ({order, onClose, children}) => {
+const OrderDetails = () => {
+  const orderNumber = useSelector((state) => state.order.orderNumber)
+  const loading = useSelector((state) => state.order.loading)
+
   return (
-<Modal onClose={onClose}>
-      <p className={styles.orderNumber}>341325</p>
-      <p className={styles.orderNumberTitle}>идентификатор заказа</p>
-      <div className={styles.icon}>
-          <CheckMarkIcon/>
-      </div>
+    <>
+    {loading &&  <p>Loading...</p>} 
+    {orderNumber &&  <> 
 
-      <p className={styles.readyText}>Ваш заказ начали готовить</p>
-      <p className={styles.waitText}>Дождитесь готовности на орбитальной станции</p>
-
-  </Modal>
+    <p className={styles.orderNumber}>{orderNumber}</p>
+          <p className={styles.orderNumberTitle}>идентификатор заказа</p>
+          <div className={styles.icon}>
+              <CheckMarkIcon/>
+          </div>
+          <p className={styles.readyText}>Ваш заказ начали готовить</p>
+          <p className={styles.waitText}>Дождитесь готовности на орбитальной станции</p>
+    </> 
+    }
+    </>
   )
 }
 
 OrderDetails.propTypes = {
-  order: PropTypes.object, // or further specify the shape if you know it
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.node,
+  orderNumber: PropTypes.number, 
 };
 
 
