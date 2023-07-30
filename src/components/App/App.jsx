@@ -1,16 +1,19 @@
 import styles from './App.module.css'
-import AppHeader from '../AppHeader/AppHeader'
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
+import PageLayout from '../PageLayout/PageLayout'
+
+import { Route, Routes } from 'react-router-dom';
+import {HomePage, Page404} from '../../pages/index'
 
 const App = () => {
+    console.log(HomePage)
     return (
         <>
-            <AppHeader />
-            <main className={styles.mainContainer}>
-                <BurgerIngredients />
-                <BurgerConstructor />
-            </main>
+            <Routes>
+                <Route element={<PageLayout/>}>
+                    <Route exact path="/" element={<HomePage/>} />
+                </Route>
+                <Route path="*" element={<Page404/>}/>
+            </Routes>
         </>
 
     );

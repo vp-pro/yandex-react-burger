@@ -22,7 +22,7 @@
 
 
 
-.container::-webkit-scrollbar {
+/* .container::-webkit-scrollbar {
   display: none;
 }
 
@@ -42,4 +42,4 @@
 .scrollable_section {
   scrollbar-width: none;
   -ms-overflow-style: none;
-}
+} 

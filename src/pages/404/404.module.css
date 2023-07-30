@@ -1,0 +1,27 @@
+/* NotFoundPage.module.css */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding-bottom: 8rem;
+  }
+  
+  .content {
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 8rem;
+    composes: mt-0 mb-2 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+}
+  
+  .subtitle {
+    composes: text_type_main-large from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    composes: mb-15 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+
+}
+  
+  .homeButton {
+
+  }
