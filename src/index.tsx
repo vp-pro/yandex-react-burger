@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import {store} from './services/store'
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,12 +17,14 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={store}>
     <DndProvider backend={HTML5Backend}>
-
       <React.StrictMode>
-        <App />
+        <Router>
+            <App/>
+        </Router>
       </React.StrictMode>
     </DndProvider>
   </Provider>
+
 );
 
 // If you want to start measuring performance in your app, pass a function
