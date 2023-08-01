@@ -18,8 +18,14 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "react-redux": "^8.1.1",
     "react-router-dom": "^6.14.1",
+=======
+    "react-jwt": "^1.2.0",
+    "react-redux": "^8.1.1",
+    "react-router-dom": "^6.14.2",
+>>>>>>> 7694018b3ff0b7ceb64915342725f9c88f5570cb
 =======
     "react-jwt": "^1.2.0",
     "react-redux": "^8.1.1",
@@ -35,7 +41,11 @@
   "scripts": {
     "lstart": "WATCHPACK_POLLING=true react-scripts start",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "start": "react-scripts start -p 3005",
+=======
+    "start": "react-scripts start --port 3003",
+>>>>>>> 7694018b3ff0b7ceb64915342725f9c88f5570cb
 =======
     "start": "react-scripts start --port 3003",
 >>>>>>> 7694018b3ff0b7ceb64915342725f9c88f5570cb
