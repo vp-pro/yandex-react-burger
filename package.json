@@ -29,7 +29,6 @@
   },
   "scripts": {
     "lstart": "WATCHPACK_POLLING=true react-scripts start",
-
     "start": "PORT=3000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
