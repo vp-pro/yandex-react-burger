@@ -7,6 +7,10 @@ export const passwordResetURL = baseURL + '/password-reset'
 
 
 export const loginURL = baseURL + '/auth/login'
+// export const loginURL = baseURL + '/auth/login'
+// export const loginURL = baseURL + '/auth/login'
+// export const loginURL = baseURL + '/auth/login'
+// export const loginURL = baseURL + '/auth/login'
 
 
 export const checkResponse = (response) => {

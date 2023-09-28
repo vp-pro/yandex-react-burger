@@ -1,11 +1,12 @@
-import React from 'react';
+import styles from'./Register.module.css'
 
 const RegisterPage = () => {
-
+   
   return (
-        <>
-            <p className="text text_type_digits-medium">Register</p>
-        </>
+        <div className={styles.mainContainer}>
+              <p className="text text_type_digits-medium">Register Page </p>
+        </div>
+      
   );
 };
 

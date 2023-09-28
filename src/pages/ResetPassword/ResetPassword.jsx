@@ -1,5 +1,5 @@
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-
+import styles from'./Register.module.css'
 
 const ResetPasswordPage = () => {
   return (
