@@ -49,7 +49,7 @@ const ForgotPasswordPage = () => {
         <Layout centered>
           <div className={styles.mainContainer}>
             <p className="text text_type_main-large mb-4">
-                  Восстановление пароля
+                  Восстановление пароля 
             </p>     
             <Input
                   type={'email'}
