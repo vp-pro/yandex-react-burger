@@ -1,26 +1,44 @@
 import styles from './App.module.css'
-import PageLayout from '../PageLayout/PageLayout'
+import AppPageLayout from '../AppPageLayout/AppPageLayout'
 
 import { Route, Routes } from 'react-router-dom';
-import {HomePage, Page404, LoginPage, ForgotPasswordPage, ProfilePage, RegisterPage, ResetPasswordPage} from '../../pages/index'
+import {
+    HomePage,
+    Page404,
+    LoginPage,
+    ForgotPasswordPage,
+    ProfilePage, 
+    RegisterPage, 
+    ResetPasswordPage, 
+    ProfileOrdersPage, 
+    ProfileOrderDetailsPage, 
+    ProfileContentPage
+} from '../../pages/index'
 
 const App = () => {
     console.log(HomePage)
     return (
         <>
             <Routes>
-                <Route element={<PageLayout/>}>
-                    <Route exact path="/" element={<HomePage/>} />
-                    
-                    <Route exact path="/login" element={<LoginPage/>} />
-                    <Route exact path="/register" element={<RegisterPage/>} />
+                <Route element={<AppPageLayout />}>
+                    <Route index element={<HomePage />} />
+                    <Route exact path="/login" element={<LoginPage />} />
+                    <Route exact path="/register" element={<RegisterPage />} />
 
-                    <Route exact path="/profile" element={<ProfilePage/>} />
+                    {/* <Route exact path="/profile" element={<ProfilePage/>} /> */}
+                    {/* <Route exact path="/profile/orders" element={<ProfilePage/>} />
+                    <Route exact path="/profile/orders/:id" element={<ProfilePage/>} /> */}
 
-                    <Route exact path="/forgot-password" element={<ForgotPasswordPage/>} />
-                    <Route exact path="/reset-password" element={<ResetPasswordPage/>} />
+                    <Route path="/profile" element={<ProfilePage />}>
+                        <Route index element={<ProfileContentPage />} />
+                        <Route path="orders" element={<ProfileOrdersPage />} />
+                        <Route path="orders/:id" element={<ProfileOrderDetailsPage />} />
+                    </Route>
+
+                    <Route exact path="/forgot-password" element={<ForgotPasswordPage />} />
+                    <Route exact path="/reset-password" element={<ResetPasswordPage />} />
                 </Route>
-                <Route path="*" element={<Page404/>}/>
+                <Route path="*" element={<Page404 />} />
             </Routes>
         </>
 

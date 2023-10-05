@@ -1,0 +1,19 @@
+.centeredContainer {
+    display: flex;
+    justify-content: center;
+    min-height: 70vh; /* Ensures that the container takes at least the full viewport height */
+    width: 1140px;
+    margin: 0 auto; /* Center horizontally */
+
+    align-items: center;
+  }
+
+.topContainer { 
+    display: flex;
+    justify-content: center;
+    min-height: 70vh; /* Ensures that the container takes at least the full viewport height */
+    width: 1140px;
+    margin: 0 auto; /* Center horizontally */
+
+    align-items: top;
+}

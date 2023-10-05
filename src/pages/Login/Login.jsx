@@ -1,4 +1,5 @@
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import Layout from '../../components/PageLayout/PageLayout'
 import React from 'react';
 
 import styles from './Login.module.css'
@@ -14,36 +15,47 @@ const LoginPage = () => {
     setEmail(e.target.value)
   }
   return (
-        <div className={styles.mainContainer}>
-              <p className="text text_type_text-medium">Login</p>     
-              <EmailInput
-                onChange={onEmailChange}
-                value={email}
-                name={'email'}
-                isIcon={false}
-              />
-              <PasswordInput
-                onChange={onPasswordChange}
-                value={password}
-                name={'password'}
-                extraClass="mb-2"
-              />
+    <Layout centered='true'>
+      <div className={styles.mainContainer}>
+        <p className="text text_type_main-large mb-4">Вход</p>     
+        <EmailInput
+          onChange={onEmailChange}
+          value={email}
+          name={'email'}
+          isIcon={false}
+          extraClass="mb-4"
+        />
+        <PasswordInput
+          onChange={onPasswordChange}
+          value={password}
+          name={'password'}
+          extraClass="mb-4"
+        />
 
-              <Button></Button>   
-              <div>
-                <p className="text text_type_text-medium">Забыли там что-то?</p>     
-                  <Button htmlType="button" type="secondary" size="medium">
-                    Нажми на меня
-                  </Button>
-              </div>
-              <div>
-                <p className="text text_type_text-medium">Второе</p>     
-                  <Button htmlType="button" type="secondary" size="medium">
-                    Что-то там ещё?
-                  </Button>
-              </div>
-
+        <Button extraClass="mb-10">
+          Войти
+        </Button>   
+        <div style={{ display: 'inline-block' }}>
+          <span className="text text_type_text-medium" style={{color: 'var(--text-inactive-color)' }}>
+            Вы - новый пользователь?
+          </span>
+          <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1">
+            Зарегистрироваться
+          </Button>
         </div>
+
+        <div style={{ display: 'inline-block' }}>
+          <span className="text text_type_text-medium" style={{color: 'var(--text-inactive-color)'}}>
+            Забыли пароль?
+          </span>
+          <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1">
+            Восстановить пароль
+          </Button>
+        </div>
+
+      </div>
+    </Layout>
+       
       
   );
 };

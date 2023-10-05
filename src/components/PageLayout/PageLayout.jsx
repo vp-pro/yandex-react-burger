@@ -1,13 +1,21 @@
-import AppHeader from '../AppHeader/AppHeader'
-import { Outlet } from 'react-router-dom'
-const PageLayout = () => {
+import styles from './PageLayout.module.css'; // Import the CSS module
 
-    return (
-        <>
-            <AppHeader />   
-            <Outlet/>
-        </>
-    )
-}
+const Layout = ({centered, children}) => {
+  return (
+    <>
+    {centered ? 
+        <div className={styles['centeredContainer']}>
+            {children}
+        </div>
+        :
+        <div className={styles.topContainer}>
+            {children}
+        </div>
+    }
+    </>
+    
+    
+  );
+};
 
-export default PageLayout
+export default Layout;

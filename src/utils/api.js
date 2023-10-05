@@ -3,10 +3,12 @@
 export const baseURL = 'https://norma.nomoreparties.space/api'
 export const ingredientsURL = baseURL + '/ingredients'
 export const urlToOrder = baseURL + '/orders'
-export const passwordResetURL = baseURL + '/password-reset'
 
 
 export const loginURL = baseURL + '/auth/login'
+export const passwordResetURL = baseURL + '/password-reset'
+export const doResetPasswordURL = passwordResetURL + '/reset'
+
 // export const loginURL = baseURL + '/auth/login'
 // export const loginURL = baseURL + '/auth/login'
 // export const loginURL = baseURL + '/auth/login'
