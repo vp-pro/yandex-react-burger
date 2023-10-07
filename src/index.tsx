@@ -10,11 +10,14 @@ import {store} from './services/store'
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { StrictMode } from 'react';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
+  // <StrictMode>
+
   <Provider store={store}>
     <DndProvider backend={HTML5Backend}>
       <React.StrictMode>
@@ -24,6 +27,8 @@ root.render(
       </React.StrictMode>
     </DndProvider>
   </Provider>
+  // </StrictMode>
+
 
 );
 

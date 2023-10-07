@@ -3,24 +3,33 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, EmailInput, PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import Layout from '../../components/PageLayout/PageLayout';
 import styles from './Register.module.css';
-import { updateRegistration, register } from '../../services/slices/userSlice'; // Import userSlice from its relative path
+import { updateRegisterUser, register } from '../../services/slices/registerSlice'; // Import userSlice from its relative path
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import Cookies from 'js-cookie';
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
-  const { email, name, password } = useSelector((state) => state.user.registration);
-  const {registration} = useSelector((state) => state.user)
+  const { email, name, password } = useSelector((state) => state.register.user);
+  const navigate = useNavigate(); // Use useNavigate for programmatic navigation
 
   const handleFieldChange = (field, value) => {
-    // Dispatch the action to update the user slice field
-    dispatch(updateRegistration({ field, value }));
-    console.log(registration)
+    dispatch(updateRegisterUser({ field, value }));
   };
 
   const handleRegistration = () => {
-    // Dispatch the register action with user registration data
-    dispatch(register({ email, name, password }));
+    dispatch(register({ email, name, password }))
+      .then((response) => {
+        if (response.meta.requestStatus === 'fulfilled') {
+          navigate('/');
+        } else {
+          console.error('Registration rejected:', response.error);
+        }
+      })
+      .catch((error) => {
+        console.error('Registration error:', error);
+      });
   };
-
+  
   return (
     <Layout centered={true}>
       <div className={styles.mainContainer}>
@@ -50,7 +59,7 @@ const RegisterPage = () => {
           extraClass="mb-4"
         />
 
-        <Button extraClass="mb-10" onClick={handleRegistration}>
+        <Button extraClass="mb-20 mt-4" onClick={handleRegistration}>
           Зарегистрироваться
         </Button>
         <div style={{ display: 'inline-block' }}>

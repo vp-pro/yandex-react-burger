@@ -25,11 +25,11 @@ const ProfilePage = () => {
               </NavLink>
             </li>
           </ul>
-          {<p >В этом разделе вы можете изменить свои персональные данные</p>}
+          {<p className='mt-20'>В этом разделе вы можете изменить свои персональные данные</p>}
         </nav>
 
 
-        <div className={styles.content}>
+        <div className={styles.content + ' ml-15'}>
           <Outlet />
         </div>
       </div>

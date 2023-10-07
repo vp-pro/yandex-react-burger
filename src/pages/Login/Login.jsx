@@ -1,42 +1,61 @@
-import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import Layout from '../../components/PageLayout/PageLayout'
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import Layout from '../../components/PageLayout/PageLayout';
+import styles from './Login.module.css';
+import { login, updateLoginUser } from '../../services/slices/loginSlice'; // Import loginSlice from its relative path
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import Cookies from 'js-cookie';
 
-import styles from './Login.module.css'
+
 const LoginPage = () => {
 
-  const [password, setPassword] = React.useState('password')
-  const [email, setEmail] = React.useState('bob@example.com')
 
-  const onPasswordChange = e => {
-    setPassword(e.target.value)
-  }
-  const onEmailChange = e => {
-    setEmail(e.target.value)
-  }
+  const dispatch = useDispatch();
+  const { email, password } = useSelector((state) => state.login.user);
+  const navigate = useNavigate(); // Use useNavigate for programmatic navigation
+
+  const handleLogin = () => {
+    dispatch(login({ email, password }))
+      .then((response) => {
+        // Check if the login was successful
+        if (response.meta.requestStatus === 'fulfilled') {
+          // Redirect to the "/" route after successful login
+          navigate('/');
+        } else {
+          // Handle login rejection here, if needed
+          console.error('Login rejected:', response.error);
+        }
+      })
+      .catch((error) => {
+        // Handle other login errors, such as network errors
+        console.error('Login error:', error);
+      });
+  };
+
   return (
-    <Layout centered='true'>
-      <div className={styles.mainContainer}>
-        <p className="text text_type_main-large mb-4">Вход</p>     
+    <Layout centered={true}>
+      <div className={styles.mainContainer+ ' ' + 'mt-20'}>
+        <p className="text text_type_main-large mb-6">Вход</p>
         <EmailInput
-          onChange={onEmailChange}
+          onChange={(e) => dispatch(updateLoginUser({ field: 'email', value: e.target.value }))}
           value={email}
-          name={'email'}
+          name="email"
           isIcon={false}
-          extraClass="mb-4"
+          extraClass="mb-6"
         />
         <PasswordInput
-          onChange={onPasswordChange}
+          onChange={(e) =>     dispatch(updateLoginUser({ field: 'password', value: e.target.value }))}
           value={password}
-          name={'password'}
-          extraClass="mb-4"
+          name="password"
+          extraClass="mb-6"
         />
 
-        <Button extraClass="mb-10">
+        <Button extraClass="mb-20" onClick={handleLogin}>
           Войти
-        </Button>   
-        <div style={{ display: 'inline-block' }}>
-          <span className="text text_type_text-medium" style={{color: 'var(--text-inactive-color)' }}>
+        </Button>
+        <div style={{ display: 'inline-block' }}className='mb-2'>
+          <span className="text text_type_text-medium" style={{ color: 'var(--text-inactive-color)' }}>
             Вы - новый пользователь?
           </span>
           <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1">
@@ -45,21 +64,16 @@ const LoginPage = () => {
         </div>
 
         <div style={{ display: 'inline-block' }}>
-          <span className="text text_type_text-medium" style={{color: 'var(--text-inactive-color)'}}>
+          <span className="text text_type_text-medium" style={{ color: 'var(--text-inactive-color)' }}>
             Забыли пароль?
           </span>
           <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1">
             Восстановить пароль
           </Button>
         </div>
-
       </div>
     </Layout>
-       
-      
   );
 };
 
 export default LoginPage;
-
-

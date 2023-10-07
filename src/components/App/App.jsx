@@ -1,7 +1,8 @@
 import styles from './App.module.css'
 import AppPageLayout from '../AppPageLayout/AppPageLayout'
-
+import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
+
 import {
     HomePage,
     Page404,
@@ -14,9 +15,13 @@ import {
     ProfileOrderDetailsPage, 
     ProfileContentPage
 } from '../../pages/index'
+import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement'
 
 const App = () => {
-    console.log(HomePage)
+    const user = useSelector((state) => state.user);
+    const all = useSelector((state) => state.auth);
+    console.log(all, user)
+
     return (
         <>
             <Routes>
@@ -35,8 +40,8 @@ const App = () => {
                         <Route path="orders/:id" element={<ProfileOrderDetailsPage />} />
                     </Route>
 
-                    <Route exact path="/forgot-password" element={<ForgotPasswordPage />} />
-                    <Route exact path="/reset-password" element={<ResetPasswordPage />} />
+                    <Route exact path="/forgot-password" element={<ProtectedRouteElement element={<ForgotPasswordPage />} />} />
+                    <Route exact path="/reset-password" element={<ProtectedRouteElement element={<ResetPasswordPage />}/>} />
                 </Route>
                 <Route path="*" element={<Page404 />} />
             </Routes>
