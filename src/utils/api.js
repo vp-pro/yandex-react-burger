@@ -6,6 +6,10 @@ export const urlToOrder = baseURL + '/orders'
 
 
 export const loginURL = baseURL + '/auth/login'
+export const registerURL = baseURL + '/auth/register'
+export const logoutURL = baseURL + '/auth/logout'
+export const tokenURL = baseURL + '/auth/token'
+
 export const passwordResetURL = baseURL + '/password-reset'
 export const doResetPasswordURL = passwordResetURL + '/reset'
 
