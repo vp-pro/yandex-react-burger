@@ -36,7 +36,6 @@ const ProfileContentPage = () => {
         placeholder={'Логин'}
         value={login}
         name={'login'}
-        isIcon={false}
         extraClass="mb-6"
         disabled={loginDisabled}
         icon="EditIcon"

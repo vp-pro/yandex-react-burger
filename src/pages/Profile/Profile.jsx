@@ -6,37 +6,30 @@ import { logout } from '../../services/slices/userSlice';
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Get the navigate function
 
   const handleLogout = () => {
-    dispatch(logout()).then(() => {
-      navigate('/'); // Navigate to the '/' route after logout
-    });
+    dispatch(logout());
   };
+  
+
 
   return (
     <Layout centered>
       <div className={styles.profileContainer}>
         
         <nav className={styles.navigation}>
-        <ul className={styles.navigationList}>
-          <li className={styles.navigationItem}>          
-              <NavLink end className={({isActive}) => isActive ? styles.activeNav: styles.nav} to="/profile" >
+              <NavLink end className={({isActive}) => isActive ? styles.activeLink + " "+ styles.navLink: styles.inactiveLink + " "+ styles.navLink} to="/profile" >
                 Профиль
               </NavLink>
-            </li>
-            <li className={styles.navigationItem}>
-              <NavLink end className={({isActive}) => isActive ? styles.activeNav: styles.nav} to="/profile/orders" >
+
+              <NavLink end to="/profile/orders" className={({isActive}) => isActive ? styles.activeLink + " "+ styles.navLink: styles.inactiveLink + " "+ styles.navLink} >
                 История заказов
               </NavLink>
-            </li>
-            <li className={styles.navigationItem}>
-              <NavLink onClick={handleLogout} className={styles.nav}>
+
+              <NavLink onClick={handleLogout} className={styles.inactiveLink + " "+ styles.navLink} >
                 Выход
               </NavLink>
-            </li>
-          </ul>
-          {<p className='mt-20'>В этом разделе вы можете изменить свои персональные данные</p>}
+              {<p className={styles.lowerText + ' mt-20'}>В этом разделе вы можете изменить свои персональные данные</p>}
         </nav>
 
 

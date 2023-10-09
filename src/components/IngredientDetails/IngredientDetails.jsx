@@ -4,7 +4,7 @@ import styles from './IngredientDetails.module.css'
 import Modal from '../Modal/Modal'
 import ingredientPropTypes from '../../utils/prop-types.js'
 import { useSelector } from 'react-redux'
-
+import { useLocation, useParams } from 'react-router-dom'
 const Element = ({title, value}) => {
   return(
     <div className={styles.element}>
@@ -15,7 +15,30 @@ const Element = ({title, value}) => {
 }
 
 const IngredientDetails = () => {
-  const ingredient = useSelector((state)=> state.ingredients.watchingIngredient )
+
+  const [ingredient, setIngredient] = React.useState(null);
+
+  const location = useLocation();
+  const { id } = useParams();
+  console.log('1',id)
+
+  const ingredients = useSelector((state) => state.ingredients.ingredients);
+  const watchingIngredient = useSelector((state)=> state.ingredients.watchingIngredient )
+
+  console.log(watchingIngredient)
+  console.log(ingredient)
+
+  // Check if the component was opened in a modal
+  if(location.state && location.state.background) {
+    setIngredient( ingredients.find((item) => item._id === id) )
+
+  } else {
+    setIngredient( watchingIngredient)
+  }
+
+  console.log('4', ingredient)
+
+
   return (
     <>
     {ingredient &&  

@@ -16,18 +16,17 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Use useNavigate for programmatic navigation
 
+  const handleRegisterClick = () => {
+    navigate('/register'); // Navigate to the '/register' route
+  };
+
+  const handlePasswordResetClick = () => {
+    navigate('/forgot-password'); // Navigate to the '/password-reset' route
+  };
+
+
   const handleLogin = () => {
     dispatch(login({ email, password }))
-      .then((response) => {
-        if (response.meta.requestStatus === 'fulfilled') {
-          navigate('/');
-        } else {
-          console.error('Login rejected:', response.error);
-        }
-      })
-      .catch((error) => {
-        console.error('Login error:', error);
-      });
   };
 
   return (
@@ -38,7 +37,6 @@ const LoginPage = () => {
           onChange={(e) => setEmail(e.target.value )}
           value={email}
           name="email"
-          isIcon={false}
           extraClass="mb-6"
         />
         <PasswordInput
@@ -55,7 +53,7 @@ const LoginPage = () => {
           <span className="text text_type_text-medium" style={{ color: 'var(--text-inactive-color)' }}>
             Вы - новый пользователь?
           </span>
-          <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1">
+          <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1" onClick={handleRegisterClick}>
             Зарегистрироваться
           </Button>
         </div>
@@ -64,7 +62,7 @@ const LoginPage = () => {
           <span className="text text_type_text-medium" style={{ color: 'var(--text-inactive-color)' }}>
             Забыли пароль?
           </span>
-          <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1">
+          <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1" onClick={handlePasswordResetClick} > 
             Восстановить пароль
           </Button>
         </div>

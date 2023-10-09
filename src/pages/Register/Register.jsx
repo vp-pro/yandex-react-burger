@@ -3,19 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, EmailInput, PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import Layout from '../../components/PageLayout/PageLayout';
 import styles from './Register.module.css';
-import { updateRegisterUser, register } from '../../services/slices/registerSlice'; // Import userSlice from its relative path
+import { register } from '../../services/slices/userSlice'; // Import userSlice from its relative path
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import Cookies from 'js-cookie';
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
-  const { email, name, password } = useSelector((state) => state.register.user);
-  const navigate = useNavigate(); // Use useNavigate for programmatic navigation
 
-  const handleFieldChange = (field, value) => {
-    dispatch(updateRegisterUser({ field, value }));
-  };
-
+  const [name, setName] = React.useState('')
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
+  
+  const navigate = useNavigate();
+  
   const handleRegistration = () => {
     dispatch(register({ email, name, password }))
       .then((response) => {
@@ -37,7 +37,7 @@ const RegisterPage = () => {
         <Input
           type="text"
           placeholder="Имя"
-          onChange={(e) => handleFieldChange('name', e.target.value)}
+          onChange={(e) => setName(e.target.value)}
           value={name}
           name="name"
           error={false}
@@ -46,14 +46,14 @@ const RegisterPage = () => {
           extraClass="mb-4"
         />
         <EmailInput
-          onChange={(e) => handleFieldChange('email', e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           value={email}
           name="email"
           isIcon={false}
           extraClass="mb-4"
         />
         <PasswordInput
-          onChange={(e) => handleFieldChange('password', e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           value={password}
           name="password"
           extraClass="mb-4"

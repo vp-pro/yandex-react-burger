@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {url, request} from '../../utils/api'
-
+import {useNavigate} from 'react-router-dom'
 const initialState = {
   user: null,
   isAuthChecked: null
@@ -48,9 +48,12 @@ async () => {
 
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
+
   } catch (error) {
+    const navigate = useNavigate(); 
+    navigate('/'); 
     throw new Error(error.message);
-  }
+  } 
 });
 
 
@@ -143,3 +146,6 @@ export const getUser = createAsyncThunk("user/user", async () => {
       throw new Error(error.message);
     }
   });
+
+
+
