@@ -3,32 +3,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import Layout from '../../components/PageLayout/PageLayout';
 import styles from './Login.module.css';
-import { login, updateLoginUser } from '../../services/slices/loginSlice'; // Import loginSlice from its relative path
+import { login } from '../../services/slices/userSlice'; // Import loginSlice from its relative path
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import Cookies from 'js-cookie';
 
 
 const LoginPage = () => {
 
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
 
   const dispatch = useDispatch();
-  const { email, password } = useSelector((state) => state.login.user);
   const navigate = useNavigate(); // Use useNavigate for programmatic navigation
 
   const handleLogin = () => {
     dispatch(login({ email, password }))
       .then((response) => {
-        // Check if the login was successful
         if (response.meta.requestStatus === 'fulfilled') {
-          // Redirect to the "/" route after successful login
           navigate('/');
         } else {
-          // Handle login rejection here, if needed
           console.error('Login rejected:', response.error);
         }
       })
       .catch((error) => {
-        // Handle other login errors, such as network errors
         console.error('Login error:', error);
       });
   };
@@ -38,20 +35,20 @@ const LoginPage = () => {
       <div className={styles.mainContainer+ ' ' + 'mt-20'}>
         <p className="text text_type_main-large mb-6">Вход</p>
         <EmailInput
-          onChange={(e) => dispatch(updateLoginUser({ field: 'email', value: e.target.value }))}
+          onChange={(e) => setEmail(e.target.value )}
           value={email}
           name="email"
           isIcon={false}
           extraClass="mb-6"
         />
         <PasswordInput
-          onChange={(e) =>     dispatch(updateLoginUser({ field: 'password', value: e.target.value }))}
+          onChange={(e) => setPassword(e.target.value)}
           value={password}
           name="password"
           extraClass="mb-6"
         />
 
-        <Button extraClass="mb-20" onClick={handleLogin}>
+        <Button htmlType="button" extraClass="mb-20" onClick={handleLogin}>
           Войти
         </Button>
         <div style={{ display: 'inline-block' }}className='mb-2'>

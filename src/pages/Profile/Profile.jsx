@@ -1,8 +1,19 @@
 import Layout from '../../components/PageLayout/PageLayout';
 import styles from './Profile.module.css';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useDispatch } from 'react-redux'; // Import useDispatch
+import { logout } from '../../services/slices/userSlice';
 
 const ProfilePage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Get the navigate function
+
+  const handleLogout = () => {
+    dispatch(logout()).then(() => {
+      navigate('/'); // Navigate to the '/' route after logout
+    });
+  };
+
   return (
     <Layout centered>
       <div className={styles.profileContainer}>
@@ -10,17 +21,17 @@ const ProfilePage = () => {
         <nav className={styles.navigation}>
         <ul className={styles.navigationList}>
           <li className={styles.navigationItem}>          
-              <NavLink end  className={({isActive}) => isActive ? styles.activeNav: styles.nav} to="/profile" >
+              <NavLink end className={({isActive}) => isActive ? styles.activeNav: styles.nav} to="/profile" >
                 Профиль
               </NavLink>
             </li>
             <li className={styles.navigationItem}>
-              <NavLink end  className={({isActive}) => isActive ? styles.activeNav: styles.nav} to="/profile/orders" >
+              <NavLink end className={({isActive}) => isActive ? styles.activeNav: styles.nav} to="/profile/orders" >
                 История заказов
               </NavLink>
             </li>
             <li className={styles.navigationItem}>
-              <NavLink className={styles.nav} to="/">
+              <NavLink onClick={handleLogout} className={styles.nav}>
                 Выход
               </NavLink>
             </li>

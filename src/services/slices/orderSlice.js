@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { urlToOrder, request } from '../../utils/api'
+import { url, request } from '../../utils/api'
 
 export const orderSlice = createSlice({
   name: 'order',
@@ -76,7 +76,7 @@ export const fetchOrderNumber = createAsyncThunk('order/fetchOrderNumber',
           ingredients: ids
         })
       };
-      const response = await request(urlToOrder, requestOptions);
+      const response = await request(url.orders, requestOptions);
       const orderNumber = response.order.number
 
       return orderNumber;

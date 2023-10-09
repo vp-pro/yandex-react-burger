@@ -1,23 +1,26 @@
-import styles from'./ProfileContent.module.css'
-
+import styles from './ProfileContent.module.css';
 import React from 'react';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector } from 'react-redux'; // Import useSelector to access state
 
 const ProfileContentPage = () => {
-    const [name, setName] = React.useState('Марк')
-    const [login, setLogin] = React.useState('mail@stellar.burgers')
-    const [password, setPassword] = React.useState('*****')
+  // Use useSelector to get user information from userSlice
+  const user = useSelector((state) => state.user.user);
 
-    const [nameDisabled, setNameDisabled] = React.useState(true)
-    const [loginDisabled, setLoginDisabled] = React.useState(true)
-    const [passwordDisabled, setPasswordDisabled] = React.useState(true)
+  const [name, setName] = React.useState(user.name || ''); // Initialize with user data if available
+  const [login, setLogin] = React.useState(user.email || ''); // Initialize with user data if available
+  const [password, setPassword] = React.useState('*****'); // Initialize with default value
+
+  const [nameDisabled, setNameDisabled] = React.useState(true);
+  const [loginDisabled, setLoginDisabled] = React.useState(true);
+  const [passwordDisabled, setPasswordDisabled] = React.useState(true);
 
   return (
     <div>
-        <Input
+      <Input
         type={'text'}
         placeholder={'Имя'}
-        onChange={e => setName(e.target.value)}
+        onChange={(e) => setName(e.target.value)}
         value={name}
         name={'name'}
         error={false}
@@ -25,37 +28,31 @@ const ProfileContentPage = () => {
         disabled={nameDisabled}
         size={'default'}
         extraClass="mb-6"
-
-        icon='EditIcon'
-        onIconClick={e=>setNameDisabled(!nameDisabled)}
-
-    />
-        <Input
-            onChange={e => setLogin(e.target.value)}
-            placeholder={'Логин'}
-            value={login}
-            name={'login'}
-            isIcon={false}
-            extraClass="mb-6"
-            disabled={loginDisabled}
-            icon='EditIcon'
-            onIconClick={e=>setLoginDisabled(!nameDisabled)}
-        />
-        <PasswordInput
-            onChange={e => setPassword(e.target.value)}
-            
-            disabled={passwordDisabled}
-            value={password}
-            name={'password'}
-            extraClass="mb-6"
-
-            icon='EditIcon'
-            onIconClick={e=>setPasswordDisabled(!nameDisabled)}
-        />
+        icon="EditIcon"
+        onIconClick={() => setNameDisabled(!nameDisabled)}
+      />
+      <Input
+        onChange={(e) => setLogin(e.target.value)}
+        placeholder={'Логин'}
+        value={login}
+        name={'login'}
+        isIcon={false}
+        extraClass="mb-6"
+        disabled={loginDisabled}
+        icon="EditIcon"
+        onIconClick={() => setLoginDisabled(!loginDisabled)}
+      />
+      <PasswordInput
+        onChange={(e) => setPassword(e.target.value)}
+        disabled={passwordDisabled}
+        value={password}
+        name={'password'}
+        extraClass="mb-6"
+        icon="EditIcon"
+        onIconClick={() => setPasswordDisabled(!passwordDisabled)}
+      />
     </div>
   );
 };
 
 export default ProfileContentPage;
-
-

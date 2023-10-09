@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { loginURL, logoutURL, tokenURL, request } from '../../utils/api.js';
+import { url, request } from '../../utils/api.js';
 import Cookies from 'js-cookie';
 
 const initialState = {
-  isAuthenticated: false,
+  isAuthChecked: false,
   accessToken: null,
   refreshToken: null,
   loading: false,
@@ -25,12 +25,6 @@ export const authSlice = createSlice({
 
         Cookies.set('accessToken', accessToken);
         Cookies.set('refreshToken', refreshToken);
-
-        console.log(state.accessToken)
-        console.log(state.refreshToken)
-
-        console.log(state.isAuthenticated)
-
     },
     clearAuthData: (state) => {
       state.isAuthenticated = false;
@@ -79,7 +73,7 @@ export const { setAuthenticated, setTokens, clearAuthData, authenticate } = auth
 
 export const logout = createAsyncThunk('auth/logout', async (refreshToken, { dispatch }) => {
     try {
-      await request(logoutURL, 'POST', { token: refreshToken });
+      await request(url.logout, 'POST', { token: refreshToken });
   
       dispatch(clearAuthData());
     } catch (error) {
@@ -91,7 +85,7 @@ export const logout = createAsyncThunk('auth/logout', async (refreshToken, { dis
     'auth/refreshAccessToken',
     async (refreshToken, { dispatch }) => {
       try {
-        const response = await request(tokenURL, 'POST', { token: refreshToken });
+        const response = await request(url.token, 'POST', { token: refreshToken });
         const newAccessToken = response.data.accessToken;
   
         dispatch(setTokens({ accessToken: newAccessToken, refreshToken }));
@@ -100,3 +94,5 @@ export const logout = createAsyncThunk('auth/logout', async (refreshToken, { dis
       }
     }
   );
+
+  

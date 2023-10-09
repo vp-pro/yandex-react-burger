@@ -2,7 +2,7 @@ import styles from'./ForgotPassword.module.css'
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import Layout from '../../components/PageLayout/PageLayout'
 import React from 'react';
-import { passwordResetURL } from '../../utils/api';
+import { url } from '../../utils/api';
 import { useNavigate } from 'react-router-dom'
 const ForgotPasswordPage = () => {
       const [email, setEmail] = React.useState()
@@ -19,7 +19,7 @@ const ForgotPasswordPage = () => {
             try {
               // Send a POST request to the password reset endpoint
               const response = await fetch(
-                passwordResetURL,
+                url.passwordReset,
                 {
                   method: 'POST',
                   headers: {

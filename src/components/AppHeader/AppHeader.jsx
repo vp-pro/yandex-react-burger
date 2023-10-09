@@ -1,21 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Logo, BurgerIcon, InfoIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { NavLink, useMatch } from 'react-router-dom'; // Import NavLink and useMatch from React Router v6
 import styles from './AppHeader.module.css';
 
-const HeaderButton = (props) => {
-  const textClass = props.active
-    ? 'text text_type_main-default text_color_active'
-    : 'text text_type_main-default text_color_inactive';
-  const iconType = props.active ? 'primary' : 'secondary';
+const NavLinkButton = ({ text, to, icon }) => {
+  const match = useMatch(to); // Check if the current route matches the 'to' prop
 
+  
   return (
-    <div className={styles.button}>
-      {React.cloneElement(props.icon, { type: iconType })}
-      <a href="https://re.panferov.site/" className={textClass + ' ml-2'}>
-        {props.text}
-      </a>
-    </div>
+      <NavLink end to={to}   className={`${styles.navLink} ${match ? styles.activeLink : styles.inactiveLink}`} >
+        <div className={styles.icon}>
+        {React.cloneElement(icon, { type: match ? 'primary' : 'secondary' })}
+        </div>
+        <p className={styles.customText}> {text} </p>
+      </NavLink>
   );
 };
 
@@ -24,24 +23,24 @@ const AppHeader = () => {
     <header>
       <nav className={styles.header}>
         <div className={styles.left}>
-          <HeaderButton text={'Конструктор'} icon={<BurgerIcon />} active={true} />
-          <HeaderButton text={'Лента заказов'} icon={<InfoIcon />} active={false} />
+          <NavLinkButton text={'Конструктор'} icon={<BurgerIcon />} to={'/'} />
+          <NavLinkButton text={'Лента заказов'} icon={<InfoIcon />} to={'/orders'} />
         </div>
         <div className={styles.center}>
           <Logo />
         </div>
         <div className={styles.right}>
-          <HeaderButton text={'Личный кабинет'} icon={<ProfileIcon />} active={false} />
+          <NavLinkButton text={'Личный кабинет'} icon={<ProfileIcon/>} to={'/profile'} />
         </div>
       </nav>
     </header>
   );
 };
 
-HeaderButton.propTypes = {
-  active: PropTypes.bool.isRequired,
+NavLinkButton.propTypes = {
   text: PropTypes.string.isRequired,
   icon: PropTypes.element.isRequired,
+  to: PropTypes.string.isRequired,
 };
 
 export default AppHeader;

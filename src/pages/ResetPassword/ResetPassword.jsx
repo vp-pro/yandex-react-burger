@@ -1,40 +1,17 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ResetPassword.module.css'
-import { doResetPasswordURL } from '../../utils/api';
+import { resetPassword } from '../../services/slices/userSlice';
 import Layout from '../../components/PageLayout/PageLayout';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
 const ResetPasswordPage = () => {
-    const [newPass, setNewPass] = React.useState()
-    const [code, setCode] = React.useState()
-
-    const handleResetPassword = async () => {
-        const requestBody = {
-            newPass,
-            code,
-        };
-
-        try {
-            const response = await fetch(
-                doResetPasswordURL,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(requestBody),
-                }
-            );
-
-            if (response.ok) {
-                // You can handle redirection or display a success message here
-                console.log('Password successfully reset');
-            } else {
-                // Handle errors here
-                console.error('Password reset failed');
-            }
-        } catch (error) {
-            console.error('An error occurred:', error);
-        }
+    const [newPass, setNewPass] = React.useState('');
+    const [emailCode, setEmailCode] = React.useState('');
+    const dispatch = useDispatch();
+  
+    const handleResetPassword = () => {
+      dispatch(resetPassword({ newPass, emailCode }));
     };
 
     return (
@@ -57,9 +34,9 @@ const ResetPasswordPage = () => {
                 <Input
                     type={'text'}
                     placeholder={'Введите код из письма'}
-                    onChange={e => setCode(e.target.value)}
-                    value={code}
-                    name={'code'}
+                    onChange={e => setEmailCode(e.target.value)}
+                    value={emailCode}
+                    name={'emailCode'}
                     error={false}
                     errorText={'Ошибка'}
                     size={'default'}
