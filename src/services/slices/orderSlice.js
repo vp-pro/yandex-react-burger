@@ -93,3 +93,12 @@ const calculateTotalPrice = (state) => {
 }
 
 export const { setBun, addIngredient, removeIngredient, setIngredients, cleanOrder } = orderSlice.actions;
+
+
+export const clearOrder= () => async (dispatch) => {
+  try {
+    dispatch(cleanOrder());
+  } catch (error) {
+    console.error("Error fetching and setting ingredients:", error);
+  }
+};

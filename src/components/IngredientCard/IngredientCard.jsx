@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setWatchingIngredient, removeWatchingIngredient } from '../../services/slices/ingredientsSlice'
 import ingredientPropTypes from '../../utils/prop-types.js'
 import Modal from '../Modal/Modal'
-import { useLocation, Link } from 'react-router-dom'
+import { useLocation, Link,  useNavigate } from 'react-router-dom'
 
 const IngredientCard = ({ ingredient }) => {
   const dispatch = useDispatch()
@@ -20,7 +20,7 @@ const IngredientCard = ({ ingredient }) => {
   const ingredients = useSelector((state) => state.order.ingredients);
   const currentBun = useSelector((state) => state.order.bun)
   const orderNumber = useSelector((state) => state.order.orderNumber)
-
+  const navigate = useNavigate()
   useEffect(() => {
     if(ingredient) {
       setId(ingredient._id)
@@ -59,15 +59,14 @@ const IngredientCard = ({ ingredient }) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false)
 
   const handleIngredientOpen = React.useCallback(() => {
-    dispatch(setWatchingIngredient(ingredient))
-    setIsModalOpen(true)
+    // setIsModalOpen(true)
   }, [dispatch, ingredient])
 
   const handleIngredientClose = React.useCallback((e) => {
     e.stopPropagation();
-    dispatch(removeWatchingIngredient())
 
-    setIsModalOpen(false)
+    navigate(-1)
+    // setIsModalOpen(false)
   }, [dispatch])
 
   const location = useLocation();
@@ -81,6 +80,7 @@ const IngredientCard = ({ ingredient }) => {
       // на котором была открыта наша модалка
       state={{ background: location }}
       // className={styles.link}
+      style={{ textDecoration: 'none', color: 'inherit' }}
     >
 
     <div
@@ -107,7 +107,7 @@ const IngredientCard = ({ ingredient }) => {
       </div>
       <p className={styles.ingredientTitle}>{ingredient.name}</p>
       {isModalOpen && 
-        <Modal onClose={handleIngredientClose} headerText='Детали ингредиента'>
+        <Modal onClose={handleIngredientClose}>
           <IngredientDetails ingredient={ingredient}/>
         </Modal>
       }

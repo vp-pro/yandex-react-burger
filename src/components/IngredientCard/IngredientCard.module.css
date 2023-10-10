@@ -1,7 +1,7 @@
 .ignredientCard {
     display: flex;
     flex-direction: column;
-
+    border-radius: 10px;
     justify-content: center;
     align-items: center;
     transition: 0.2s;

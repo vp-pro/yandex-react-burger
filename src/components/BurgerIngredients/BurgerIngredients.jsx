@@ -39,11 +39,11 @@ const BurgerIngredients = () => {
   const sauces = ingredients.filter(element => element.type === "sauce")
   const mains = ingredients.filter(element => element.type === "main")
 
-  useEffect(() => {
-    if (!ingredients?.length) {
-      dispatch(fetchIngredients());
-    }
-  }, [dispatch, ingredients]);
+  // useEffect(() => {
+  //   if (!ingredients?.length) {
+  //     dispatch(fetchIngredients());
+  //   }
+  // }, [dispatch, ingredients]);
 
 
   useEffect(() => {

@@ -23,30 +23,37 @@ import IngredientDetails from '../IngredientDetails/IngredientDetails'
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
 import { useLocation, useNavigate } from 'react-router-dom';
 import Modal from '../Modal/Modal'
+import { fetchIngredients } from '../../services/slices/ingredientsSlice';
 
 const App = () => {
     const dispatch = useDispatch();
     const location = useLocation();
 
     const background = location.state && location.state.background;
+
     const navigate = useNavigate();
     const handleModalClose = () => {
         // Возвращаемся к предыдущему пути при закрытии модалки
         navigate(-1);
     };
 
+    const loading = useSelector((state) => state.ingredients.loading)
+
     useEffect(() => {
         dispatch(checkUserAuth());
+        dispatch(fetchIngredients());
     }, []);
 
+
     return (
+        <>
+        {!loading && 
         <>
             <Routes location={background || location}>
                 <Route element={<AppPageLayout />}>
                     <Route index element={<HomePage />} />
                     <Route exact path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
-                    <Route exact path="/register" element={<RegisterPage />} />
-                    <Route path="/ingredients/:id" element={<BurgerIngredients />} />
+                    <Route exact path="/register" element={<OnlyUnAuth component={<RegisterPage />} />}/>
 
                     <Route path="/profile" element={<OnlyAuth component={<ProfilePage />} />}>
                         <Route index element={<ProfileContentPage />} />
@@ -64,6 +71,7 @@ const App = () => {
             </Routes>
 
             {background && (
+                <>
                 <Routes>
                     <Route element={<AppPageLayout />}>
                         <Route
@@ -77,9 +85,11 @@ const App = () => {
                     </Route>
 
                 </Routes>
+                </>
             )}
         </>
-
+        }
+        </>
     );
 }
 

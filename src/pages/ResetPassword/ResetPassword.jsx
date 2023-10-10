@@ -4,12 +4,23 @@ import { resetPassword } from '../../services/slices/userSlice';
 import Layout from '../../components/PageLayout/PageLayout';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ResetPasswordPage = () => {
     const [newPass, setNewPass] = React.useState('');
     const [emailCode, setEmailCode] = React.useState('');
     const dispatch = useDispatch();
-  
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const isResetPassword = localStorage.getItem('reset_password_process');
+        console.log(isResetPassword)
+        if (!(isResetPassword === 'true')) {
+            navigate('/login'); // Redirect to the login page
+        }
+    }, [navigate]);
+
     const handleResetPassword = () => {
       dispatch(resetPassword({ newPass, emailCode }));
     };
@@ -42,7 +53,7 @@ const ResetPasswordPage = () => {
                     size={'default'}
                     extraClass="mb-4"
                 />
-                <Button extraClass="mb-10" onClick={handleResetPassword}>
+                <Button htmlType='button' extraClass="mb-10" onClick={handleResetPassword}>
                     Сохранить
                 </Button>   
             </div>

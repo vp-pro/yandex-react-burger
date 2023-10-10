@@ -34,8 +34,8 @@ const ForgotPasswordPage = () => {
                 // You can handle redirection or display a success message here
                 console.log('Reset email sent');
                 console.log(response)
+                localStorage.setItem('reset_password_process', true);
                 navigate('/reset-password'); // Replace with the desired URL
-
               } else {
                 // Handle errors here
                 console.error('Reset email sending failed');

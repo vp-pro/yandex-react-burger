@@ -10,8 +10,6 @@ const ProfilePage = () => {
   const handleLogout = () => {
     dispatch(logout());
   };
-  
-
 
   return (
     <Layout centered>

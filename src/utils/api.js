@@ -32,25 +32,26 @@ export const url = {
 // export const loginURL = baseURL + '/auth/login'
 
 
-// export const checkResponse = (response) => {
-//     if (!response.ok) {
-//       throw new Error(`Server Error: ${response.status} ${response.statusText}`);
-//     }
-//     return response.json(); // Return the response if it is ok
-//   };
+export const checkResponse = (response) => {
+    if (!response.ok) {
+      console.log(response)
+      throw new Error(`Server Error: ${response.status} ${response.statusText}`);
+    }
+    return response.json(); // Return the response if it is ok
+  };
 
-export const checkResponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-};
+// export const checkResponse = (res) => {
+//   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+// };
 
 export const request = (url, options) => {
-    // принимает два аргумента: урл и объект опций, как и `fetch`
+    // принимает два аргумента: урл и объект опций, как и `fetch
     return fetch(url, options).then(checkResponse)
   }
 
-
-  
-
+  export const requestWithRefresh = (url, options) => {
+    return fetchWithRefresh(url, options)
+  }
 
   
 export const refreshToken = () => {

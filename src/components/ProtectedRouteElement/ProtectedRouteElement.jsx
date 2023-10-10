@@ -9,7 +9,6 @@ const ProtectedComponent = ({ onlyUnAuth = false, component }) => {
   const isAuthChecked = useSelector((store) => store.user.isAuthChecked);
   const user = useSelector((store) => store.user.user);
   const location = useLocation();
-  console.log(onlyUnAuth, user)
 
   if (!isAuthChecked) {
     // Запрос еще выполняется

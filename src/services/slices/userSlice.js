@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {url, request} from '../../utils/api'
+import {url, request, requestWithRefresh} from '../../utils/api'
 import {useNavigate} from 'react-router-dom'
+import { clearOrder } from "./orderSlice";
+import { useDispatch } from "react-redux";
 const initialState = {
   user: null,
   isAuthChecked: null
@@ -38,22 +40,25 @@ export const {setAuthChecked, setUser} = userSlice.actions;
 
 
 
-export const logout = createAsyncThunk('user/logout', 
-async () => {
+export const logout = createAsyncThunk("user/logout", async (_, { dispatch }) => {
+  const token = localStorage.getItem("refreshToken");
   try {
     await request(url.logout, {
-      method:'POST', 
-      body: JSON.stringify({ token: localStorage.getItem('refreshToken') }), // Corrected here
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token }),
     });
 
-    localStorage.removeItem('accessToken')
-    localStorage.removeItem('refreshToken')
-
+    dispatch(clearOrder());
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
   } catch (error) {
-    const navigate = useNavigate(); 
-    navigate('/'); 
+    const navigate = useNavigate();
+    navigate("/login");
     throw new Error(error.message);
-  } 
+  }
 });
 
 
@@ -95,6 +100,7 @@ export const register = createAsyncThunk("user/register", async ({ email, passwo
 
 export const resetPassword = createAsyncThunk('user/resetPassword',async ({ newPass, emailCode }) => {
     try {
+      console.log(url.doResetPassword)
       const response = await request(
         url.doResetPassword,
         {
@@ -103,14 +109,17 @@ export const resetPassword = createAsyncThunk('user/resetPassword',async ({ newP
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            newPass,
-            emailCode,
+            password: newPass,
+            token: emailCode,
           }),
         }
       );
+      console.log(response)
 
     } catch (error) {
       console.error('An error occurred:', error);
+      console.error('An error occurred:', error.message);
+
       throw new Error(error.message);
     }
   }
@@ -133,9 +142,9 @@ export const checkUserAuth = () => {
   };
 };
 
-export const getUser = createAsyncThunk("user/user", async () => {
+export const getUser = createAsyncThunk("user/getUser", async () => {
     try {
-      const response = await request(url.user, {
+      const response = await requestWithRefresh(url.user, {
         method: "GET",
         headers: { "Content-Type": "application/json; charset=utf-8",
           "Authorization": localStorage.getItem('refreshToken') },
@@ -143,6 +152,23 @@ export const getUser = createAsyncThunk("user/user", async () => {
   
       return response.user;
     } catch (error) {
+      throw new Error(error.message);
+    }
+  });
+
+
+  export const patchUser = createAsyncThunk("user/pathUser", async ({name, email, password}) => {
+    try {
+      const response = await requestWithRefresh(url.user, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json; charset=utf-8",
+          "Authorization": localStorage.getItem('accessToken') },
+        body: JSON.stringify({name,email, password})
+      });
+      console.log(response)
+      return response.user;
+    } catch (error) {
+      console.log(error)
       throw new Error(error.message);
     }
   });

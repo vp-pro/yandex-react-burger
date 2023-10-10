@@ -5,11 +5,10 @@ import { NavLink, useMatch } from 'react-router-dom'; // Import NavLink and useM
 import styles from './AppHeader.module.css';
 
 const NavLinkButton = ({ text, to, icon }) => {
-  const match = useMatch(to); // Check if the current route matches the 'to' prop
+  const match = useMatch(to+'/*'); // Check if the current route matches the 'to' prop
 
-  
   return (
-      <NavLink end to={to}   className={`${styles.navLink} ${match ? styles.activeLink : styles.inactiveLink}`} >
+      <NavLink  to={to}   className={`${styles.navLink} ${match ? styles.activeLink : styles.inactiveLink}`} >
         <div className={styles.icon}>
         {React.cloneElement(icon, { type: match ? 'primary' : 'secondary' })}
         </div>
@@ -24,7 +23,7 @@ const AppHeader = () => {
       <nav className={styles.header}>
         <div className={styles.left}>
           <NavLinkButton text={'Конструктор'} icon={<BurgerIcon />} to={'/'} />
-          <NavLinkButton text={'Лента заказов'} icon={<InfoIcon />} to={'/orders'} />
+          <NavLinkButton text={'Лента заказов'} icon={<InfoIcon />} to={'/profile/orders'} />
         </div>
         <div className={styles.center}>
           <Logo />

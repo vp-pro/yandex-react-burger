@@ -16,6 +16,10 @@ const RegisterPage = () => {
   
   const navigate = useNavigate();
   
+  const handleLoginClick = () => {
+    navigate('/login'); // Navigate to the '/register' route
+  };
+
   const handleRegistration = () => {
     dispatch(register({ email, name, password }))
       .then((response) => {
@@ -66,7 +70,7 @@ const RegisterPage = () => {
           <span className="text text_type_text-medium" style={{ color: 'var(--text-inactive-color)' }}>
             Уже зарегистрировались?
           </span>
-          <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1">
+          <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1"   onClick={handleLoginClick}>
             Войти
           </Button>
         </div>
