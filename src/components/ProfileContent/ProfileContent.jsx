@@ -4,6 +4,10 @@ import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-co
 import { useDispatch, useSelector } from 'react-redux'; // Import useSelector to access state
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import {patchUser} from '../../services/slices/userSlice'
+import PropTypes from 'prop-types'
+
+
+
 const ProfileContentPage = () => {
 
   const [buttonsDisabled, setButtonsDisabled] = React.useState(true);

@@ -168,7 +168,7 @@ export const getUser = createAsyncThunk("user/getUser", async () => {
         body: JSON.stringify({ name, email, password }),
       });
       console.log(response);
-      // Dispatch the action to update the user data in the store here
+
       dispatch(setUser(response.user));
       return response.user;
     } catch (error) {

@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
+import PropTypes from 'prop-types'
 
 const ProtectedComponent = ({ onlyUnAuth = false, component }) => {
   
@@ -31,6 +32,15 @@ const ProtectedComponent = ({ onlyUnAuth = false, component }) => {
   // !onlyUnAuth && user Пользователь авторизован и роут для авторизованного пользователя
 
   return component;
+};
+
+ProtectedComponent.propTypes = {
+  onlyUnAuth: PropTypes.bool, // Whether the route is for unauthenticated users
+  component: PropTypes.node, // The component to render if authentication checks pass
+};
+
+OnlyUnAuth.propTypes = {
+  component: PropTypes.node, // The component to render for unauthenticated users
 };
 
 export const OnlyAuth = ProtectedComponent;
