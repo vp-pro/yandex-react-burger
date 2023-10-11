@@ -13,7 +13,8 @@ import {
     ResetPasswordPage,
     ProfileOrdersPage,
     ProfileOrderDetailsPage,
-    ProfileContentPage
+    ProfileContentPage,
+    OrdersPage
 } from '../../pages/index'
 import { OnlyAuth, OnlyUnAuth } from '../ProtectedRouteElement/ProtectedRouteElement'
 import { useDispatch } from 'react-redux';
@@ -55,6 +56,8 @@ const App = () => {
                     <Route exact path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
                     <Route exact path="/register" element={<OnlyUnAuth component={<RegisterPage />} />}/>
 
+                    <Route exact path="/orders" element={<OrdersPage />}/>
+
                     <Route path="/profile" element={<OnlyAuth component={<ProfilePage />} />}>
                         <Route index element={<ProfileContentPage />} />
                         <Route path="orders" element={<ProfileOrdersPage />} />
@@ -73,7 +76,6 @@ const App = () => {
             {background && (
                 <>
                 <Routes>
-                    <Route element={<AppPageLayout />}>
                         <Route
                             path='/ingredients/:id'
                             element={
@@ -82,7 +84,6 @@ const App = () => {
                                 </Modal>
                             }
                         />
-                    </Route>
 
                 </Routes>
                 </>

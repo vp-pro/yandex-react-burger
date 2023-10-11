@@ -6,6 +6,7 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import {patchUser} from '../../services/slices/userSlice'
 const ProfileContentPage = () => {
 
+  const [buttonsDisabled, setButtonsDisabled] = React.useState(true);
   const dispatch = useDispatch()
   const user = useSelector((state) => state.user.user);
 
@@ -19,31 +20,33 @@ const ProfileContentPage = () => {
 
 
 
+  const handleAcceptClick = () => {
+    // Assuming you have a Redux action called patchUser that sends a patch request to update the user.
+    dispatch(patchUser({ name: name, email: login, password: password }))
+      .unwrap()
+      .then(() => {
+        // The update was successful.
+        // You can add further actions here.
+        setNameDisabled(true);
+        setLoginDisabled(true);
+        setPasswordDisabled(true);
+        setButtonsDisabled(true)
+      })
+      .catch((error) => {
+        // Handle errors, e.g., display an error message to the user.
+        console.error("Error updating user:", error);
+      });
+  };
 
-  const handleAcceptClick= ()=> {
-    const nameSend = name ? name : null;
-    const loginSend = login ? login : null;
-    const passSend = password ? password : null;
 
-    console.log({nameSend, loginSend, passSend})
-    // dispatch(patchUser({name, login, password}))
-    // .unwrap()
-    // .then(() => {
-    //   .then(() => dispatch(second).unwrap());
-    //   setNameDisabled(true)
-    //   setLoginDisabled(true)
-    //   setPasswordDisabled(true)
-    // }
-    // )
-
-  }
   const handleRevertClick = () =>{
     setName(user.name)
     setLogin(user.email)
-    setPassword('******')
+    setPassword(null)
     setNameDisabled(true)
     setLoginDisabled(true)
     setPasswordDisabled(true)
+    setButtonsDisabled(true)
   }
 
   return (
@@ -51,7 +54,10 @@ const ProfileContentPage = () => {
       <Input
         type={'text'}
         placeholder={'Имя'}
-        onChange={(e) => setName(e.target.value)}
+        onChange={(e) => {
+          setButtonsDisabled(false)
+          setName(e.target.value)
+        }}
         value={name}
         name={'name'}
         error={false}
@@ -60,35 +66,49 @@ const ProfileContentPage = () => {
         size={'default'}
         extraClass="mb-6"
         icon="EditIcon"
-        onIconClick={() => setNameDisabled(!nameDisabled)}
+        onIconClick={() => {
+          setNameDisabled(!nameDisabled)
+        }}
       />
       <Input
-        onChange={(e) => setLogin(e.target.value)}
+        onChange={(e) => {
+          setButtonsDisabled(false)
+          setLogin(e.target.value)
+        }}
         placeholder={'Логин'}
         value={login}
         name={'login'}
         extraClass="mb-6"
         disabled={loginDisabled}
         icon="EditIcon"
-        onIconClick={() => setLoginDisabled(!loginDisabled)}
+        onIconClick={() => {
+          setLoginDisabled(!loginDisabled)
+        }}
       />
       <PasswordInput
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) => {
+          setButtonsDisabled(false) 
+          setPassword(e.target.value)
+        }}
         disabled={passwordDisabled}
         value={password}
         name={'password'}
         extraClass="mb-6"
         icon="EditIcon"
-        onIconClick={() => setPasswordDisabled(!passwordDisabled)}
+        onIconClick={() => {
+          setPasswordDisabled(!passwordDisabled)
+        }}
       />
-      <div className={styles.buttonSection}>
-      <Button htmlType="button" type="primary" size="small" extraClass="p-5" onClick={handleRevertClick}>
+      
+      { !buttonsDisabled && <div className={styles.buttonSection}>
+      <Button htmlType="button" type="primary" size="medium" extraClass={styles.button} onClick={handleRevertClick}>
           Отменить
         </Button>
-        <Button htmlType="button" type="primary" size="small" extraClass="p-5" onClick={handleAcceptClick}>
+        <Button htmlType="button" type="primary" size="medium" extraClass={styles.button} onClick={handleAcceptClick}>
           Принять изменения
         </Button>
       </div>
+      }
     </div>
   );
 };

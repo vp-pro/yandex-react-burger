@@ -40,7 +40,7 @@
 
 
   .icon{
-    composes: pt-2 mr-2 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+    composes: pt-1 mr-2 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
   }
 
   .activeLink{

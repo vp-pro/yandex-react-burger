@@ -157,21 +157,23 @@ export const getUser = createAsyncThunk("user/getUser", async () => {
   });
 
 
-  export const patchUser = createAsyncThunk("user/pathUser", async ({name, email, password}) => {
+  export const patchUser = createAsyncThunk("user/pathUser", async ({ name, email, password }, { dispatch }) => {
     try {
       const response = await requestWithRefresh(url.user, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json; charset=utf-8",
-          "Authorization": localStorage.getItem('accessToken') },
-        body: JSON.stringify({name,email, password})
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "Authorization": localStorage.getItem('accessToken'),
+        },
+        body: JSON.stringify({ name, email, password }),
       });
-      console.log(response)
+      console.log(response);
+      // Dispatch the action to update the user data in the store here
+      dispatch(setUser(response.user));
       return response.user;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       throw new Error(error.message);
     }
   });
-
-
-
+  
