@@ -125,7 +125,8 @@ export const resetPassword = createAsyncThunk('user/resetPassword',async ({ newP
 
 export const checkUserAuth = () => {
   return (dispatch) => {
-      if (localStorage.getItem("accessToken")) {
+      if (localStorage.getItem("accessToken") && localStorage.getItem('refreshToken')) {
+        console.log("There is a accessToken!")
           dispatch(getUser())
               .catch(() => {
                   localStorage.removeItem("accessToken");
@@ -140,18 +141,19 @@ export const checkUserAuth = () => {
 };
 
 export const getUser = createAsyncThunk("user/getUser", async () => {
-    try {
-      const response = await requestWithRefresh(url.user, {
-        method: "GET",
-        headers: { "Content-Type": "application/json; charset=utf-8",
-          "Authorization": localStorage.getItem('refreshToken') },
-      });
-  
-      return response.user;
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  });
+  try {
+    const response = await requestWithRefresh(url.user, {
+      method: "GET",
+      headers: { 
+        "Content-Type": "application/json; charset=utf-8",
+        "authorization": localStorage.getItem('accessToken') },
+    });
+    return response.user;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+});
+
 
 
   export const patchUser = createAsyncThunk("user/pathUser", async ({ name, email, password }, { dispatch }) => {
@@ -160,7 +162,7 @@ export const getUser = createAsyncThunk("user/getUser", async () => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          "Authorization": localStorage.getItem('accessToken'),
+          "authorization": localStorage.getItem('accessToken'),
         },
         body: JSON.stringify({ name, email, password }),
       });
