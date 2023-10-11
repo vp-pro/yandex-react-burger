@@ -55,65 +55,72 @@ const ProfileContentPage = () => {
 
   return (
     <div>
-      <Input
-        type={'text'}
-        placeholder={'Имя'}
-        onChange={(e) => {
-          setButtonsDisabled(false)
-          setName(e.target.value)
-        }}
-        value={name}
-        name={'name'}
-        error={false}
-        errorText={'Ошибка'}
-        disabled={nameDisabled}
-        size={'default'}
-        extraClass="mb-6"
-        icon="EditIcon"
-        onIconClick={() => {
-          setNameDisabled(!nameDisabled)
-        }}
-      />
-      <Input
-        onChange={(e) => {
-          setButtonsDisabled(false)
-          setLogin(e.target.value)
-        }}
-        placeholder={'Логин'}
-        value={login}
-        name={'login'}
-        extraClass="mb-6"
-        disabled={loginDisabled}
-        icon="EditIcon"
-        onIconClick={() => {
-          setLoginDisabled(!loginDisabled)
-        }}
-      />
-      <PasswordInput
-        onChange={(e) => {
-          setButtonsDisabled(false) 
-          setPassword(e.target.value)
-        }}
-        disabled={passwordDisabled}
-        value={password}
-        name={'password'}
-        extraClass="mb-6"
-        icon="EditIcon"
-        onIconClick={() => {
-          setPasswordDisabled(!passwordDisabled)
-        }}
-      />
-      
+      <form onSubmit={handleAcceptClick}>
+        <Input
+            type={'text'}
+            placeholder={'Имя'}
+            onChange={(e) => {
+              setButtonsDisabled(false)
+              setName(e.target.value)
+            }}
+            value={name}
+            name={'name'}
+            error={false}
+            errorText={'Ошибка'}
+            disabled={nameDisabled}
+            size={'default'}
+            extraClass="mb-6"
+            icon="EditIcon"
+            onIconClick={() => {
+              setNameDisabled(!nameDisabled)
+            }}
+          />
+          <Input
+            onChange={(e) => {
+              setButtonsDisabled(false)
+              setLogin(e.target.value)
+            }}
+            placeholder={'Логин'}
+            value={login}
+            name={'login'}
+            extraClass="mb-6"
+            disabled={loginDisabled}
+            icon="EditIcon"
+            onIconClick={() => {
+              setLoginDisabled(!loginDisabled)
+            }}
+          />
+          <PasswordInput
+            onChange={(e) => {
+              setButtonsDisabled(false) 
+              setPassword(e.target.value)
+            }}
+            disabled={passwordDisabled}
+            value={password}
+            name={'password'}
+            extraClass="mb-6"
+            icon="EditIcon"
+            onIconClick={() => {
+              setPasswordDisabled(!passwordDisabled)
+            }}
+          />
+          {!buttonsDisabled && <div className={styles.buttonSection}>
+          <Button htmlType="button" type="primary" size="medium" extraClass={styles.button} onClick={handleAcceptClick}>
+              Принять изменения
+          </Button>
+          </div>
+          }
+
+      </form>
       { !buttonsDisabled && <div className={styles.buttonSection}>
-      <Button htmlType="button" type="primary" size="medium" extraClass={styles.button} onClick={handleRevertClick}>
-          Отменить
-        </Button>
-        <Button htmlType="button" type="primary" size="medium" extraClass={styles.button} onClick={handleAcceptClick}>
-          Принять изменения
-        </Button>
+
+            <Button htmlType="button" type="primary" size="medium" extraClass={styles.button} onClick={handleRevertClick}>
+            Отменить
+          </Button>
+          </div>
+
+        }
       </div>
-      }
-    </div>
   );
 };
 

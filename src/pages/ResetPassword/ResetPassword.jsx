@@ -21,7 +21,9 @@ const ResetPasswordPage = () => {
     }, [navigate]);
 
     const handleResetPassword = () => {
-      dispatch(resetPassword({ newPass, emailCode }));
+      dispatch(resetPassword({ newPass, emailCode })).unwrap().then(()=>
+        localStorage.setItem('reset_password_process', false)
+      )
     };
 
     return (
@@ -30,31 +32,33 @@ const ResetPasswordPage = () => {
                 <p className="text text_type_main-large mb-4">
                     Восстановление пароля
                 </p>
-                <Input
-                    type={'text'}
-                    placeholder={'Введите новый пароль'}
-                    onChange={e => setNewPass(e.target.value)}
-                    value={newPass}
-                    name={'newPass'}
-                    error={false}
-                    errorText={'Ошибка'}
-                    size={'default'}
-                    extraClass="mb-4"
-                />
-                <Input
-                    type={'text'}
-                    placeholder={'Введите код из письма'}
-                    onChange={e => setEmailCode(e.target.value)}
-                    value={emailCode}
-                    name={'emailCode'}
-                    error={false}
-                    errorText={'Ошибка'}
-                    size={'default'}
-                    extraClass="mb-4"
-                />
-                <Button htmlType='button' extraClass="mb-10" onClick={handleResetPassword}>
-                    Сохранить
-                </Button>   
+                <form onSubmit={handleResetPassword}>
+                    <Input
+                        type={'text'}
+                        placeholder={'Введите новый пароль'}
+                        onChange={e => setNewPass(e.target.value)}
+                        value={newPass}
+                        name={'newPass'}
+                        error={false}
+                        errorText={'Ошибка'}
+                        size={'default'}
+                        extraClass="mb-4"
+                    />
+                    <Input
+                        type={'text'}
+                        placeholder={'Введите код из письма'}
+                        onChange={e => setEmailCode(e.target.value)}
+                        value={emailCode}
+                        name={'emailCode'}
+                        error={false}
+                        errorText={'Ошибка'}
+                        size={'default'}
+                        extraClass="mb-4"
+                    />
+                    <Button htmlType='button' extraClass="mb-10" >
+                        Сохранить
+                    </Button>   
+                </form>
             </div>
 
         </Layout>

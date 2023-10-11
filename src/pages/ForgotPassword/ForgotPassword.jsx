@@ -32,8 +32,6 @@ const ForgotPasswordPage = () => {
               if (response.ok) {
                 // Password reset email sent successfully
                 // You can handle redirection or display a success message here
-                console.log('Reset email sent');
-                console.log(response)
                 localStorage.setItem('reset_password_process', true);
                 navigate('/reset-password'); // Replace with the desired URL
               } else {
@@ -51,21 +49,23 @@ const ForgotPasswordPage = () => {
             <p className="text text_type_main-large mb-4">
                   Восстановление пароля 
             </p>     
-            <Input
-                  type={'email'}
-                  placeholder={'Укажите e-mail'}
-                  onChange={e => setEmail(e.target.value)}
-                  value={email}
-                  name={'email'}
-                  error={false}
-                  errorText={'Ошибка'}
-                  size={'default'}
-                  extraClass="mb-4"
-            />
-    
-            <Button extraClass="mb-10" onClick={handleResetPassword}>
-              Восстановить
-            </Button>   
+            <form onSubmit={handleResetPassword}>
+              <Input
+                    type={'email'}
+                    placeholder={'Укажите e-mail'}
+                    onChange={e => setEmail(e.target.value)}
+                    value={email}
+                    name={'email'}
+                    error={false}
+                    errorText={'Ошибка'}
+                    size={'default'}
+                    extraClass="mb-4"
+              />
+      
+              <Button extraClass="mb-10">
+                Восстановить
+              </Button>   
+            </form>
     
             <div style={{ display: 'inline-block' }}>
               <span className="text text_type_text-medium" style={{color: 'var(--text-inactive-color)'}}>
