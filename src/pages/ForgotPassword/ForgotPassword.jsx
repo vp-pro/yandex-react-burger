@@ -6,18 +6,14 @@ import { url } from '../../utils/api';
 import { useNavigate } from 'react-router-dom'
 const ForgotPasswordPage = () => {
       const [email, setEmail] = React.useState()
-      const [isEmailSent, setIsEmailSent] = React.useState(false);
 
       const navigate = useNavigate() 
 
       const handleResetPassword = async () => {
-            // Create a request body
             const requestBody = {
               email,
             };
-        
             try {
-              // Send a POST request to the password reset endpoint
               const response = await fetch(
                 url.passwordReset,
                 {
@@ -28,14 +24,10 @@ const ForgotPasswordPage = () => {
                   body: JSON.stringify(requestBody),
                 }
               ); 
-        
               if (response.ok) {
-                // Password reset email sent successfully
-                // You can handle redirection or display a success message here
                 localStorage.setItem('reset_password_process', true);
-                navigate('/reset-password'); // Replace with the desired URL
+                navigate('/reset-password');
               } else {
-                // Handle errors here
                 console.error('Reset email sending failed');
               }
             } catch (error) {
