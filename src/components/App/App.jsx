@@ -84,7 +84,6 @@ const App = () => {
                                 </Modal>
                             }
                         />
-
                 </Routes>
                 </>
             )}

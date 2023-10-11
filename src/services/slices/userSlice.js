@@ -100,7 +100,6 @@ export const register = createAsyncThunk("user/register", async ({ email, passwo
 
 export const resetPassword = createAsyncThunk('user/resetPassword',async ({ newPass, emailCode }) => {
     try {
-      console.log(url.doResetPassword)
       const response = await request(
         url.doResetPassword,
         {
@@ -114,8 +113,6 @@ export const resetPassword = createAsyncThunk('user/resetPassword',async ({ newP
           }),
         }
       );
-      console.log(response)
-
     } catch (error) {
       console.error('An error occurred:', error);
       console.error('An error occurred:', error.message);
@@ -167,12 +164,10 @@ export const getUser = createAsyncThunk("user/getUser", async () => {
         },
         body: JSON.stringify({ name, email, password }),
       });
-      console.log(response);
 
       dispatch(setUser(response.user));
       return response.user;
     } catch (error) {
-      console.log(error);
       throw new Error(error.message);
     }
   });

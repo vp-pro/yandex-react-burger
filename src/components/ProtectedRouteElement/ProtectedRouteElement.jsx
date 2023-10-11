@@ -1,12 +1,10 @@
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import PropTypes from 'prop-types'
+import styles from './ProtectedRouteElement.module.css'
 
 const ProtectedComponent = ({ onlyUnAuth = false, component }) => {
   
-  // isAuthChecked это флаг, показывающий что проверка токена произведена
-  // при этом результат этой проверки не имеет значения, важно только,
-  // что сам факт проверки имел место.
   const isAuthChecked = useSelector((store) => store.user.isAuthChecked);
   const user = useSelector((store) => store.user.user);
   const location = useLocation();
@@ -15,7 +13,7 @@ const ProtectedComponent = ({ onlyUnAuth = false, component }) => {
     // Запрос еще выполняется
     // Выводим прелоадер в ПР
     // Здесь возвращается просто null для экономии времени
-    return <div>Please, wait while wi check your authentication</div>;
+    return <div className={styles.checkingBox}>Loading</div>;
   }
 
   if (onlyUnAuth && user) {
@@ -34,16 +32,18 @@ const ProtectedComponent = ({ onlyUnAuth = false, component }) => {
   return component;
 };
 
-ProtectedComponent.propTypes = {
-  onlyUnAuth: PropTypes.bool, // Whether the route is for unauthenticated users
-  component: PropTypes.node, // The component to render if authentication checks pass
-};
-
-OnlyUnAuth.propTypes = {
-  component: PropTypes.node, // The component to render for unauthenticated users
-};
 
 export const OnlyAuth = ProtectedComponent;
 export const OnlyUnAuth = ({ component }) => (
   <ProtectedComponent onlyUnAuth={true} component={component} />
 );
+
+
+ProtectedComponent.propTypes = {
+  onlyUnAuth: PropTypes.bool, 
+  component: PropTypes.node, 
+};
+
+OnlyUnAuth.propTypes = {
+  component: PropTypes.node, 
+};

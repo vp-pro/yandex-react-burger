@@ -30,7 +30,6 @@ const BurgerConstructor = () => {
   const navigate = useNavigate()
 
   const handleModalOpen = () => {
-    console.log(user)
     if (!user){
       navigate('/login')
     } else {

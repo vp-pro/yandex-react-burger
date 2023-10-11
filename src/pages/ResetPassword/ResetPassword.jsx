@@ -15,7 +15,6 @@ const ResetPasswordPage = () => {
 
     useEffect(() => {
         const isResetPassword = localStorage.getItem('reset_password_process');
-        console.log(isResetPassword)
         if (!(isResetPassword === 'true')) {
             navigate('/login'); // Redirect to the login page
         }
