@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 const OrdersPage = () => {
    
   return (
-        <div>
+        <div className={styles.container}>
           OrdersPage
         </div>
   );

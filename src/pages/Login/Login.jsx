@@ -33,22 +33,25 @@ const LoginPage = () => {
     <Layout centered={true}>
       <div className={styles.mainContainer+ ' ' + 'mt-20'}>
         <p className="text text_type_main-large mb-6">Вход</p>
-        <EmailInput
-          onChange={(e) => setEmail(e.target.value )}
-          value={email}
-          name="email"
-          extraClass="mb-6"
-        />
-        <PasswordInput
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          name="password"
-          extraClass="mb-6"
-        />
+        <form onSubmit={handleLogin}>
+          <EmailInput
+            onChange={(e) => setEmail(e.target.value )}
+            value={email}
+            name="email"
+            extraClass="mb-6"
+          />
+          <PasswordInput
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            name="password"
+            extraClass="mb-6"
+          />
 
-        <Button htmlType="button" extraClass="mb-20" onClick={handleLogin}>
-          Войти
-        </Button>
+          <Button htmlType="button" extraClass="mb-20">
+            Войти
+          </Button>
+        </form>
+        
         <div style={{ display: 'inline-block' }}className='mb-2'>
           <span className="text text_type_text-medium" style={{ color: 'var(--text-inactive-color)' }}>
             Вы - новый пользователь?

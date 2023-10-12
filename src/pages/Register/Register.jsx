@@ -38,6 +38,7 @@ const RegisterPage = () => {
     <Layout centered={true}>
       <div className={styles.mainContainer}>
         <p className="text text_type_main-large mb-4">Регистрация</p>
+        <form onSubmit={handleRegistration}>
         <Input
           type="text"
           placeholder="Имя"
@@ -63,9 +64,10 @@ const RegisterPage = () => {
           extraClass="mb-4"
         />
 
-        <Button extraClass="mb-20 mt-4" onClick={handleRegistration}>
+        <Button extraClass="mb-20 mt-4" >
           Зарегистрироваться
         </Button>
+        </form>
         <div style={{ display: 'inline-block' }}>
           <span className="text text_type_text-medium" style={{ color: 'var(--text-inactive-color)' }}>
             Уже зарегистрировались?
