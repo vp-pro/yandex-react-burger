@@ -64,7 +64,7 @@ const RegisterPage = () => {
           extraClass="mb-4"
         />
 
-        <Button extraClass="mb-20 mt-4" >
+        <Button htmlType="button"  extraClass="mb-20 mt-4" >
           Зарегистрироваться
         </Button>
         </form>
