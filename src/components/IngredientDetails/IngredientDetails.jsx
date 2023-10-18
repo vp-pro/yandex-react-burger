@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styles from './IngredientDetails.module.css'
 import Modal from '../Modal/Modal'
 import ingredientPropTypes from '../../utils/prop-types.js'
 import { useSelector } from 'react-redux'
+import { useLocation, useParams } from 'react-router-dom'
+import { useState } from 'react'
+import { fetchIngredients } from '../../services/slices/ingredientsSlice'
+import { useDispatch } from 'react-redux'
 
 const Element = ({title, value}) => {
   return(
@@ -14,12 +18,17 @@ const Element = ({title, value}) => {
   )
 }
 
-const IngredientDetails = () => {
-  const ingredient = useSelector((state)=> state.ingredients.watchingIngredient )
+const IngredientDetails = (props) => {
+
+  const { id } = useParams();
+  const ingredients = useSelector((state) => state.ingredients.ingredients);
+  const ingredient = props.ingredient ? props.ingredient : ingredients.find((item) => item._id === id)
+
   return (
     <>
     {ingredient &&  
-    <>
+    <div className={styles.container}>
+      <p className={styles.header}>Детали ингредиента</p>
       <img alt={ingredient.name} src={ingredient.image_large}/>
       <p className={styles.ingredientTitle}>{ingredient.name}</p>
       <div className={styles.elements}>
@@ -28,9 +37,8 @@ const IngredientDetails = () => {
         <Element title='Жиры,г' value={ingredient.fat}/>
         <Element title='Углеводы,г' value={ingredient.carbohydrates}/>
       </div>
-      </>
+    </div>
   }
-
     </>
 
   )

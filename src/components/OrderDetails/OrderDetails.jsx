@@ -10,7 +10,7 @@ const OrderDetails = () => {
   return (
     <>
     {loading &&  <p>Loading...</p>} 
-    {orderNumber &&  <> 
+    {orderNumber &&  <div className={styles.container}> 
 
     <p className={styles.orderNumber}>{orderNumber}</p>
           <p className={styles.orderNumberTitle}>идентификатор заказа</p>
@@ -19,7 +19,7 @@ const OrderDetails = () => {
           </div>
           <p className={styles.readyText}>Ваш заказ начали готовить</p>
           <p className={styles.waitText}>Дождитесь готовности на орбитальной станции</p>
-    </> 
+    </div> 
     }
     </>
   )

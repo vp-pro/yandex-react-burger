@@ -1,65 +1,77 @@
-import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import Layout from '../../components/PageLayout/PageLayout'
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import Layout from '../../components/PageLayout/PageLayout';
+import styles from './Login.module.css';
+import { login } from '../../services/slices/userSlice'; // Import loginSlice from its relative path
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import Cookies from 'js-cookie';
 
-import styles from './Login.module.css'
+
 const LoginPage = () => {
 
-  const [password, setPassword] = React.useState('password')
-  const [email, setEmail] = React.useState('bob@example.com')
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
 
-  const onPasswordChange = e => {
-    setPassword(e.target.value)
-  }
-  const onEmailChange = e => {
-    setEmail(e.target.value)
-  }
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Use useNavigate for programmatic navigation
+
+  const handleRegisterClick = () => {
+    navigate('/register'); // Navigate to the '/register' route
+  };
+
+  const handlePasswordResetClick = () => {
+    navigate('/forgot-password'); // Navigate to the '/password-reset' route
+  };
+
+
+  const handleLogin = () => {
+    dispatch(login({ email, password }))
+  };
+
   return (
-    <Layout centered='true'>
-      <div className={styles.mainContainer}>
-        <p className="text text_type_main-large mb-4">Вход</p>     
-        <EmailInput
-          onChange={onEmailChange}
-          value={email}
-          name={'email'}
-          isIcon={false}
-          extraClass="mb-4"
-        />
-        <PasswordInput
-          onChange={onPasswordChange}
-          value={password}
-          name={'password'}
-          extraClass="mb-4"
-        />
+    <Layout centered={true}>
+      <div className={styles.mainContainer+ ' ' + 'mt-20'}>
+        <p className="text text_type_main-large mb-6">Вход</p>
+        <form onSubmit={handleLogin}>
+          <EmailInput
+            onChange={(e) => setEmail(e.target.value )}
+            value={email}
+            name="email"
+            extraClass="mb-6"
+          />
+          <PasswordInput
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            name="password"
+            extraClass="mb-6"
+          />
 
-        <Button extraClass="mb-10">
-          Войти
-        </Button>   
-        <div style={{ display: 'inline-block' }}>
-          <span className="text text_type_text-medium" style={{color: 'var(--text-inactive-color)' }}>
+          <Button htmlType="button" extraClass="mb-20">
+            Войти
+          </Button>
+        </form>
+        
+        <div style={{ display: 'inline-block' }}className='mb-2'>
+          <span className="text text_type_text-medium" style={{ color: 'var(--text-inactive-color)' }}>
             Вы - новый пользователь?
           </span>
-          <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1">
+          <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1" onClick={handleRegisterClick}>
             Зарегистрироваться
           </Button>
         </div>
 
         <div style={{ display: 'inline-block' }}>
-          <span className="text text_type_text-medium" style={{color: 'var(--text-inactive-color)'}}>
+          <span className="text text_type_text-medium" style={{ color: 'var(--text-inactive-color)' }}>
             Забыли пароль?
           </span>
-          <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1">
+          <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1" onClick={handlePasswordResetClick} > 
             Восстановить пароль
           </Button>
         </div>
-
       </div>
     </Layout>
-       
-      
   );
 };
 
 export default LoginPage;
-
-

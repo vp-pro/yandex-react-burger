@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import Modal from '../Modal/Modal'
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
 
 const BurgerConstructor = () => {
   const ingredients = useSelector((state) => state.order.ingredients);
@@ -20,14 +21,22 @@ const BurgerConstructor = () => {
   const totalPrice = useSelector((state) => state.order.totalPrice)
   const dispatch = useDispatch()
 
+  const user = useSelector((state) => state.user.user)
 
   const handleModalClose = () => {
     dispatch(cleanOrder())
     setIsModalOpen(false)
   }
+  const navigate = useNavigate()
+
   const handleModalOpen = () => {
-    dispatch(fetchOrderNumber())
-    setIsModalOpen(true)
+    if (!user){
+      navigate('/login')
+    } else {
+      dispatch(fetchOrderNumber())
+      setIsModalOpen(true)
+    }
+
   }
 
   const handleDrop = (ingredient) => {

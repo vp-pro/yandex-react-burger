@@ -27,7 +27,6 @@ const Modal = ({ children, onClose, headerText }) => {
       <>
         <ModalOverlay onClose={(e) => onClose(e)}/>
         <div className={styles.modal}>
-            {headerText && <p className={styles.header}>{headerText}</p>}
             <div className={styles.icon}>
                 <CloseIcon onClick={handleCloseIconClick}/>
               </div>

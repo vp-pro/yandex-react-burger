@@ -1,35 +1,37 @@
 import Layout from '../../components/PageLayout/PageLayout';
 import styles from './Profile.module.css';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useDispatch } from 'react-redux'; // Import useDispatch
+import { logout } from '../../services/slices/userSlice';
 
 const ProfilePage = () => {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <Layout centered>
       <div className={styles.profileContainer}>
         
         <nav className={styles.navigation}>
-        <ul className={styles.navigationList}>
-          <li className={styles.navigationItem}>          
-              <NavLink end  className={({isActive}) => isActive ? styles.activeNav: styles.nav} to="/profile" >
+              <NavLink end className={({isActive}) => isActive ? styles.activeLink + " "+ styles.navLink: styles.inactiveLink + " "+ styles.navLink} to="/profile" >
                 Профиль
               </NavLink>
-            </li>
-            <li className={styles.navigationItem}>
-              <NavLink end  className={({isActive}) => isActive ? styles.activeNav: styles.nav} to="/profile/orders" >
+
+              <NavLink end to="/profile/orders" className={({isActive}) => isActive ? styles.activeLink + " "+ styles.navLink: styles.inactiveLink + " "+ styles.navLink} >
                 История заказов
               </NavLink>
-            </li>
-            <li className={styles.navigationItem}>
-              <NavLink className={styles.nav} to="/">
+
+              <NavLink onClick={handleLogout} className={styles.inactiveLink + " "+ styles.navLink} >
                 Выход
               </NavLink>
-            </li>
-          </ul>
-          {<p >В этом разделе вы можете изменить свои персональные данные</p>}
+              {<p className={styles.lowerText + ' mt-20'}>В этом разделе вы можете изменить свои персональные данные</p>}
         </nav>
 
 
-        <div className={styles.content}>
+        <div className={styles.content + ' ml-15'}>
           <Outlet />
         </div>
       </div>

@@ -1,50 +1,56 @@
 .mainContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /* width: 600px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* width: 600px; */
 }
 
 .profileContainer {
-    display: flex;
-    /* align-items: center; */
-    min-width: 840px;
-  } 
+  display: flex;
+  /* align-items: center; */
+  width: 840px;
+} 
 
-  .content {
-    width: 100%; /* Adjust as needed */
-  }
-  
-  .navigation {
-    width: 500px; /* Width of the left navigation block */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-self: flex-start;
-  }
-  
-  .activeNav {
-    composes: text text_type_main-medium from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'    ;
-  }
-  .nav {
-    composes: text text_type_main-medium text_color_inactive from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'    ;
-  }
-  
+.content {
+  width: 100%; /* Adjust as needed */
+}
 
-  .navigationList {
-    list-style: none; /* Remove bullets or dots */
-    padding: 0; /* Remove default padding */
-    margin: 0; /* Remove default margin */
-  }
-  
-  .navigationItem {
-    text-decoration: none; /* Remove underlines from list items */
-    composes: mb-8 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'
-    /* Add any other desired styles for list items */
-  }
+.navigation {
+  width: 500px; /* Width of the left navigation block */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-self: flex-start;
+}
+/* li, li a {
+  text-decoration: none;
 
-  li, li a {
-    text-decoration: none;
+} */
 
-  }
+.navLink {
+  text-decoration: none;
+  composes: mb-8 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+  margin-bottom: 32px;
+
+}
+
+/* Add the underline to the <p> element on hover */
+.navLink:hover {
+  text-decoration: underline;
+}
+
+.activeLink{
+  color: var(--text-primary-color);
+  composes: text text_type_main-medium from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'    ;
+}
+
+.inactiveLink {
+  composes: text text_type_main-medium text_color_inactive from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'    ;
+
+}
+
+.lowerText {
+  composes: text text_type_main-small text_color_inactive from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'    ;
+
+}

@@ -21,8 +21,39 @@
     transform: translateX(-50%);
   }
 
-  .button {
-    display: flex;
-    align-items: center;
-    composes: mt-2 mb-2 pl-5 pr-5 mr-2 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'
+
+.navLink {
+  display: flex;
+  align-items: center;
+  /* composes: mt-2 mb-2 pl-5 pr-5 mr-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css' */
+  margin-right: 16px;
+  
+  text-decoration: none;
+  composes: ml-2 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'
+
+}
+
+/* Add the underline to the <p> element on hover */
+.navLink:hover {
+  text-decoration: underline;
+}
+
+
+  .icon{
+    composes: pt-1 mr-2 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
   }
+
+  .activeLink{
+    color: var(--text-primary-color);
+    composes:  text text_type_main-default from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+  }
+
+  .inactiveLink {
+    composes:  text text_type_main-default text_color_inactive from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+
+  }
+
+  /* Add a specific CSS rule for NavLinkButton within styles.right */
+.right .button {
+  margin: 0; /* This will remove any margin for NavLinkButton within styles.right */
+}

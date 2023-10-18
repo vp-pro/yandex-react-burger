@@ -3,8 +3,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 600px;
-    max-height: 80vh;
+    min-width: 600px;
+    min-height: 30vh;  
     z-index: 1001;
     margin: auto;
     display: flex;
@@ -18,14 +18,6 @@
     composes: p-10 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css'    ;
 }
 
-.header{
-    align-self: baseline;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-
-    composes: text text_type_main-large from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'    ;
-
-}
 
 .icon{
     position: absolute;
@@ -33,4 +25,5 @@
     top: 60px;
     cursor: pointer;
     height: 24px;
+    z-index:9999;
 }

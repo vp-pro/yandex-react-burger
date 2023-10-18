@@ -5,7 +5,7 @@ const ProfileOrderDetailsPage = () => {
    
   return (
         <div className={styles.mainContainer}>
-          Order Detail
+          Some [ORDER ID] Details
         </div>
   );
 };

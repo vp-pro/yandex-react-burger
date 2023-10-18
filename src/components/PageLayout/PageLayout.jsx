@@ -1,4 +1,5 @@
 import styles from './PageLayout.module.css'; // Import the CSS module
+import PropTypes from 'prop-types'
 
 const Layout = ({centered, children}) => {
   return (
@@ -16,6 +17,11 @@ const Layout = ({centered, children}) => {
     
     
   );
+};
+
+Layout.propTypes = {
+  centered: PropTypes.bool,
+  children: PropTypes.node, 
 };
 
 export default Layout;
