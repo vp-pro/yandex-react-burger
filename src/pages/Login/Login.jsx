@@ -25,7 +25,8 @@ const LoginPage = () => {
   };
 
 
-  const handleLogin = () => {
+  const handleLogin = (e) => {
+    e.preventDefault()
     dispatch(login({ email, password }))
   };
 

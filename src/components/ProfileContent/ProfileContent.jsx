@@ -24,26 +24,27 @@ const ProfileContentPage = () => {
 
 
 
-  const handleAcceptClick = () => {
-    // Assuming you have a Redux action called patchUser that sends a patch request to update the user.
+  const handleAcceptClick = (e) => {
+    e.preventDefault()
+
     dispatch(patchUser({ name: name, email: login, password: password }))
       .unwrap()
       .then(() => {
-        // The update was successful.
-        // You can add further actions here.
+
         setNameDisabled(true);
         setLoginDisabled(true);
         setPasswordDisabled(true);
         setButtonsDisabled(true)
       })
       .catch((error) => {
-        // Handle errors, e.g., display an error message to the user.
         console.error("Error updating user:", error);
       });
   };
 
 
-  const handleRevertClick = () =>{
+  const handleRevertClick = (e) =>{
+    e.preventDefault()
+
     setName(user.name)
     setLogin(user.email)
     setPassword(null)

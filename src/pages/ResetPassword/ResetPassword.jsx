@@ -20,7 +20,8 @@ const ResetPasswordPage = () => {
         }
     }, [navigate]);
 
-    const handleResetPassword = () => {
+    const handleResetPassword = (e) => {
+        e.preventDefault()
       dispatch(resetPassword({ newPass, emailCode })).unwrap().then(()=>
         localStorage.setItem('reset_password_process', false)
       )

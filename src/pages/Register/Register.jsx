@@ -20,7 +20,9 @@ const RegisterPage = () => {
     navigate('/login'); // Navigate to the '/register' route
   };
 
-  const handleRegistration = () => {
+
+  const handleRegistration = (e) => {
+    e.preventDefault();
     dispatch(register({ email, name, password }))
       .then((response) => {
         if (response.meta.requestStatus === 'fulfilled') {

@@ -9,7 +9,8 @@ const ForgotPasswordPage = () => {
 
       const navigate = useNavigate() 
 
-      const handleResetPassword = async () => {
+      const handleResetPassword = async (e) => {
+        e.preventDefault()
             const requestBody = {
               email,
             };
