@@ -85,6 +85,7 @@ const BurgerConstructor: React.FC = () => {
       />
     )
   }
+  
 
   const moveCard = (dragIndex: number, hoverIndex: number) => {
     const dragIngredients = ingredients[dragIndex];
