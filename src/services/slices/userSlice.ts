@@ -131,6 +131,7 @@ export const resetPassword = createAsyncThunk(
           }),
         }
       );
+      console.log(response?.success)
     } catch (error: any) {
       console.error('An error occurred:', error);
       console.error('An error occurred:', error.message);
