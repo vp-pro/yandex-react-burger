@@ -3,7 +3,6 @@ import styles from './ResetPassword.module.css'
 import { resetPassword } from '../../services/slices/userSlice';
 import Layout from '../../components/PageLayout/PageLayout';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../services/store';

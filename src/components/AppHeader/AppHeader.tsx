@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Logo, BurgerIcon, InfoIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, useMatch } from 'react-router-dom'; // Import NavLink and useMatch from React Router v6
 import styles from './AppHeader.module.css';
@@ -40,12 +39,6 @@ const AppHeader: React.FC = () => {
       </nav>
     </header>
   );
-};
-
-NavLinkButton.propTypes = {
-  text: PropTypes.string.isRequired,
-  icon: PropTypes.element.isRequired,
-  to: PropTypes.string.isRequired,
 };
 
 export default AppHeader;

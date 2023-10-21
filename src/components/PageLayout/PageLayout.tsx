@@ -1,5 +1,4 @@
 import styles from './PageLayout.module.css'; // Import the CSS module
-import PropTypes from 'prop-types'
 
 interface ILayout{
   centered: boolean,

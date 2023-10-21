@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './IngredientCard.module.css'
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import IngredientDetails from '../IngredientDetails/IngredientDetails.jsx'
+import IngredientDetails from '../IngredientDetails/IngredientDetails'
 import { useDrag } from 'react-dnd';
-import { useSelector, useDispatch } from 'react-redux'
-import { setWatchingIngredient, removeWatchingIngredient } from '../../services/slices/ingredientsSlice'
-import ingredientPropTypes from '../../utils/prop-types.js'
+
 import Modal from '../Modal/Modal'
 import { useLocation, Link,  useNavigate } from 'react-router-dom'
 import { IIngredient } from '../../types/common'
@@ -111,7 +108,7 @@ const IngredientCard: React.FC<IIngredient> = ( ingredient ) => {
       <p className={styles.ingredientTitle}>{ingredient.name}</p>
       {isModalOpen && 
         <Modal onClose={handleIngredientClose}>
-          <IngredientDetails {...ingredient}/>
+          <IngredientDetails ingr={ingredient}/>
         </Modal>
       }
     </div>

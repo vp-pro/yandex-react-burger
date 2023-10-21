@@ -5,7 +5,7 @@ import React from "react";
 
 interface IProtectedComponent {
   onlyUnAuth: boolean;
-  component: React.ReactNode;
+  component: React.ReactNode
 }
 const ProtectedComponent: React.FC <IProtectedComponent> = ({ onlyUnAuth = false, component }) => {
   
@@ -37,7 +37,9 @@ const ProtectedComponent: React.FC <IProtectedComponent> = ({ onlyUnAuth = false
 };
 
 
-export const OnlyAuth = ProtectedComponent;
+export const OnlyAuth: React.FC<{ component: React.ReactNode}> = ({ component }) => (
+  <ProtectedComponent onlyUnAuth={false} component={component} />
+);
 
 export const OnlyUnAuth: React.FC<{component: React.ReactNode}> = ({ component }) => (
   <ProtectedComponent onlyUnAuth={true} component={component} />

@@ -1,11 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import PropTypes from 'prop-types'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './BurgerIngredients.module.css'
-import IngredientCard from '../IngredientCard/IngredientCard.jsx'
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchIngredients } from '../../services/slices/ingredientsSlice';
-import ingredientPropTypes from '../../utils/prop-types.js'
+import IngredientCard from '../IngredientCard/IngredientCard'
 import { useAppSelector } from '../../services/store';
 
 const BurgerIngredients: React.FC = () => {
@@ -119,11 +115,5 @@ const BurgerIngredients: React.FC = () => {
   )
 }
 
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(
-    ingredientPropTypes
-  ),
-};
 
 export default BurgerIngredients

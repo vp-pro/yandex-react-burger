@@ -1,6 +1,5 @@
 import styles from './App.module.css'
 import AppPageLayout from '../AppPageLayout/AppPageLayout'
-import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
 import {

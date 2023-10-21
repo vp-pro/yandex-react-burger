@@ -1,5 +1,3 @@
-
-
 const base = 'https://norma.nomoreparties.space/api'
 const ingredients = base + '/ingredients'
 const orders = base + '/orders'

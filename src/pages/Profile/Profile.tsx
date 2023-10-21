@@ -1,7 +1,6 @@
 import Layout from '../../components/PageLayout/PageLayout';
 import styles from './Profile.module.css';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'; // Import useNavigate
-import { useDispatch } from 'react-redux'; // Import useDispatch
 import { logout } from '../../services/slices/userSlice';
 import { useAppDispatch } from '../../services/store';
 

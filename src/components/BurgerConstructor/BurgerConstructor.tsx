@@ -1,13 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './BurgerConstructor.module.css';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import { useSelector } from 'react-redux';
 import { setBun, addIngredient, setIngredients, fetchOrderNumber, cleanOrder } from '../../services/slices/orderSlice';
 import ConstructorElementBox from '../ConstructorElementBox/ConstructorElementBox'
-import { useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import Modal from '../Modal/Modal'
 import { v4 as uuidv4 } from 'uuid';

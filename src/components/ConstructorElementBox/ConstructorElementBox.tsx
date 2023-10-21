@@ -1,12 +1,9 @@
 import styles from './ConstructorElementBox.module.css'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
 import { removeIngredient } from '../../services/slices/orderSlice'
 import { useDrop, useDrag } from 'react-dnd'
 import { useRef } from 'react';
-import PropTypes from 'prop-types'
 import { useAppDispatch } from '../../services/store';
-import { IIngredient } from '../../types/common';
 
 
 interface ICard {

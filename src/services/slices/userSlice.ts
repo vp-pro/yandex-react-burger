@@ -6,8 +6,6 @@ import {
 } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 import { clearOrder } from "./orderSlice";
-import { useDispatch } from "react-redux";
-import React from "react";
 
 interface IUser {
   name: string | null, 
