@@ -6,18 +6,19 @@ import IngredientCard from '../IngredientCard/IngredientCard.jsx'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchIngredients } from '../../services/slices/ingredientsSlice';
 import ingredientPropTypes from '../../utils/prop-types.js'
+import { useAppSelector } from '../../services/store';
 
-const BurgerIngredients = () => {
+const BurgerIngredients: React.FC = () => {
   const sectionsRef = {
-    buns: useRef(null),
-    sauces: useRef(null),
-    mains: useRef(null),
-    allIngredientsContainer: useRef(null),
+    buns: useRef<HTMLDivElement | null>(null),
+    sauces: useRef<HTMLDivElement | null>(null),
+    mains: useRef<HTMLDivElement | null>(null),
+    allIngredientsContainer: useRef<HTMLDivElement | null>(null),
   };
 
-  const [current, setCurrent] = React.useState('булки');
+  const [current, setCurrent] = React.useState<string>('булки');
 
-  const setCurrentWithScroll = (value) => {
+  const setCurrentWithScroll = (value: string) => {
     const sectionRef = (value === 'булки')
       ? sectionsRef.buns
       : (value === 'соусы')
@@ -31,26 +32,19 @@ const BurgerIngredients = () => {
   };
 
 
-  const ingredients = useSelector((state) => state.ingredients.ingredients);
-  const loading = useSelector((state) => state.ingredients.loading)
-  const dispatch = useDispatch()
+  const ingredients = useAppSelector((state) => state.ingredients.ingredients);
+  const loading = useAppSelector((state) => state.ingredients.loading)
 
   const buns = ingredients.filter(element => element.type === "bun")
   const sauces = ingredients.filter(element => element.type === "sauce")
   const mains = ingredients.filter(element => element.type === "main")
 
-  // useEffect(() => {
-  //   if (!ingredients?.length) {
-  //     dispatch(fetchIngredients());
-  //   }
-  // }, [dispatch, ingredients]);
-
 
   useEffect(() => {
     const scrollContainer = sectionsRef.allIngredientsContainer.current;
-    scrollContainer.addEventListener('scroll', handleScroll);
+    scrollContainer?.addEventListener('scroll', handleScroll);
     return () => {
-      scrollContainer.removeEventListener('scroll', handleScroll);
+      scrollContainer?.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -105,17 +99,17 @@ const BurgerIngredients = () => {
 
           <p className={styles.ingredientsTitle} ref={sectionsRef.buns}>Булки</p>
           <div className={styles.typeIngredientsContainer}>
-            {buns.map(ingredient => <IngredientCard key={ingredient._id} ingredient={ingredient} />)}
+            {buns.map(ingredient => <IngredientCard key={ingredient._id} {...ingredient} />)}
           </div>
 
           <p className={styles.ingredientsTitle} ref={sectionsRef.sauces}>Соусы</p>
           <div className={styles.typeIngredientsContainer}>
-            {sauces.map(ingredient => <IngredientCard key={ingredient._id} ingredient={ingredient} />)}
+            {sauces.map(ingredient => <IngredientCard key={ingredient._id} {...ingredient} />)}
           </div>
 
           <p className={styles.ingredientsTitle} ref={sectionsRef.mains}>Основное</p>
           <div className={styles.typeIngredientsContainer}>
-            {mains.map(ingredient => <IngredientCard key={ingredient._id} ingredient={ingredient} />)}
+            {mains.map(ingredient => <IngredientCard key={ingredient._id} {...ingredient} />)}
           </div>
 
         </div>

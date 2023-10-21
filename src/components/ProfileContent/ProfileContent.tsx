@@ -4,33 +4,28 @@ import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-co
 import { useDispatch, useSelector } from 'react-redux'; // Import useSelector to access state
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import {patchUser} from '../../services/slices/userSlice'
-import PropTypes from 'prop-types'
-
-
-
-const ProfileContentPage = () => {
+import { useAppSelector } from '../../services/store';
+import { useAppDispatch } from '../../services/store';
+const ProfileContentPage: React.FC = () => {
 
   const [buttonsDisabled, setButtonsDisabled] = React.useState(true);
-  const dispatch = useDispatch()
-  const user = useSelector((state) => state.user.user);
+  const dispatch = useAppDispatch()
+  const user = useAppSelector((state) => state.user.user);
 
-  const [name, setName] = React.useState(user.name); 
-  const [login, setLogin] = React.useState(user.email); 
-  const [password, setPassword] = React.useState(null);
+  const [name, setName] = React.useState<string>(user?.name || ''); 
+  const [login, setLogin] = React.useState<string>(user?.email || ''); 
+  const [password, setPassword] = React.useState<string>('');
 
-  const [nameDisabled, setNameDisabled] = React.useState(true);
-  const [loginDisabled, setLoginDisabled] = React.useState(true);
-  const [passwordDisabled, setPasswordDisabled] = React.useState(true);
+  const [nameDisabled, setNameDisabled] = React.useState<boolean>(true);
+  const [loginDisabled, setLoginDisabled] = React.useState<boolean>(true);
+  const [passwordDisabled, setPasswordDisabled] = React.useState<boolean>(true);
 
-
-
-  const handleAcceptClick = (e) => {
+  const handleAcceptClick = (e: React.FormEvent) => {
     e.preventDefault()
 
     dispatch(patchUser({ name: name, email: login, password: password }))
       .unwrap()
       .then(() => {
-
         setNameDisabled(true);
         setLoginDisabled(true);
         setPasswordDisabled(true);
@@ -42,12 +37,12 @@ const ProfileContentPage = () => {
   };
 
 
-  const handleRevertClick = (e) =>{
+  const handleRevertClick = (e: React.FormEvent) =>{
     e.preventDefault()
 
-    setName(user.name)
-    setLogin(user.email)
-    setPassword(null)
+    setName(user?.name || '')
+    setLogin(user?.email || '')
+    setPassword('')
     setNameDisabled(true)
     setLoginDisabled(true)
     setPasswordDisabled(true)
@@ -101,9 +96,9 @@ const ProfileContentPage = () => {
             name={'password'}
             extraClass="mb-6"
             icon="EditIcon"
-            onIconClick={() => {
-              setPasswordDisabled(!passwordDisabled)
-            }}
+            // onIconClick={() => {
+            //   setPasswordDisabled(!passwordDisabled)
+            // }}
           />
           {!buttonsDisabled && <div className={styles.buttonSection}>
           <Button htmlType="submit" type="primary" size="medium" extraClass={styles.button} onClick={handleAcceptClick}>

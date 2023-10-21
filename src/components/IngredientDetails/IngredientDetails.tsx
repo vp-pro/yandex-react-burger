@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import styles from './IngredientDetails.module.css'
-import Modal from '../Modal/Modal'
-import ingredientPropTypes from '../../utils/prop-types.js'
-import { useSelector } from 'react-redux'
-import { useLocation, useParams } from 'react-router-dom'
-import { useState } from 'react'
-import { fetchIngredients } from '../../services/slices/ingredientsSlice'
-import { useDispatch } from 'react-redux'
+import { IIngredient } from '../../types/common'
+import { useAppSelector } from '../../services/store'
+import { useParams } from 'react-router-dom'
 
-const Element = ({title, value}) => {
+
+interface IElement{
+  title: string,
+  value: string | number
+}
+
+const Element: React.FC<IElement> = ({title, value}) => {
   return(
     <div className={styles.element}>
       <p className='text text_type_main-default text_color_inactive'>{title}</p>
@@ -18,11 +19,11 @@ const Element = ({title, value}) => {
   )
 }
 
-const IngredientDetails = (props) => {
+const IngredientDetails: React.FC<{ ingr?: IIngredient }> = ({ ingr }) => {
 
   const { id } = useParams();
-  const ingredients = useSelector((state) => state.ingredients.ingredients);
-  const ingredient = props.ingredient ? props.ingredient : ingredients.find((item) => item._id === id)
+  const ingredients = useAppSelector((state) => state.ingredients.ingredients);
+  const ingredient = ingr ? ingr : ingredients.find((item) => item._id === id)
 
   return (
     <>
@@ -43,14 +44,5 @@ const IngredientDetails = (props) => {
 
   )
 }
-
-Element.propTypes = {
-  title: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-  ]).isRequired
-};
-
 
 export default IngredientDetails

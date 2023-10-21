@@ -1,7 +1,7 @@
 import styles from'./ProfileOrderDetails.module.css'
 import { NavLink } from 'react-router-dom';
 
-const ProfileOrderDetailsPage = () => {
+const ProfileOrderDetailsPage: React.FC = () => {
    
   return (
         <div className={styles.mainContainer}>

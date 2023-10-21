@@ -1,7 +1,12 @@
 import styles from './PageLayout.module.css'; // Import the CSS module
 import PropTypes from 'prop-types'
 
-const Layout = ({centered, children}) => {
+interface ILayout{
+  centered: boolean,
+  children: React.ReactNode
+}
+
+const Layout: React.FC<ILayout> = ({centered, children}) => {
   return (
     <>
     {centered ? 
@@ -17,11 +22,6 @@ const Layout = ({centered, children}) => {
     
     
   );
-};
-
-Layout.propTypes = {
-  centered: PropTypes.bool,
-  children: PropTypes.node, 
 };
 
 export default Layout;

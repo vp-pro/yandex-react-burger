@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import styles from './Modal.module.css'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const Modal = ({ children, onClose, headerText }) => {
+interface IModal {
+  onClose: (e?: any)=> void;
+  children: ReactNode;
+}
 
-  const handleCloseIconClick = (e) => {
+
+const Modal: React.FC<IModal> = ( {onClose, children } ) => {
+
+  const handleCloseIconClick = (e: any) => {
     onClose(e)
   }
 
-  const handleEscPress = React.useCallback((e) => {
+  const handleEscPress = React.useCallback((e: any) => {
     if (e.key === 'Escape') {
       onClose(e);
     }
@@ -27,19 +33,16 @@ const Modal = ({ children, onClose, headerText }) => {
       <>
         <ModalOverlay onClose={(e) => onClose(e)}/>
         <div className={styles.modal}>
-            <div className={styles.icon}>
-                <CloseIcon onClick={handleCloseIconClick}/>
+            <div className={styles.icon} onClick={handleCloseIconClick}>
+                <CloseIcon type="primary"/>
               </div>
             {children}
           </div>
       </>
       ),
-    document.getElementById('react-modals'))
+      document.getElementById('react-modals') ?? document.body
+      )
 }
-Modal.propTypes = {
-  children: PropTypes.node.isRequired,
-  onClose: PropTypes.func.isRequired,
-  headerText: PropTypes.string,
-};
+
 
 export default Modal;

@@ -10,16 +10,19 @@ import { setWatchingIngredient, removeWatchingIngredient } from '../../services/
 import ingredientPropTypes from '../../utils/prop-types.js'
 import Modal from '../Modal/Modal'
 import { useLocation, Link,  useNavigate } from 'react-router-dom'
+import { IIngredient } from '../../types/common'
+import { useAppDispatch, useAppSelector } from '../../services/store'
 
-const IngredientCard = ({ ingredient }) => {
-  const dispatch = useDispatch()
-  const [numberToOrder, setNumberToOrder] = useState(0)
+const IngredientCard: React.FC<IIngredient> = ( ingredient ) => {
 
-  const [id, setId] = useState('')
+  const dispatch = useAppDispatch()
+  const [numberToOrder, setNumberToOrder] = useState<number>(0)
 
-  const ingredients = useSelector((state) => state.order.ingredients);
-  const currentBun = useSelector((state) => state.order.bun)
-  const orderNumber = useSelector((state) => state.order.orderNumber)
+  const [id, setId] = useState<string>('')
+
+  const ingredients = useAppSelector((state) => state.order.ingredients);
+  const currentBun = useAppSelector((state) => state.order.bun)
+  const orderNumber = useAppSelector((state) => state.order.orderNumber)
   const navigate = useNavigate()
   useEffect(() => {
     if(ingredient) {
@@ -34,7 +37,7 @@ const IngredientCard = ({ ingredient }) => {
           setNumberToOrder(0)
         }
       } else {
-        const n = Object.values(ingredients).reduce((count, element) => {
+        const n = Object.values(ingredients).reduce((count, element: IIngredient) => {
           if (element._id === id) {
             return count + 1;
           }
@@ -56,13 +59,13 @@ const IngredientCard = ({ ingredient }) => {
     })
   });
 
-  const [isModalOpen, setIsModalOpen] = React.useState(false)
+  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false)
 
   const handleIngredientOpen = React.useCallback(() => {
     // setIsModalOpen(true)
   }, [dispatch, ingredient])
 
-  const handleIngredientClose = React.useCallback((e) => {
+  const handleIngredientClose = React.useCallback((e: any) => {
     e.stopPropagation();
 
     navigate(-1)
@@ -103,12 +106,12 @@ const IngredientCard = ({ ingredient }) => {
       <img className={styles.ingredientImage} alt={ingredient.name} src={ingredient.image} />
       <div className={styles.ingredientPriceContainer}>
         <p className={styles.ingredientPrice}>{ingredient.price}</p>
-        <CurrencyIcon />
+        <CurrencyIcon type="primary" />
       </div>
       <p className={styles.ingredientTitle}>{ingredient.name}</p>
       {isModalOpen && 
         <Modal onClose={handleIngredientClose}>
-          <IngredientDetails ingredient={ingredient}/>
+          <IngredientDetails {...ingredient}/>
         </Modal>
       }
     </div>
@@ -117,9 +120,6 @@ const IngredientCard = ({ ingredient }) => {
   )
 }
 
-IngredientCard.propTypes = {
-  ingredient: ingredientPropTypes.isRequired,
-};
 
 
-export default IngredientCard;
+export default IngredientCard; 

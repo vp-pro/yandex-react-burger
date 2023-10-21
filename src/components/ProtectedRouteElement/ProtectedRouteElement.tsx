@@ -1,12 +1,16 @@
-import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
-import PropTypes from 'prop-types'
 import styles from './ProtectedRouteElement.module.css'
+import { useAppSelector } from "../../services/store";
+import React from "react";
 
-const ProtectedComponent = ({ onlyUnAuth = false, component }) => {
+interface IProtectedComponent {
+  onlyUnAuth: boolean;
+  component: React.ReactNode;
+}
+const ProtectedComponent: React.FC <IProtectedComponent> = ({ onlyUnAuth = false, component }) => {
   
-  const isAuthChecked = useSelector((store) => store.user.isAuthChecked);
-  const user = useSelector((store) => store.user.user);
+  const isAuthChecked = useAppSelector((store) => store.user.isAuthChecked);
+  const user = useAppSelector((store) => store.user.user);
   const location = useLocation();
 
   if (!isAuthChecked) {
@@ -29,21 +33,12 @@ const ProtectedComponent = ({ onlyUnAuth = false, component }) => {
 
   // !onlyUnAuth && user Пользователь авторизован и роут для авторизованного пользователя
 
-  return component;
+  return <>{component}</>;
 };
 
 
 export const OnlyAuth = ProtectedComponent;
-export const OnlyUnAuth = ({ component }) => (
+
+export const OnlyUnAuth: React.FC<{component: React.ReactNode}> = ({ component }) => (
   <ProtectedComponent onlyUnAuth={true} component={component} />
 );
-
-
-ProtectedComponent.propTypes = {
-  onlyUnAuth: PropTypes.bool, 
-  component: PropTypes.node, 
-};
-
-OnlyUnAuth.propTypes = {
-  component: PropTypes.node, 
-};

@@ -9,8 +9,10 @@ import { clearOrder } from "./orderSlice";
 import { useDispatch } from "react-redux";
 import React from "react";
 
-interface IUser {name: string, 
-  email: string}
+interface IUser {
+  name: string | null, 
+  email: string | null
+}
 
 const initialState = {
   user: null as IUser | null,
