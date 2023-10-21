@@ -4,7 +4,13 @@ import { Logo, BurgerIcon, InfoIcon, ProfileIcon } from '@ya.praktikum/react-dev
 import { NavLink, useMatch } from 'react-router-dom'; // Import NavLink and useMatch from React Router v6
 import styles from './AppHeader.module.css';
 
-const NavLinkButton = ({ text, to, icon }) => {
+interface INavLinkButtonProps {
+  text: string;
+  to: string;
+  icon: React.ReactElement;
+}
+
+const NavLinkButton: React.FC<INavLinkButtonProps> = ({ text, to, icon }) => {
   const match = useMatch(to+'/*'); // Check if the current route matches the 'to' prop
 
   return (
@@ -17,19 +23,19 @@ const NavLinkButton = ({ text, to, icon }) => {
   );
 };
 
-const AppHeader = () => {
+const AppHeader: React.FC = () => {
   return (
     <header>
       <nav className={styles.header}>
         <div className={styles.left}>
-          <NavLinkButton text={'Конструктор'} icon={<BurgerIcon />} to={'/'} />
-          <NavLinkButton text={'Лента заказов'} icon={<InfoIcon />} to={'/orders'} />
+          <NavLinkButton text={'Конструктор'} icon={<BurgerIcon type="primary"/>} to={'/'} />
+          <NavLinkButton text={'Лента заказов'} icon={<InfoIcon  type="primary"/>} to={'/orders'} />
         </div>
         <div className={styles.center}>
           <Logo />
         </div>
         <div className={styles.right}>
-          <NavLinkButton text={'Личный кабинет'} icon={<ProfileIcon/>} to={'/profile'} />
+          <NavLinkButton text={'Личный кабинет'} icon={<ProfileIcon type="primary"/>} to={'/profile'} />
         </div>
       </nav>
     </header>

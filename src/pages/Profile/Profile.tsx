@@ -3,9 +3,10 @@ import styles from './Profile.module.css';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'; // Import useNavigate
 import { useDispatch } from 'react-redux'; // Import useDispatch
 import { logout } from '../../services/slices/userSlice';
+import { useAppDispatch } from '../../services/store';
 
-const ProfilePage = () => {
-  const dispatch = useDispatch();
+const ProfilePage: React.FC = () => {
+  const dispatch = useAppDispatch();
 
   const handleLogout = () => {
     dispatch(logout());
@@ -24,9 +25,9 @@ const ProfilePage = () => {
                 История заказов
               </NavLink>
 
-              <NavLink onClick={handleLogout} className={styles.inactiveLink + " "+ styles.navLink} >
+              <div  onClick={handleLogout} style={{cursor: 'pointer'}} className={styles.inactiveLink + " "+ styles.navLink} >
                 Выход
-              </NavLink>
+              </div>
               {<p className={styles.lowerText + ' mt-20'}>В этом разделе вы можете изменить свои персональные данные</p>}
         </nav>
 

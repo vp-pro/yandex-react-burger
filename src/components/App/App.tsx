@@ -25,9 +25,9 @@ import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
 import { useLocation, useNavigate } from 'react-router-dom';
 import Modal from '../Modal/Modal'
 import { fetchIngredients } from '../../services/slices/ingredientsSlice';
-
-const App = () => {
-    const dispatch = useDispatch();
+import { useAppDispatch, useAppSelector } from '../../services/store';
+const App: React.FC = () => {
+    const dispatch = useAppDispatch();
     const location = useLocation();
 
     const background = location.state && location.state.background;
@@ -38,7 +38,7 @@ const App = () => {
         navigate(-1);
     };
 
-    const loading = useSelector((state) => state.ingredients.loading)
+    const loading = useAppSelector((state) => state.ingredients.loading)
 
     useEffect(() => {
         dispatch(checkUserAuth());
@@ -53,10 +53,10 @@ const App = () => {
             <Routes location={background || location}>
                 <Route element={<AppPageLayout />}>
                     <Route index element={<HomePage />} />
-                    <Route exact path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
-                    <Route exact path="/register" element={<OnlyUnAuth component={<RegisterPage />} />}/>
+                    <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
+                    <Route path="/register" element={<OnlyUnAuth component={<RegisterPage />} />}/>
 
-                    <Route exact path="/orders" element={<OrdersPage />}/>
+                    <Route path="/orders" element={<OrdersPage />}/>
 
                     <Route path="/profile" element={<OnlyAuth component={<ProfilePage />} />}>
                         <Route index element={<ProfileContentPage />} />
@@ -64,10 +64,10 @@ const App = () => {
                         <Route path="orders/:id" element={<ProfileOrderDetailsPage />} />
                     </Route>
 
-                    <Route exact path="/forgot-password" element={<OnlyUnAuth component={<ForgotPasswordPage />} />} />
-                    <Route exact path="/reset-password" element={<OnlyUnAuth component={<ResetPasswordPage />} />} />
+                    <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPasswordPage />} />} />
+                    <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPasswordPage />} />} />
 
-                    <Route exact path='/ingredients/:id' element={<IngredientDetails />} />
+                    <Route path='/ingredients/:id' element={<IngredientDetails />} />
 
                 </Route>
                 <Route path="*" element={<Page404 />} />

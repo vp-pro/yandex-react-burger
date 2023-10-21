@@ -106,7 +106,7 @@ const ProfileContentPage = () => {
             }}
           />
           {!buttonsDisabled && <div className={styles.buttonSection}>
-          <Button htmlType="button" type="primary" size="medium" extraClass={styles.button} onClick={handleAcceptClick}>
+          <Button htmlType="submit" type="primary" size="medium" extraClass={styles.button} onClick={handleAcceptClick}>
               Принять изменения
           </Button>
           </div>

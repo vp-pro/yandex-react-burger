@@ -1,6 +1,6 @@
 import AppHeader from '../AppHeader/AppHeader'
 import { Outlet } from 'react-router-dom'
-const AppPageLayout = () => {
+const AppPageLayout: React.FC = () => {
 
     return (
         <>

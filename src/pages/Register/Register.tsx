@@ -5,10 +5,9 @@ import Layout from '../../components/PageLayout/PageLayout';
 import styles from './Register.module.css';
 import { register } from '../../services/slices/userSlice'; // Import userSlice from its relative path
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
-import Cookies from 'js-cookie';
-
+import { useAppDispatch } from '../../services/store';
 const RegisterPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
@@ -21,17 +20,17 @@ const RegisterPage = () => {
   };
 
 
-  const handleRegistration = (e) => {
+  const handleRegistration = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(register({ email, name, password }))
       .then((response) => {
-        if (response.meta.requestStatus === 'fulfilled') {
+        if (register.fulfilled.match(response)) {
           navigate('/');
-        } else {
-          console.error('Registration rejected:', response.error);
+        } else if (register.rejected.match(response)) {
+          console.error('Registration rejected:', response.payload);
         }
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.error('Registration error:', error);
       });
   };
@@ -66,7 +65,7 @@ const RegisterPage = () => {
           extraClass="mb-4"
         />
 
-        <Button htmlType="button"  extraClass="mb-20 mt-4" >
+        <Button htmlType="submit"  extraClass="mb-20 mt-4" >
           Зарегистрироваться
         </Button>
         </form>

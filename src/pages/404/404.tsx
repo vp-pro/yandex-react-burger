@@ -4,11 +4,10 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useNavigate } from 'react-router-dom';
 
 
-const Page404 = () => {
+const Page404: React.FC = () => {
     const navigate = useNavigate()
 
-    const handleOnClick = (e) =>{
-        e.preventDefault();
+    const handleOnClick = () =>{
         navigate('/')
     }
   return (

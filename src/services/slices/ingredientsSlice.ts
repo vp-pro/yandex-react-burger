@@ -1,14 +1,24 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {url, request} from '../../utils/api';
+import {IIngredient} from '../../types/common'
+
+  interface IngredientsState {
+    ingredients: IIngredient[];
+    watchingIngredient: IIngredient | null;
+    loading: boolean;
+    error: string | null;
+  }
+  
+  const initialState: IngredientsState = {
+    ingredients: [],
+    watchingIngredient: null,
+    loading: false,
+    error: null,
+  };
 
 export const ingredientsSlice = createSlice({
     name: 'ingredients',
-    initialState: {
-        ingredients: [],
-        watchingIngredient: null,
-        loading: false,
-        error: null
-    },
+    initialState: initialState,
     reducers: {
         setWatchingIngredient: (state, action) => {
             state.watchingIngredient = action.payload
@@ -31,7 +41,7 @@ export const ingredientsSlice = createSlice({
           })
         .addCase(fetchIngredients.rejected, (state, action) => {
             state.loading = false;
-            state.error = action.error.message;
+            state.error = action.error.message || null;
         })
     }
 
@@ -46,7 +56,7 @@ async () => {
         const ingredients = response.data
 
         return ingredients;
-    } catch (error) {
+    } catch (error: any) {
         throw new Error(error.message)
     }
 })

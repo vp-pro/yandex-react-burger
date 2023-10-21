@@ -4,12 +4,13 @@ import Layout from '../../components/PageLayout/PageLayout'
 import React from 'react';
 import { url } from '../../utils/api';
 import { useNavigate } from 'react-router-dom'
-const ForgotPasswordPage = () => {
-      const [email, setEmail] = React.useState()
+
+const ForgotPasswordPage: React.FC = () => {
+      const [email, setEmail] = React.useState<string>()
 
       const navigate = useNavigate() 
 
-      const handleResetPassword = async (e) => {
+      const handleResetPassword = async (e: React.FormEvent) => {
         e.preventDefault()
             const requestBody = {
               email,
@@ -26,12 +27,12 @@ const ForgotPasswordPage = () => {
                 }
               ); 
               if (response.ok) {
-                localStorage.setItem('reset_password_process', true);
+                localStorage.setItem('reset_password_process', 'true');
                 navigate('/reset-password');
               } else {
                 console.error('Reset email sending failed');
               }
-            } catch (error) {
+            } catch (error: any) {
               console.error('An error occurred:', error);
             }
           };
@@ -47,7 +48,7 @@ const ForgotPasswordPage = () => {
                     type={'email'}
                     placeholder={'Укажите e-mail'}
                     onChange={e => setEmail(e.target.value)}
-                    value={email}
+                    value={email|| ''}
                     name={'email'}
                     error={false}
                     errorText={'Ошибка'}
@@ -55,7 +56,7 @@ const ForgotPasswordPage = () => {
                     extraClass="mb-4"
               />
       
-              <Button extraClass="mb-10">
+              <Button htmlType='submit' extraClass="mb-10">
                 Восстановить
               </Button>   
             </form>

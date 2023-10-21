@@ -1,6 +1,6 @@
 import styles from'./Ingredient.module.css'
 
-const IngredientPage = () => {
+const IngredientPage: React.FC = () => {
    
   return (
         <div className={styles.mainContainer}>

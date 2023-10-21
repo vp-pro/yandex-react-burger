@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import styles from'./Orders.module.css'
 import { NavLink } from 'react-router-dom';
 
-const OrdersPage = () => {
+const OrdersPage: React.FC = () => {
    
   return (
         <div className={styles.container}>

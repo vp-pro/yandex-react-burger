@@ -6,11 +6,11 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useAppDispatch } from '../../services/store';
 const ResetPasswordPage = () => {
     const [newPass, setNewPass] = React.useState('');
     const [emailCode, setEmailCode] = React.useState('');
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -20,10 +20,10 @@ const ResetPasswordPage = () => {
         }
     }, [navigate]);
 
-    const handleResetPassword = (e) => {
+    const handleResetPassword = (e: React.FormEvent) => {
         e.preventDefault()
       dispatch(resetPassword({ newPass, emailCode })).unwrap().then(()=>
-        localStorage.setItem('reset_password_process', false)
+        localStorage.setItem('reset_password_process', 'false')
       )
     };
 
@@ -56,7 +56,7 @@ const ResetPasswordPage = () => {
                         size={'default'}
                         extraClass="mb-4"
                     />
-                    <Button htmlType='button' extraClass="mb-10" >
+                    <Button htmlType='submit' extraClass="mb-10" >
                         Сохранить
                     </Button>   
                 </form>

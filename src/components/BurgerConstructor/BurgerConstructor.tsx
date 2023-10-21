@@ -12,16 +12,17 @@ import { useDrop } from 'react-dnd';
 import Modal from '../Modal/Modal'
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '../../services/store';
+import { IIngredient } from '../../types/common';
+const BurgerConstructor: React.FC = () => {
+  const ingredients = useAppSelector((state) => state.order.ingredients);
+  const loading = useAppSelector((state) => state.ingredients.loading)
+  const bun = useAppSelector((state) => state.order.bun)
+  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false)
+  const totalPrice = useAppSelector((state) => state.order.totalPrice)
+  const dispatch = useAppDispatch()
 
-const BurgerConstructor = () => {
-  const ingredients = useSelector((state) => state.order.ingredients);
-  const loading = useSelector((state) => state.ingredients.loading)
-  const bun = useSelector((state) => state.order.bun)
-  const [isModalOpen, setIsModalOpen] = React.useState(false)
-  const totalPrice = useSelector((state) => state.order.totalPrice)
-  const dispatch = useDispatch()
-
-  const user = useSelector((state) => state.user.user)
+  const user = useAppSelector((state) => state.user.user)
 
   const handleModalClose = () => {
     dispatch(cleanOrder())
@@ -39,7 +40,7 @@ const BurgerConstructor = () => {
 
   }
 
-  const handleDrop = (ingredient) => {
+  const handleDrop = (ingredient: IIngredient) => {
     ingredients.forEach(element => element)
     if (ingredient.type === 'bun') {
       dispatch(setBun(ingredient))
@@ -58,23 +59,34 @@ const BurgerConstructor = () => {
     })
   });
 
-  const renderCard = (ingredient, index) => {
+  const renderCard = (
+    index: number,   
+    type: "top" | "bottom" | undefined = undefined,  
+    text: string,
+    price: number,
+    thumbnail: string,
+    isLocked: boolean = false,
+    id: string,
+    extraClass: string,
+    ) => {
     return (
       <ConstructorElementBox
-        text={ingredient.name}
-        price={ingredient.price}
-        thumbnail={ingredient.image}
-        key={ingredient.id}
-        id={ingredient.id}
+        type={type}
+        text={text}
+        price={price}
+        thumbnail={thumbnail}
+        // key={ingredient._id}
+        id={id}
         index={index}
-        extraClass={styles.middleIngredient}
+        isLocked={isLocked}
+        extraClass={extraClass}
         dndIcon
         moveCard={moveCard}
       />
     )
   }
 
-  const moveCard = (dragIndex, hoverIndex) => {
+  const moveCard = (dragIndex: number, hoverIndex: number) => {
     const dragIngredients = ingredients[dragIndex];
     const newIngredients = [...ingredients];
     newIngredients.splice(dragIndex, 1);
@@ -89,33 +101,67 @@ const BurgerConstructor = () => {
       {!bun && <h1>Пожалуйста, перенесите сюда булку</h1>}
       {bun &&
         <>
-          <ConstructorElementBox
+        {
+        renderCard(
+          0,
+          "top",
+          bun.name + ' (верх)', 
+          bun.price, 
+          bun.image, 
+          true,
+          bun._id,
+          styles.topSide
+        )
+      }
+          {/* <ConstructorElementBox
             type="top"
             isLocked={true}
-            text={bun.name + ' (верх)'}
+            text={}
             price={bun.price}
             thumbnail={bun.image}
             extraClass={styles.topSide}
-          />
+            id={''}
+            index={0}
+            moveCard= {''}
+            dndIcon= {''}
+          /> */}
+
           <div className={styles.constructorList}>
-            {ingredients?.length > 0 && bun && ingredients.map((element, index) =>
-
-              renderCard(element, index)
-
+            {ingredients?.length > 0 && bun && ingredients.map((ingredient, index) =>
+              renderCard(
+                index,
+                undefined,
+                ingredient.name,
+                ingredient.price,
+                ingredient.image,
+                false,
+                ingredient._id,
+                styles.middleIngredient
+                )
             )}
           </div>
-          <ConstructorElementBox
+          {renderCard(
+            0,
+            "bottom",
+            bun.name+ ' (низ)',
+            bun.price,
+            bun.image,
+            true,
+            bun._id,
+            styles.bottomSide
+          )}
+          {/* <ConstructorElementBox
             type="bottom"
             isLocked={true}
             text={bun.name + ' (низ)'}
             price={bun.price}
             thumbnail={bun.image}
             extraClass={styles.bottomSide}
-          />
+          /> */}
           <div className={styles.sumContainer}>
             <div className={styles.sumAndIcon}>
               <p className="text text_type_digits-medium"> {totalPrice} </p>
-              <CurrencyIcon />
+              <CurrencyIcon type="primary"/>
             </div>
             <Button htmlType="button" type="primary" size="medium" onClick={handleModalOpen}>
               Оформить заказ
@@ -129,16 +175,6 @@ const BurgerConstructor = () => {
       }
     </section>
   );
-};
-
-ConstructorElementBox.propTypes = {
-  type: PropTypes.string,
-  isLocked: PropTypes.bool,
-  text: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  extraClass: PropTypes.string,
-  dndIcon: PropTypes.bool,
 };
 
 export default BurgerConstructor;

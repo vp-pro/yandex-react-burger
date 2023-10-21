@@ -5,15 +5,14 @@ import Layout from '../../components/PageLayout/PageLayout';
 import styles from './Login.module.css';
 import { login } from '../../services/slices/userSlice'; // Import loginSlice from its relative path
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
-import Cookies from 'js-cookie';
+import { useAppDispatch } from '../../services/store';
 
+const LoginPage: React.FC = () => {
 
-const LoginPage = () => {
+  const [email, setEmail] = React.useState<string>('')
+  const [password, setPassword] = React.useState<string>('')
 
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
-
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate(); // Use useNavigate for programmatic navigation
 
   const handleRegisterClick = () => {
@@ -25,10 +24,10 @@ const LoginPage = () => {
   };
 
 
-  const handleLogin = (e) => {
-    e.preventDefault()
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
     dispatch(login({ email, password }))
-  };
+    };
 
   return (
     <Layout centered={true}>
@@ -48,7 +47,7 @@ const LoginPage = () => {
             extraClass="mb-6"
           />
 
-          <Button htmlType="button" extraClass="mb-20">
+          <Button htmlType="submit" extraClass="mb-20">
             Войти
           </Button>
         </form>

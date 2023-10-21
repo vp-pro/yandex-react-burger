@@ -5,31 +5,38 @@ import { removeIngredient } from '../../services/slices/orderSlice'
 import { useDrop, useDrag } from 'react-dnd'
 import { useRef } from 'react';
 import PropTypes from 'prop-types'
+import { useAppDispatch } from '../../services/store';
+import { IIngredient } from '../../types/common';
 
-const ConstructorElementBox = ({
-  type,
-  isLocked,
-  text,
-  price,
-  thumbnail,
-  extraClass,
-  id,
-  index,
-  moveCard,
-  dndIcon
-}) => {
 
-  const dispatch = useDispatch()
+interface ICard {
+  type: "top" | "bottom" | undefined;
+  isLocked: boolean;
+  text: string;
+  price: number;
+  thumbnail: string;
+  extraClass: string;
+  id: string;
+  index: number;
+  moveCard: (dragIndex: number, hoverIndex: number) => void;
+  dndIcon: boolean;
+}
+
+
+
+const ConstructorElementBox: React.FC<ICard> = ({type, isLocked, text, price, thumbnail, extraClass, id, index, moveCard, dndIcon}) => {
+
+  const dispatch = useAppDispatch()
 
   const handleClose = () => {
     dispatch(removeIngredient(id))
   }
 
-  const ref = useRef(null)
+  const ref = useRef<HTMLDivElement | null>(null);
 
   const [, drop] = useDrop({
     accept: 'Card',
-    hover: (item, monitor) => {
+    hover: (item: any, monitor) => {
       if (!ref.current) {
         return
       }
@@ -37,22 +44,23 @@ const ConstructorElementBox = ({
       const dragIndex = item.index
       const hoverIndex = index
 
-
       if (dragIndex === hoverIndex) {
         return
       }
       const hoverBoundingRect = ref.current?.getBoundingClientRect()
 
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-      const clientOffset = monitor.getClientOffset()
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top
+      const clientOffset = monitor.getClientOffset()?.y
 
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return
-      }
-
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return
+      if (clientOffset !== undefined) {
+        const hoverClientY = clientOffset  - hoverBoundingRect.top;
+        if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+          return
+        }
+  
+        if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+          return
+        }
       }
 
       moveCard(dragIndex, hoverIndex)
@@ -96,30 +104,19 @@ const ConstructorElementBox = ({
         </div>
       }
       <div className='pl-8'>
-        <ConstructorElement type={type}
+        <ConstructorElement 
+          type={type}
           isLocked={isLocked}
           text={text}
           price={price}
           thumbnail={thumbnail}
           extraClass={extraClass}
           handleClose={handleClose}
-          id={id} />
+           />
       </div>
     </div>
   )
 }
 
-ConstructorElementBox.propTypes = {
-  type: PropTypes.string.isRequired,
-  isLocked: PropTypes.bool.isRequired,
-  text: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  thumbnail: PropTypes.string.isRequired,
-  extraClass: PropTypes.string,
-  id: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
-  moveCard: PropTypes.func.isRequired,
-  dndIcon: PropTypes.bool.isRequired,
-};
 
 export default ConstructorElementBox
