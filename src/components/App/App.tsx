@@ -16,7 +16,6 @@ import {
     OrdersPage
 } from '../../pages/index'
 import { OnlyAuth, OnlyUnAuth } from '../ProtectedRouteElement/ProtectedRouteElement'
-import { useDispatch } from 'react-redux';
 import { checkUserAuth } from '../../services/slices/userSlice'
 import { useEffect } from 'react';
 import IngredientDetails from '../IngredientDetails/IngredientDetails'

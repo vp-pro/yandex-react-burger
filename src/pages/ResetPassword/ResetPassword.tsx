@@ -6,7 +6,8 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../services/store';
-const ResetPasswordPage = () => {
+
+const ResetPasswordPage: React.FC = () => {
     const [newPass, setNewPass] = React.useState('');
     const [emailCode, setEmailCode] = React.useState('');
     const dispatch = useAppDispatch();

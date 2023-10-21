@@ -5,7 +5,8 @@ import styles from './Register.module.css';
 import { register } from '../../services/slices/userSlice'; // Import userSlice from its relative path
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import { useAppDispatch } from '../../services/store';
-const RegisterPage = () => {
+
+const RegisterPage: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const [name, setName] = React.useState('')
