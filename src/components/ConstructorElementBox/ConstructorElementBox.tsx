@@ -22,8 +22,6 @@ interface ICard {
   dndIcon: boolean;
 }
 
-
-
 const ConstructorElementBox: React.FC<ICard> = ({type, isLocked, text, price, thumbnail, extraClass, id, index, moveCard, dndIcon}) => {
 
   const dispatch = useAppDispatch()
