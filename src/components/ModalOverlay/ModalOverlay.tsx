@@ -3,13 +3,13 @@ import styles from'./ModalOverlay.module.css'
 
 
 interface IModalOverlay {
-  onClose: (e: any) => void
+  onClose: () => void;
 }
 const ModalOverlay: React.FC<IModalOverlay> = ( {onClose} ) => {
 
-  const handleModalOverlayClick = (e: any) => {
+  const handleModalOverlayClick = (e: React.SyntheticEvent<HTMLDivElement, MouseEvent>) => {
     if (e.target === e.currentTarget) {
-      onClose(e)
+      onClose()
     }
   }
   return <div className={styles.modalOverlay} onClick={handleModalOverlayClick}/>;

@@ -20,7 +20,7 @@ const RegisterPage: React.FC = () => {
   };
 
 
-  const handleRegistration = (e: React.FormEvent) => {
+  const handleRegistration = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(register({ email, name, password }))
       .then((response) => {

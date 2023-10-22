@@ -62,8 +62,10 @@ const IngredientCard: React.FC<IIngredient> = ( ingredient ) => {
     // setIsModalOpen(true)
   }, [dispatch, ingredient])
 
-  const handleIngredientClose = React.useCallback((e: any) => {
-    e.stopPropagation();
+  const handleIngredientClose = React.useCallback((e: MouseEvent | KeyboardEvent | undefined) => {
+    if (e) {
+      e.stopPropagation();
+    }
 
     navigate(-1)
     // setIsModalOpen(false)

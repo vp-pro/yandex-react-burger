@@ -3,22 +3,22 @@ import ReactDOM from 'react-dom';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import styles from './Modal.module.css'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import {PropsWithChildren} from 'react';
 
 interface IModal {
-  onClose: (e?: any)=> void;
-  children: ReactNode;
+  onClose: (e?: MouseEvent | KeyboardEvent) => void;
 }
 
 
-const Modal: React.FC<IModal> = ( {onClose, children } ) => {
+const Modal: React.FC<PropsWithChildren<IModal>> = ( {onClose, children } ) => {
 
-  const handleCloseIconClick = (e: any) => {
-    onClose(e)
+  const handleCloseIconClick = () => {
+    onClose()
   }
 
-  const handleEscPress = React.useCallback((e: any) => {
+  const handleEscPress = React.useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') {
-      onClose(e);
+      onClose();
     }
   }, [onClose]);
 
@@ -30,7 +30,7 @@ const Modal: React.FC<IModal> = ( {onClose, children } ) => {
   return ReactDOM.createPortal(
     (
       <>
-        <ModalOverlay onClose={(e) => onClose(e)}/>
+        <ModalOverlay onClose={() => onClose()}/>
         <div className={styles.modal}>
             <div className={styles.icon} onClick={handleCloseIconClick}>
                 <CloseIcon type="primary"/>
