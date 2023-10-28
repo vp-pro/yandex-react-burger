@@ -1,5 +1,6 @@
 // websocketMiddleware.ts
 import { Middleware, MiddlewareAPI, Dispatch } from "redux";
+import { setOrders } from "../slices/ordersSlice"; // Import the action
 
 interface WebSocketAction {
   type: string;
@@ -30,6 +31,11 @@ const websocketMiddleware: Middleware = (store: MiddlewareAPI) => (next: Dispatc
   } else if (type === "websocket/disconnect" && socket) {
     socket.close();
     socket = null;
+  } else if (type === "websocket/message") {
+    // Check if the payload contains "orders"
+    if (payload.success && payload.orders) {
+      store.dispatch(setOrders(payload.orders)); // Dispatch the "setOrders" action
+    }
   }
 
   return next(action);
