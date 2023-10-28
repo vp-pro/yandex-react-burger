@@ -13,7 +13,8 @@ import {
     ProfileOrdersPage,
     ProfileOrderDetailsPage,
     ProfileContentPage,
-    OrdersPage
+    OrdersPage,
+    FeedPage
 } from '../../pages/index'
 import { OnlyAuth, OnlyUnAuth } from '../ProtectedRouteElement/ProtectedRouteElement'
 import { checkUserAuth } from '../../services/slices/userSlice'
@@ -55,7 +56,7 @@ const App: React.FC = () => {
                     <Route path="/register" element={<OnlyUnAuth component={<RegisterPage />} />}/>
 
                     <Route path="/orders" element={<OrdersPage />}/>
-
+                    <Route path="/feed" element={<FeedPage />}/>
                     <Route path="/profile" element={<OnlyAuth component={<ProfilePage />} />}>
                         <Route index element={<ProfileContentPage />} />
                         <Route path="orders" element={<ProfileOrdersPage />} />

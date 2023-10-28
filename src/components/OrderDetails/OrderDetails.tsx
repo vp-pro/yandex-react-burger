@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from'./OrderDetails.module.css'
 import { useAppSelector } from '../../services/store'
@@ -25,9 +24,6 @@ const OrderDetails: React.FC = () => {
   )
 }
 
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number, 
-};
 
 
 export default OrderDetails

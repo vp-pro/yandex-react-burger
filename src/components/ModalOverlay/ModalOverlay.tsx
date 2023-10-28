@@ -1,4 +1,4 @@
-import React, { ReactEventHandler } from 'react';
+import React from 'react';
 import styles from'./ModalOverlay.module.css'
 
 

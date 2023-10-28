@@ -9,6 +9,7 @@ import ProfileOrdersPage from '../components/ProfileOrders/ProfileOrders'
 import ProfileOrderDetailsPage from '../components/ProfileOrderDetails/ProfileOrderDetails'
 import ProfileContentPage from'../components/ProfileContent/ProfileContent'
 import OrdersPage from './Orders/Orders'
+import FeedPage from './Feed/Feed'
 
 export {
     Page404, 
@@ -21,5 +22,6 @@ export {
     ProfileOrdersPage,
     ProfileOrderDetailsPage,
     ProfileContentPage,
-    OrdersPage
+    OrdersPage,
+    FeedPage
 }

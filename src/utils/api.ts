@@ -1,27 +1,22 @@
-const base = 'https://norma.nomoreparties.space/api'
-const ingredients = base + '/ingredients'
-const orders = base + '/orders'
+const httpsBase = 'https://norma.nomoreparties.space/api'
 
-const login = base + '/auth/login'
-const register = base + '/auth/register'
-const logout = base + '/auth/logout'
-const token = base + '/auth/token'
-
-const passwordReset = base + '/password-reset'
-const doResetPassword = passwordReset + '/reset'
-const user = base + '/auth/user'
 
 export const url = {
-  base,
-  ingredients,
-  orders,
-  login,
-  register,
-  logout,
-  token,
-  passwordReset,
-  doResetPassword,
-  user
+  ingredients : httpsBase + '/ingredients',
+  orders : httpsBase + '/orders',
+  login : httpsBase + '/auth/login',
+  register : httpsBase + '/auth/register',
+  logout : httpsBase + '/auth/logout',
+  token : httpsBase + '/auth/token',
+  passwordReset : httpsBase + '/password-reset',
+  doResetPassword : httpsBase +  '/password-reset/reset',
+  user : httpsBase + '/auth/user'
+};
+
+const wssBase = 'wss://norma.nomoreparties.space'
+
+export const wssUrl = {
+  feed : wssBase+ '/orders/all',
 }
 
 export const checkResponse = (response: Response) => {
