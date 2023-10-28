@@ -1,16 +1,13 @@
-.mainContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  /* width: 600px; */
-}
 
 .profileContainer {
   display: flex;
   /* align-items: center; */
   width: 840px;
-} 
+  /* align-items: center; */
+  margin-top: 300px;
+  /* width: 600px; */
+
+}
 
 .content {
   width: 100%; /* Adjust as needed */

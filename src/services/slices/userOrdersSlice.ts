@@ -1,32 +1,24 @@
 // userOrdersSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IHistoryOrder } from '../../types/common';
 
-interface UserOrder {
-  _id: string; // Replace with the actual ID type if it's not a string
-  ingredients: string[]; // Array of ingredient IDs
-  status: string; // Status type (e.g., "done")
-  number: number; // Order number
-  createdAt: string; // ISO 8601 date string
-  updatedAt: string; // ISO 8601 date string
-}
 
 interface UserOrdersState {
-  userOrders: UserOrder[];
+  userOrders: IHistoryOrder[];
 }
 
 const initialState: UserOrdersState = {
   userOrders: [],
 };
 
-const userOrdersSlice = createSlice({
+export const userOrdersSlice = createSlice({
   name: 'userOrders',
   initialState,
   reducers: {
-    setUserOrders: (state, action: PayloadAction<UserOrder[]>) => {
+    setUserOrders: (state, action: PayloadAction<IHistoryOrder[]>) => {
       state.userOrders = action.payload;
     },
   },
 });
 
 export const { setUserOrders } = userOrdersSlice.actions;
-export default userOrdersSlice.reducer;

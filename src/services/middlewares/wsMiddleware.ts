@@ -11,39 +11,41 @@ interface WebSocketAction {
 const connections: Record<string, WebSocket | null> = {};
 
 const getAccessToken = () => {
-  // Extract the access token from localStorage
   const token = localStorage.getItem('accessToken');
   if (token) {
-    // Remove the 'Bearer ' prefix and any leading/trailing whitespace
     return token.replace(/^Bearer\s+/i, '').trim();
   }
   return '';
 };
 
-const getWebSocketForEndpoint = (endpoint: string) => {
+const getWebSocketForEndpoint = (endpoint: string, dispatch: Dispatch) => {
   if (!connections[endpoint]) {
+
     const accessToken = getAccessToken();
     const url = `wss://norma.nomoreparties.space/${endpoint}?token=${accessToken}`;
+    console.log(url)
+
     connections[endpoint] = new WebSocket(url);
 
-    connections[endpoint].onmessage = (event) => {
+    connections[endpoint]?.addEventListener('message', (event) => {
       const data = JSON.parse(event.data);
       if (data.success) {
         if (endpoint === 'orders/all') {
           if (data.orders) {
-            store.dispatch(setOrders(data.orders)); // Dispatch the "setOrders" action for ordersSlice
+            dispatch(setOrders(data.orders));
           }
         } else if (endpoint === 'orders') {
-          if (data.userOrders) {
-            store.dispatch(setUserOrders(data.userOrders)); // Dispatch the "setUserOrders" action for userOrdersSlice
+          console.log(data)
+          if (data.orders) {
+            dispatch(setUserOrders(data.orders));
           }
         }
       }
-    };
+    });
 
-    connections[endpoint].onclose = () => {
+    connections[endpoint]?.addEventListener('close', () => {
       connections[endpoint] = null;
-    };
+    });
   }
   return connections[endpoint];
 };
@@ -55,10 +57,10 @@ const websocketMiddleware: Middleware = (store: MiddlewareAPI) => (next: Dispatc
 
   if (type === 'websocket/connect') {
     const endpoint = payload.endpoint;
-    getWebSocketForEndpoint(endpoint);
+    getWebSocketForEndpoint(endpoint, store.dispatch); // Pass the dispatch function
   } else if (type === 'websocket/send') {
     const { endpoint, data } = payload;
-    const socket = getWebSocketForEndpoint(endpoint);
+    const socket = getWebSocketForEndpoint(endpoint, store.dispatch); // Pass the dispatch function
     if (socket) {
       socket.send(JSON.stringify(data));
     }

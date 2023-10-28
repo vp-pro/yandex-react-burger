@@ -13,7 +13,6 @@ import {
     ProfileOrdersPage,
     ProfileOrderDetailsPage,
     ProfileContentPage,
-    OrdersPage,
     FeedPage
 } from '../../pages/index'
 import { OnlyAuth, OnlyUnAuth } from '../ProtectedRouteElement/ProtectedRouteElement'
@@ -47,7 +46,7 @@ const App: React.FC = () => {
 
     return (
         <>
-        {!loading && 
+        {!loading &&
         <>
             <Routes location={background || location}>
                 <Route element={<AppPageLayout />}>
@@ -55,7 +54,6 @@ const App: React.FC = () => {
                     <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
                     <Route path="/register" element={<OnlyUnAuth component={<RegisterPage />} />}/>
 
-                    <Route path="/orders" element={<OrdersPage />}/>
                     <Route path="/feed" element={<FeedPage />}/>
                     <Route path="/profile" element={<OnlyAuth component={<ProfilePage />} />}>
                         <Route index element={<ProfileContentPage />} />

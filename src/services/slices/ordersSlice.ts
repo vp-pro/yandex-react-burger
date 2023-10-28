@@ -1,18 +1,10 @@
 // ordersSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface Order {
-  _id: string;
-  ingredients: string[];
-  status: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  number: number;
-}
+import { IHistoryOrder } from "../../types/common";
 
 interface OrdersState {
-  orders: Order[];
+  orders: IHistoryOrder[];
 }
 
 const initialState: OrdersState = {
@@ -23,7 +15,7 @@ export const ordersSlice = createSlice({
   name: "orders",
   initialState,
   reducers: {
-    setOrders: (state, action: PayloadAction<Order[]>) => {
+    setOrders: (state, action: PayloadAction<IHistoryOrder[]>) => {
       state.orders = action.payload;
     },
   },

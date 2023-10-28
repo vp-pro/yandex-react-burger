@@ -1,56 +1,30 @@
-// OrdersComponent.tsx
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Order, setOrders } from "../../services/slices/ordersSlice";
-import { RootState } from "../../services/store";
+import { useAppDispatch, useAppSelector } from "../../services/store";
+import { IHistoryOrder } from "../../types/common";
+import OrderCard from "../../components/OrderCard/OrderCard";
 
 const FeedPage: React.FC = () => {
-  const dispatch = useDispatch();
-  const orders = useSelector((state: RootState) => state.orders.orders);
+  const dispatch = useAppDispatch();
+  const orders = useAppSelector((state) => state.orders.orders);
 
   useEffect(() => {
-    dispatch({ type: 'websocket/connect', payload: { url: 'wss://norma.nomoreparties.space/orders/all' }});
+    dispatch({ type: 'websocket/connect', payload: { endpoint: 'orders/all', addToken: false }});
 
     return () => {
-      dispatch({ type: 'websocket/disconnect' });
+      dispatch({ type: 'websocket/disconnect',  payload: { endpoint: 'orders/all' } });
     };
   }, [dispatch]);
 
-  useEffect(() => {
-    if (orders.length === 0) {
-      // Send a request to get the list of orders when connected
-      const websocket = new WebSocket('wss://norma.nomoreparties.space/orders/all');
-
-      websocket.onopen = () => {
-        websocket.send('your_request_here'); // Send the request when the WebSocket is open
-      };
-
-      websocket.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        dispatch(setOrders(data.orders)); // Dispatch the "setOrders" action
-      };
-    }
-  }, [dispatch, orders]);
   return (
     <div>
       <h1>List of Orders</h1>
       <ul>
-        {orders.map((order: Order) => (
-          <>
-          <h1>{order.name}</h1>
-          <li key={order._id}>{order.createdAt}</li>
-          <li key={order._id}>{order.updatedAt}</li>
-          <li key={order._id}>{order.status}</li>
-          <li key={order._id}>{order.number}</li>
-
-          </>
-
-
+        {orders.map((order: IHistoryOrder) => (
+          <OrderCard  key={order._id} {...order}/>
         ))}
       </ul>
     </div>
   );
 };
-
 
 export default FeedPage;

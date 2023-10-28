@@ -12,9 +12,9 @@ const ProfilePage: React.FC = () => {
   };
 
   return (
-    <Layout centered>
+    <Layout>
       <div className={styles.profileContainer}>
-        
+
         <nav className={styles.navigation}>
               <NavLink end className={({isActive}) => isActive ? styles.activeLink + " "+ styles.navLink: styles.inactiveLink + " "+ styles.navLink} to="/profile" >
                 Профиль

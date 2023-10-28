@@ -12,3 +12,15 @@ export interface IIngredient {
     image_large: string;
     __v: string;
   }
+
+export interface IHistoryOrder {
+    _id: string;
+    ingredients: string[];
+    status: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    number: number;
+  }
+
+
