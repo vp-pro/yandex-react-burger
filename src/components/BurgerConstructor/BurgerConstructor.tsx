@@ -57,8 +57,8 @@ const BurgerConstructor: React.FC = () => {
   });
 
   const renderCard = (
-    index: number,   
-    type: "top" | "bottom" | undefined = undefined,  
+    index: number,
+    type: "top" | "bottom" | undefined = undefined,
     text: string,
     price: number,
     thumbnail: string,
@@ -68,6 +68,7 @@ const BurgerConstructor: React.FC = () => {
     ) => {
     return (
       <ConstructorElementBox
+       key={index}
         type={type}
         text={text}
         price={price}
@@ -82,7 +83,7 @@ const BurgerConstructor: React.FC = () => {
       />
     )
   }
-  
+
 
   const moveCard = (dragIndex: number, hoverIndex: number) => {
     const dragIngredients = ingredients[dragIndex];
@@ -103,9 +104,9 @@ const BurgerConstructor: React.FC = () => {
         renderCard(
           0,
           "top",
-          bun.name + ' (верх)', 
-          bun.price, 
-          bun.image, 
+          bun.name + ' (верх)',
+          bun.price,
+          bun.image,
           true,
           bun._id,
           styles.topSide
@@ -127,7 +128,7 @@ const BurgerConstructor: React.FC = () => {
           <div className={styles.constructorList}>
             {ingredients?.length > 0 && bun && ingredients.map((ingredient, index) =>
               renderCard(
-                index,
+                index+1,
                 undefined,
                 ingredient.name,
                 ingredient.price,
@@ -139,7 +140,7 @@ const BurgerConstructor: React.FC = () => {
             )}
           </div>
           {renderCard(
-            0,
+            999,
             "bottom",
             bun.name+ ' (низ)',
             bun.price,

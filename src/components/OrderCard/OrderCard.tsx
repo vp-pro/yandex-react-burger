@@ -14,7 +14,7 @@ const OrderCard: React.FC<IHistoryOrder > = ( order) => {
   const ingredientList = useAppSelector((state) => state.ingredients.ingredients);
   const location = useLocation();
 
-  const match = useMatch('/feed*')
+  const match = useMatch('/feed/*')
   const to = match ? '/feed/' : '/profile/orders/'
 
   let colorStyleClass

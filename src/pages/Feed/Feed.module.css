@@ -12,6 +12,12 @@
 
 
 }
+
+.loading {
+    margin:auto;
+    composes:  text_type_main-large from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+
+}
 .container{
     display: flex;
     flex-direction: row;

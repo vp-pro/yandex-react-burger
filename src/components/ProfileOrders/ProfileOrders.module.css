@@ -4,13 +4,17 @@
     flex-grow: 1;
     gap:10px;
     flex-direction: column;
-    /* overflow: hidden; */
     align-items: end;
 
 }
 
 
+.loading {
+    margin:auto;
+    width: max-content;
+    composes:  text_type_main-large from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
 
+}
 .title{
     composes:  text_type_main-large from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
 margin-top: 0;

@@ -19,12 +19,16 @@ const ProfileOrdersPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Ваши заказы</h1>
-      <ul className={styles.ordersList}>
-        {!userOrders ? <h1>Загрузка...</h1> : userOrders.map((order: IHistoryOrder) => (
-          <OrderCard key={order._id} {...order} />
-        ))}
-      </ul>
+      {userOrders.length>1 && <>
+        <h1 className={styles.title}>Ваши заказы</h1>
+        <ul className={styles.ordersList}>
+          {!userOrders ? <h1>Загрузка...</h1> : userOrders.map((order: IHistoryOrder) => (
+            <OrderCard key={order._id} {...order} />
+          ))}
+        </ul>
+      </>}
+      {userOrders.length<1 && <p className={styles.loading}>Пока нет заказов...</p>}
+
     </div>
   );
 };

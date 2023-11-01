@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from "../../services/store";
 import { IHistoryOrder } from "../../types/common";
 import OrderCard from "../../components/OrderCard/OrderCard";
 import styles from './Feed.module.css'
-import Layout from "../../components/PageLayout/PageLayout";
 
 const FeedPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -21,6 +20,7 @@ const FeedPage: React.FC = () => {
 
   return (
     <section className={styles.mainContainer}>
+      {orders.length>1 && <>
       <h1 className={styles.header}>Лента заказов</h1>
       <div className={styles.container}>
         <div className={styles.leftSection}>
@@ -55,7 +55,8 @@ const FeedPage: React.FC = () => {
           <p className={styles.total}>{totalToday}</p>
         </section>
       </div>
-
+      </>}
+              {orders.length<1 && <p className={styles.loading}>Loading...</p>}
     </section>
 
 

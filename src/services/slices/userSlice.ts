@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { clearOrder } from "./orderSlice";
 
 interface IUser {
-  name: string | null, 
+  name: string | null,
   email: string | null
 }
 
@@ -95,7 +95,7 @@ export const login = createAsyncThunk(
 );
 
 export const register = createAsyncThunk(
-  "user/register", 
+  "user/register",
   async ({email, password, name} : { email: string, password:string, name:string}, thunkAPI) => {
   try {
     const response = await request(url.register, {
@@ -145,7 +145,6 @@ export const resetPassword = createAsyncThunk(
 export const checkUserAuth = () => {
   return (dispatch: any) => {
       if (localStorage.getItem("accessToken") && localStorage.getItem('refreshToken')) {
-        console.log("There is a accessToken!")
           dispatch(getUser())
               .catch(() => {
                   localStorage.removeItem("accessToken");
@@ -178,14 +177,14 @@ export const getUser = createAsyncThunk(
 });
 
 
-  export const patchUser = createAsyncThunk("user/pathUser", 
+  export const patchUser = createAsyncThunk("user/pathUser",
   async ({name, email, password} : { name:string, email:string, password:string }, { dispatch }) => {
     try {
       const headers = new Headers();
       headers.append("Content-Type", "application/json; charset=utf-8");
       headers.append("Authorization", localStorage.getItem("accessToken") || '');
 
-      
+
       const response = await requestWithRefresh(url.user, {
         method: "PATCH",
         headers: headers,
@@ -198,4 +197,4 @@ export const getUser = createAsyncThunk(
       throw new Error(error.message);
     }
   });
-  
+
