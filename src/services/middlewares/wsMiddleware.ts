@@ -46,7 +46,7 @@ const getWebSocketForEndpoint = (endpoint: string, dispatch: Dispatch) => {
     });
   }
   connections[endpoint]?.addEventListener('error', (error) => {
-    console.error('WebSocket Error:', error); 
+    console.error('WebSocket Error:', error);
   });
 
   return connections[endpoint];
