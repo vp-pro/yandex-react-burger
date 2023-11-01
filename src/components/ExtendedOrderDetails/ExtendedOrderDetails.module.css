@@ -101,3 +101,8 @@
     color: var(--colors-interface-success);
 
 }
+
+
+.loadingText{
+    margin: auto;
+}

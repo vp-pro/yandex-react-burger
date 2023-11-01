@@ -64,6 +64,7 @@ const ProfileOrderDetailsPage: React.FC = () => {
   const [colorStyleClass, setColorStyleClass] = useState<string>('')
   const [statusText, setStatusText] = useState<string>('')
 
+  const [httpFetchError, setHttpFetchError] = useState<string>('')
 
   useEffect(() => {
     if (!fetchAttempted && checkOrder === undefined && checkUserOrder === undefined) {
@@ -77,6 +78,7 @@ const ProfileOrderDetailsPage: React.FC = () => {
             console.error('Request failed with status:', response.status);
           }
         } catch (error) {
+          setHttpFetchError('Упс, что-то пошло не так!')
           console.error('Error fetching order:', error);
         } finally {
           setFetchAttempted(true);
@@ -142,10 +144,14 @@ const ProfileOrderDetailsPage: React.FC = () => {
             </div>
           </div>
         }
-        {!order &&
-        <h1>
-          Упс, заказ не найден!
+        {!order && !httpFetchError &&
+        <h1 className={styles.loadingText}>
+          Loading...
           </h1>}
+
+          {!order && httpFetchError &&
+        <h1 className={styles.loadingText}>{httpFetchError}</h1>}
+
       </>
   );
 };
