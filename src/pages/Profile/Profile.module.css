@@ -1,20 +1,21 @@
 
 .profileContainer {
   display: flex;
-  /* align-items: center; */
-  width: 840px;
-  /* align-items: center; */
-  margin-top: 300px;
+
+  width: fit-content;
+  justify-content: space-between;
+  margin-top: 40px;
   /* width: 600px; */
+ width: 1140px;
 
 }
 
 .content {
-  width: 100%; /* Adjust as needed */
+width: 840px;
 }
 
 .navigation {
-  width: 500px; /* Width of the left navigation block */
+  width: 300px; /* Width of the left navigation block */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

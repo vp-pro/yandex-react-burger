@@ -1,6 +1,6 @@
 // websocketMiddleware.ts
 import { Middleware, MiddlewareAPI, Dispatch } from 'redux';
-import { setOrders } from '../slices/ordersSlice';
+import { setOrders, setTotals } from '../slices/ordersSlice';
 import { setUserOrders } from '../slices/userOrdersSlice';
 
 interface WebSocketAction {
@@ -23,19 +23,17 @@ const getWebSocketForEndpoint = (endpoint: string, dispatch: Dispatch) => {
 
     const accessToken = getAccessToken();
     const url = `wss://norma.nomoreparties.space/${endpoint}?token=${accessToken}`;
-    console.log(url)
 
     connections[endpoint] = new WebSocket(url);
-
     connections[endpoint]?.addEventListener('message', (event) => {
       const data = JSON.parse(event.data);
       if (data.success) {
         if (endpoint === 'orders/all') {
           if (data.orders) {
             dispatch(setOrders(data.orders));
+            dispatch(setTotals({total: data.total, totalToday: data.totalToday}))
           }
         } else if (endpoint === 'orders') {
-          console.log(data)
           if (data.orders) {
             dispatch(setUserOrders(data.orders));
           }
@@ -47,6 +45,10 @@ const getWebSocketForEndpoint = (endpoint: string, dispatch: Dispatch) => {
       connections[endpoint] = null;
     });
   }
+  connections[endpoint]?.addEventListener('error', (error) => {
+    console.error('WebSocket Error:', error); 
+  });
+
   return connections[endpoint];
 };
 

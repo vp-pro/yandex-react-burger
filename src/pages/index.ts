@@ -6,7 +6,7 @@ import ProfilePage from './Profile/Profile'
 import RegisterPage from './Register/Register'
 import ResetPasswordPage from './ResetPassword/ResetPassword'
 import ProfileOrdersPage from '../components/ProfileOrders/ProfileOrders'
-import ProfileOrderDetailsPage from '../components/ProfileOrderDetails/ProfileOrderDetails'
+import ProfileOrderDetailsPage from '../components/ExtendedOrderDetails/ExtendedOrderDetails'
 import ProfileContentPage from'../components/ProfileContent/ProfileContent'
 import FeedPage from './Feed/Feed'
 

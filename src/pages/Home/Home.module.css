@@ -1,21 +1,13 @@
 .mainContainer {
-    display:flex;
-  
-    margin:auto;
-    justify-content: center;
-    width: fit-content;
     gap: 40px;
     flex-grow: 1;
     /* height: 100vh; */
-  
     display: flex;
     margin: auto;
     justify-content: center;
     width: -moz-fit-content;
     width: fit-content;
-  
+
     height: 0px;
-  
     composes: pb-10 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
-  
   }

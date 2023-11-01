@@ -10,7 +10,7 @@ export const url = {
   token : httpsBase + '/auth/token',
   passwordReset : httpsBase + '/password-reset',
   doResetPassword : httpsBase +  '/password-reset/reset',
-  user : httpsBase + '/auth/user'
+  user : httpsBase + '/auth/user',
 };
 
 const wssBase = 'wss://norma.nomoreparties.space'
@@ -47,7 +47,7 @@ export const refreshToken = () => {
     }),
   }).then(checkResponse);
 };
-  
+
 
 export const fetchWithRefresh = async (url: string, options: RequestInit) => {
   try {
