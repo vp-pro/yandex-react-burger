@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, Dispatch } from "@reduxjs/toolkit";
 import { url, request } from '../../utils/api'
 import {IIngredient} from '../../types/common'
 
@@ -117,7 +117,7 @@ export const fetchOrderNumber = createAsyncThunk('order/fetchOrderNumber',
 export const { setBun, addIngredient, removeIngredient, setIngredients, cleanOrder } = orderSlice.actions;
 
 
-export const clearOrder= () => async (dispatch: any) => {
+export const clearOrder= () => async (dispatch: Dispatch) => {
   try {
     dispatch(cleanOrder());
   } catch (error) {

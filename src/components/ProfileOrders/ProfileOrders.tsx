@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../services/store';
+import { RootState, useAppDispatch, useAppSelector } from '../../services/store';
 import { IHistoryOrder } from '../../types/common';
 import OrderCard from '../OrderCard/OrderCard';
 import styles from './ProfileOrders.module.css'
 
 const ProfileOrdersPage: React.FC = () => {
-  const dispatch = useDispatch();
-  const userOrders = useSelector((state: RootState) => state.userOrders.userOrders);
+  const dispatch = useAppDispatch();
+  const userOrders = useAppSelector((state: RootState) => state.userOrders.userOrders);
 
   useEffect(() => {
     dispatch({ type: 'websocket/connect', payload: { endpoint: 'orders' } });
