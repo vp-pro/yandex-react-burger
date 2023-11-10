@@ -89,13 +89,8 @@ const BurgerConstructor: React.FC = () => {
   const moveCard = (dragIndex: number, hoverIndex: number) => {
     const dragIngredient = ingredients[dragIndex];
     const newIngredients = [...ingredients];
-
-    // Remove the dragged item from its original position
     newIngredients.splice(dragIndex, 1);
-
-    // Insert the dragged item at its new position
     newIngredients.splice(hoverIndex, 0, dragIngredient);
-
     dispatch(setIngredients(newIngredients));
   };
 
@@ -117,19 +112,6 @@ const BurgerConstructor: React.FC = () => {
           styles.topSide
         )
       }
-          {/* <ConstructorElementBox
-            type="top"
-            isLocked={true}
-            text={}
-            price={bun.price}
-            thumbnail={bun.image}
-            extraClass={styles.topSide}
-            id={''}
-            index={0}
-            moveCard= {''}
-            dndIcon= {''}
-          /> */}
-
           <div className={styles.constructorList}>
             {ingredients?.length > 0 && bun && ingredients.map((ingredient, index) =>
               renderCard(
@@ -155,14 +137,6 @@ const BurgerConstructor: React.FC = () => {
             bun._id,
             styles.bottomSide
           )}
-          {/* <ConstructorElementBox
-            type="bottom"
-            isLocked={true}
-            text={bun.name + ' (низ)'}
-            price={bun.price}
-            thumbnail={bun.image}
-            extraClass={styles.bottomSide}
-          /> */}
           <div className={styles.sumContainer}>
             <div className={styles.sumAndIcon}>
               <p className="text text_type_digits-medium"> {totalPrice} </p>
