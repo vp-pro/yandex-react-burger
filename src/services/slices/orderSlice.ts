@@ -32,9 +32,9 @@ export const orderSlice = createSlice({
     },
     addIngredient: (state, action) => {
       const ingredientToAdd = action.payload.ingredient;
-      const id = action.payload.uuid;
+      const uuid = action.payload.uuid;
 
-      let updatedIngredient = { ...ingredientToAdd, id };
+      let updatedIngredient = { ...ingredientToAdd, uuid };
       state.ingredients.push(updatedIngredient);
 
       state.totalPrice = calculateTotalPrice(state);

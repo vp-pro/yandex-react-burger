@@ -65,10 +65,11 @@ const BurgerConstructor: React.FC = () => {
     isLocked: boolean = false,
     id: string,
     extraClass: string,
+    key?: string,
     ) => {
     return (
       <ConstructorElementBox
-       key={index}
+        key={key}
         type={type}
         text={text}
         price={price}
@@ -86,13 +87,17 @@ const BurgerConstructor: React.FC = () => {
 
 
   const moveCard = (dragIndex: number, hoverIndex: number) => {
-    const dragIngredients = ingredients[dragIndex];
+    const dragIngredient = ingredients[dragIndex];
     const newIngredients = [...ingredients];
-    newIngredients.splice(dragIndex, 1);
-    newIngredients.splice(hoverIndex, 0, dragIngredients)
 
-    dispatch(setIngredients(newIngredients))
-  }
+    // Remove the dragged item from its original position
+    newIngredients.splice(dragIndex, 1);
+
+    // Insert the dragged item at its new position
+    newIngredients.splice(hoverIndex, 0, dragIngredient);
+
+    dispatch(setIngredients(newIngredients));
+  };
 
   return (
     <section ref={drop} className={styles.container}>
@@ -102,7 +107,7 @@ const BurgerConstructor: React.FC = () => {
         <>
         {
         renderCard(
-          0,
+          -1,
           "top",
           bun.name + ' (верх)',
           bun.price,
@@ -128,14 +133,15 @@ const BurgerConstructor: React.FC = () => {
           <div className={styles.constructorList}>
             {ingredients?.length > 0 && bun && ingredients.map((ingredient, index) =>
               renderCard(
-                index+1,
+                index,
                 undefined,
                 ingredient.name,
                 ingredient.price,
                 ingredient.image,
                 false,
                 ingredient._id,
-                styles.middleIngredient
+                styles.middleIngredient,
+                ingredient.uuid
                 )
             )}
           </div>

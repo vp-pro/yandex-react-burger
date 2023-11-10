@@ -1,5 +1,6 @@
 export interface IIngredient {
     _id: string;
+    uuid?: string;
     name: string;
     type: string;
     proteins: number;

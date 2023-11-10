@@ -10,7 +10,7 @@ const logger = reduxLogger.createLogger()
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware)=> getDefaultMiddleware().concat(websocketMiddleware),
+  middleware: (getDefaultMiddleware)=> getDefaultMiddleware().concat(logger, websocketMiddleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

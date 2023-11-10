@@ -1,10 +1,12 @@
-import styles from './ConstructorElementBox.module.css'
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { removeIngredient } from '../../services/slices/orderSlice'
-import { useDrop, useDrag } from 'react-dnd'
-import { useRef } from 'react';
-import { useAppDispatch } from '../../services/store';
-
+import React, { useRef } from "react";
+import {
+  ConstructorElement,
+  DragIcon,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import { removeIngredient } from "../../services/slices/orderSlice";
+import { useDrop, useDrag, DropTargetMonitor } from "react-dnd";
+import { useAppDispatch } from "../../services/store";
+import styles from "./ConstructorElementBox.module.css";
 
 interface ICard {
   type: "top" | "bottom" | undefined;
@@ -19,99 +21,93 @@ interface ICard {
   dndIcon: boolean;
 }
 
-const ConstructorElementBox: React.FC<ICard> = ({type, isLocked, text, price, thumbnail, extraClass, id, index, moveCard, dndIcon}) => {
-
-  const dispatch = useAppDispatch()
-
-  const handleClose = () => {
-    dispatch(removeIngredient(id))
-  }
-
+const ConstructorElementBox: React.FC<ICard> = ({
+  type,
+  isLocked,
+  text,
+  price,
+  thumbnail,
+  extraClass,
+  id,
+  index,
+  moveCard,
+  dndIcon,
+}) => {
+  const dispatch = useAppDispatch();
   const ref = useRef<HTMLDivElement | null>(null);
 
+  const handleRemoveIngredient = () => {
+    dispatch(removeIngredient(id));
+  };
+
   const [, drop] = useDrop({
-    accept: 'Card',
-    hover: (item: any, monitor) => {
+    accept: "Card",
+    hover: (item: { index: number }, monitor: DropTargetMonitor) => {
       if (!ref.current) {
-        return
+        return;
       }
 
-      const dragIndex = item.index
-      const hoverIndex = index
+      const dragIndex = item.index; // Index of the dragged item
+      const hoverIndex = index; // Index of the current element being hovered over
 
       if (dragIndex === hoverIndex) {
-        return
-      }
-      const hoverBoundingRect = ref.current?.getBoundingClientRect()
-
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-      const clientOffset = monitor.getClientOffset()?.y
-
-      if (clientOffset !== undefined) {
-        const hoverClientY = clientOffset  - hoverBoundingRect.top;
-        if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-          return
-        }
-  
-        if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-          return
-        }
+        return;
       }
 
-      moveCard(dragIndex, hoverIndex)
+      const hoverBoundingRect = ref.current.getBoundingClientRect();
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const clientOffset = monitor.getClientOffset();
 
-      item.index = hoverIndex
-    }
-  })
+      if (clientOffset) {
+        console.log(clientOffset, dragIndex, hoverIndex, clientOffset.y, hoverBoundingRect.top)
+        const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-  const [
-    {
-      isDragging
-    }, drag
-  ] = useDrag({
-    type: "Card",
-    item: () => {
-      return { id, index }
+        // Determine whether to move the card based on the position of the drag and hover
+        if (
+          (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) ||
+          (dragIndex > hoverIndex && hoverClientY > hoverMiddleY)
+        ) {
+          moveCard(dragIndex, hoverIndex);
+          item.index = hoverIndex; // Update the index of the dragged item
+        }
+      }
     },
-    collect: (monitor) => (
-      { isDragging: monitor.isDragging() }
-    )
-  })
-  const opacity = isDragging ? 0 : 1
+  });
 
-  drag(drop(ref))
+  const [{ isDragging }, drag] = useDrag({
+    type: "Card",
+    item: { id, index },
+    collect: (monitor) => ({ isDragging: monitor.isDragging() }),
+  });
+
+  const opacity = isDragging ? 0.5 : 1;
+
+  drag(drop(ref));
 
   return (
-    <div className={
-      styles.elementContainer
-    }
-      ref={
-        isLocked ? null : ref
-      }
-      style={
-        { opacity: opacity }
-      }>
-      {
-        dndIcon && <div className={
-          styles.icon
-        }>
+    <div
+      className={styles.elementContainer}
+      ref={isLocked ? null : ref}
+      style={{ opacity }}
+    >
+      {dndIcon && (
+        <div className={styles.icon}>
           <DragIcon type="primary" />
         </div>
-      }
+      )}
       <div className='pl-8'>
-        <ConstructorElement 
+        <ConstructorElement
           type={type}
           isLocked={isLocked}
           text={text}
           price={price}
           thumbnail={thumbnail}
           extraClass={extraClass}
-          handleClose={handleClose}
-           />
+          handleClose={handleRemoveIngredient}
+        />
       </div>
     </div>
-  )
-}
+  );
+};
 
-
-export default ConstructorElementBox
+export default ConstructorElementBox;
