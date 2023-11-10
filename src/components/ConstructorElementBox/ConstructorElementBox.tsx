@@ -18,7 +18,8 @@ interface ICard {
   id: string;
   index: number;
   moveCard: (dragIndex: number, hoverIndex: number) => void;
-  dndIcon: boolean;
+  dndIcon?: boolean;
+  uuid?: string;
 }
 
 const ConstructorElementBox: React.FC<ICard> = ({
@@ -32,12 +33,13 @@ const ConstructorElementBox: React.FC<ICard> = ({
   index,
   moveCard,
   dndIcon,
+  uuid
 }) => {
   const dispatch = useAppDispatch();
   const ref = useRef<HTMLDivElement | null>(null);
 
   const handleRemoveIngredient = () => {
-    dispatch(removeIngredient(id));
+    dispatch(removeIngredient(uuid));
   };
 
   const [, drop] = useDrop({
@@ -76,7 +78,7 @@ const ConstructorElementBox: React.FC<ICard> = ({
 
   const [{ isDragging }, drag] = useDrag({
     type: "Card",
-    item: { id, index },
+    item: { uuid, index },
     collect: (monitor) => ({ isDragging: monitor.isDragging() }),
   });
 

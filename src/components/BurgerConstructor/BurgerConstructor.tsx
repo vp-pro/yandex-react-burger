@@ -67,22 +67,22 @@ const BurgerConstructor: React.FC = () => {
     extraClass: string,
     key?: string,
     ) => {
-    return (
-      <ConstructorElementBox
-        key={key}
-        type={type}
-        text={text}
-        price={price}
-        thumbnail={thumbnail}
-        // key={ingredient._id}
-        id={id}
-        index={index}
-        isLocked={isLocked}
-        extraClass={extraClass}
-        dndIcon
-        moveCard={moveCard}
-      />
-    )
+      const commonProps = {
+        type,
+        text,
+        price,
+        thumbnail,
+        id,
+        index,
+        isLocked,
+        extraClass,
+        moveCard,
+        uuid: key
+      };
+
+      const cardProps = type === undefined ? { ...commonProps, dndIcon: true } : commonProps;
+
+      return <ConstructorElementBox {...cardProps} />;
   }
 
 

@@ -40,8 +40,8 @@ export const orderSlice = createSlice({
       state.totalPrice = calculateTotalPrice(state);
     },
     removeIngredient: (state, action) => {
-      const id = action.payload;
-      state.ingredients = state.ingredients.filter((ingredient) => ingredient._id !== id)
+      const uuid = action.payload;
+      state.ingredients = state.ingredients.filter((ingredient) => ingredient.uuid !== uuid)
       state.totalPrice = calculateTotalPrice(state);
     },
     setIngredients: (state, action) => {
@@ -76,7 +76,6 @@ export const orderSlice = createSlice({
 
 export const fetchOrderNumber = createAsyncThunk('order/fetchOrderNumber',
   async (_, { getState }) => {
-    try {
       const state = getState() as {order : IOrderState}
       const ids = [];
       if (state.order.bun) {
@@ -102,9 +101,6 @@ export const fetchOrderNumber = createAsyncThunk('order/fetchOrderNumber',
       const orderNumber = response.order.number
 
       return orderNumber;
-    } catch (error: any) {
-      throw new Error(error.message)
-    }
   })
 
   const calculateTotalPrice = (state: IOrderState) => {
@@ -118,9 +114,5 @@ export const { setBun, addIngredient, removeIngredient, setIngredients, cleanOrd
 
 
 export const clearOrder= () => async (dispatch: Dispatch) => {
-  try {
     dispatch(cleanOrder());
-  } catch (error) {
-    console.error("Error fetching and setting ingredients:", error);
-  }
 };

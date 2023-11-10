@@ -44,7 +44,7 @@ const OrderCard: React.FC<IHistoryOrder > = ( order) => {
     // на котором была открыта наша модалка
     state={{ background: location }}
     // className={styles.link}
-    style={{ textDecoration: 'none', color: 'inherit' }}
+    className={styles.mainLink}
   >
     <div className={styles.container}>
       <div className={styles.header}>

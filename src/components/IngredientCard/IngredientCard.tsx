@@ -35,7 +35,7 @@ const IngredientCard: React.FC<IIngredient> = ( ingredient ) => {
           setNumberToOrder(0)
         }
       } else {
-        const n = Object.values(ingredients).reduce((count, element: IIngredient) => {
+        const n = Object.values(ingredients).reduce((count, element) => {
           if (element._id === id) {
             return count + 1;
           }
@@ -83,7 +83,7 @@ const IngredientCard: React.FC<IIngredient> = ( ingredient ) => {
       // на котором была открыта наша модалка
       state={{ background: location }}
       // className={styles.link}
-      style={{ textDecoration: 'none', color: 'inherit' }}
+      className={styles.mainLink}
     >
 
     <div

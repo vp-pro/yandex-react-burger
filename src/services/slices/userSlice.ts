@@ -36,6 +36,10 @@ export const userSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
       })
+      .addCase(logout.rejected, () =>{
+        const navigate = useNavigate();
+        navigate("/login");
+      })
       .addCase(register.fulfilled, (state, action) => {
         state.user = action.payload;
       })
@@ -45,6 +49,7 @@ export const userSlice = createSlice({
       .addCase(getUser.fulfilled, (state, action) => {
         state.user = action.payload;
       });
+
   },
 });
 
@@ -54,7 +59,6 @@ export const logout = createAsyncThunk(
   "user/logout",
   async (_, { dispatch }) => {
     const token = localStorage.getItem("refreshToken");
-    try {
       await request(url.logout, {
         method: "POST",
         headers: {
@@ -66,11 +70,7 @@ export const logout = createAsyncThunk(
       dispatch(clearOrder());
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
-    } catch (error: any) {
-      const navigate = useNavigate();
-      navigate("/login");
-      throw new Error(error.message);
-    }
+
   }
 );
 
@@ -79,7 +79,7 @@ export const logout = createAsyncThunk(
 export const login = createAsyncThunk(
   "user/login",
   async ({email, password} : { email:string, password:string }, thunkAPI) => {
-    try {
+    // try {
       const response = await request(url.login, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json; charset=utf-8' },
@@ -88,16 +88,16 @@ export const login = createAsyncThunk(
         localStorage.setItem("refreshToken", response.refreshToken);
         localStorage.setItem("accessToken", response.accessToken);
         return response.user;
-      } catch (error: any) {
-        return thunkAPI.rejectWithValue(error.message);
-      }
+      // } catch (error: any) {
+      //   return thunkAPI.rejectWithValue(error.message);
+      // }
   }
 );
 
 export const register = createAsyncThunk(
   "user/register",
   async ({email, password, name} : { email: string, password:string, name:string}, thunkAPI) => {
-  try {
+  // try {
     const response = await request(url.register, {
       method: "POST",
       headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -108,16 +108,15 @@ export const register = createAsyncThunk(
     localStorage.setItem("accessToken", response.accessToken);
 
     return response.user;
-  } catch (error: any) {
-    return thunkAPI.rejectWithValue(error.message);
-  }
+  // } catch (error: any) {
+  //   return thunkAPI.rejectWithValue(error.message);
+  // }
 });
 
 
 export const resetPassword = createAsyncThunk(
   'user/resetPassword',
   async ({newPass, emailCode} : { newPass:string, emailCode:string}) => {
-    try {
       const response = await request(
         url.doResetPassword,
         {
@@ -132,12 +131,6 @@ export const resetPassword = createAsyncThunk(
         }
       );
       console.log(response?.success)
-    } catch (error: any) {
-      console.error('An error occurred:', error);
-      console.error('An error occurred:', error.message);
-
-      throw new Error(error.message);
-    }
   }
 );
 
@@ -160,7 +153,6 @@ export const checkUserAuth = () => {
 
 export const getUser = createAsyncThunk(
   "user/getUser", async () => {
-  try {
     const headers = new Headers();
     headers.append("Content-Type", "application/json; charset=utf-8");
     headers.append("Authorization", localStorage.getItem("accessToken") || '');
@@ -171,15 +163,11 @@ export const getUser = createAsyncThunk(
     });
 
     return response.user;
-  } catch (error: any) {
-    throw new Error(error.message);
-  }
 });
 
 
   export const patchUser = createAsyncThunk("user/pathUser",
   async ({name, email, password} : { name:string, email:string, password:string }, { dispatch }) => {
-    try {
       const headers = new Headers();
       headers.append("Content-Type", "application/json; charset=utf-8");
       headers.append("Authorization", localStorage.getItem("accessToken") || '');
@@ -193,8 +181,5 @@ export const getUser = createAsyncThunk(
 
       dispatch(setUser(response.user));
       return response.user;
-    } catch (error:any) {
-      throw new Error(error.message);
-    }
   });
 
