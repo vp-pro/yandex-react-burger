@@ -65,9 +65,10 @@ const BurgerConstructor: React.FC = () => {
     isLocked: boolean = false,
     id: string,
     extraClass: string,
-    key?: string,
+    uuid?: string,
     ) => {
       const commonProps = {
+        key: uuid,
         type,
         text,
         price,
@@ -77,7 +78,7 @@ const BurgerConstructor: React.FC = () => {
         isLocked,
         extraClass,
         moveCard,
-        uuid: key
+        uuid: uuid
       };
 
       const cardProps = type === undefined ? { ...commonProps, dndIcon: true } : commonProps;
