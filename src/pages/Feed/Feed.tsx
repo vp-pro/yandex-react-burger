@@ -3,6 +3,8 @@ import { useAppDispatch, useAppSelector } from "../../services/store";
 import { IHistoryOrder } from "../../types/common";
 import OrderCard from "../../components/OrderCard/OrderCard";
 import styles from './Feed.module.css'
+import {wsActions} from '../../services/slices/ordersSlice'
+import { wssUrl } from '../../utils/api';
 
 const FeedPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -11,10 +13,10 @@ const FeedPage: React.FC = () => {
   const totalToday = useAppSelector((state) => state.orders.totalToday);
 
   useEffect(() => {
-    dispatch({ type: 'websocket/connect', payload: { endpoint: 'orders/all', addToken: false }});
+    dispatch(wsActions.wsConnect(wssUrl.feed));
 
     return () => {
-      dispatch({ type: 'websocket/disconnect',  payload: { endpoint: 'orders/all' } });
+      dispatch(wsActions.wsConnect(wssUrl.feed));
     };
   }, [dispatch]);
 

@@ -3,19 +3,23 @@ import { RootState, useAppDispatch, useAppSelector } from '../../services/store'
 import { IHistoryOrder } from '../../types/common';
 import OrderCard from '../OrderCard/OrderCard';
 import styles from './ProfileOrders.module.css'
+import {wsActions} from '../../services/slices/userOrdersSlice'
+import {getAccessToken} from '../../utils/functions';
+import { wssUrl } from '../../utils/api';
+
 
 const ProfileOrdersPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const userOrders = useAppSelector((state: RootState) => state.userOrders.userOrders);
 
   useEffect(() => {
-    dispatch({ type: 'websocket/connect', payload: { endpoint: 'orders' } });
-
+    const accessToken = getAccessToken();
+    const url = wssUrl.userOrders+'?token='+accessToken;
+    dispatch(wsActions.wsConnect(url));
     return () => {
-      dispatch({ type: 'websocket/disconnect', payload: { endpoint: 'orders' } });
+      dispatch(wsActions.wsDisconnect());
     };
   }, [dispatch]);
-
   return (
     <div className={styles.container}>
       {userOrders.length>1 && <>

@@ -17,6 +17,7 @@ const wssBase = 'wss://norma.nomoreparties.space'
 
 export const wssUrl = {
   feed : wssBase+ '/orders/all',
+  userOrders: wssBase+ '/orders',
 }
 
 export const checkResponse = (response: Response) => {

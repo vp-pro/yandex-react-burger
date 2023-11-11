@@ -14,3 +14,12 @@ export function formatRelativeDateTime(inputDate: string): string {
       return `${daysDifference} ${pluralForm} назад ` + inputDateTime.toLocaleTimeString(undefined, { timeZoneName: 'short' });
     }
   }
+
+
+  export const getAccessToken = () => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      return token.replace(/^Bearer\s+/i, '').trim();
+    }
+    return '';
+  };
