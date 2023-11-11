@@ -88,7 +88,7 @@ const ConstructorElementBox: React.FC<ICard> = ({
 
   return (
     <div
-      className={styles.elementContainer}
+      className={styles.elementContainer }
       ref={isLocked ? null : ref}
       style={{ opacity , }}
     >
