@@ -53,7 +53,7 @@ const FeedPage: React.FC = () => {
           </div>
           <p className={styles.miniTitle}>Выполнено за все время:</p>
           <p className={styles.total}>{total}</p>
-          <p className={styles.miniTitle}>Выполнено за все сегодня:</p>
+          <p className={styles.miniTitle}>Выполнено за сегодня:</p>
           <p className={styles.total}>{totalToday}</p>
         </section>
       </div>
