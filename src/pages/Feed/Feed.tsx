@@ -22,7 +22,7 @@ const FeedPage: React.FC = () => {
 
   return (
     <section className={styles.mainContainer}>
-      {orders.length>1 && <>
+      {orders.length>0 && <>
       <h1 className={styles.header}>Лента заказов</h1>
       <div className={styles.container}>
         <div className={styles.leftSection}>

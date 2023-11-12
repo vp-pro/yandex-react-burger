@@ -25,7 +25,7 @@ const ProfileOrdersPage: React.FC = () => {
       {userOrders.length>1 && <>
         <h1 className={styles.title}>Ваши заказы</h1>
         <div className={styles.ordersList}>
-          {!userOrders ? <h1>Загрузка...</h1> : userOrders.map((order) => (
+          {!userOrders ? <h1>Загрузка...</h1> : userOrders.slice(0).reverse().map((order) => (
             <OrderCard key={order._id} {...order} />
           ))}
         </div>
