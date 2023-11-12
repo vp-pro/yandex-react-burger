@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { Dispatch, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   url,
   request,
@@ -136,7 +136,7 @@ export const resetPassword = createAsyncThunk(
 
 
 export const checkUserAuth = () => {
-  return (dispatch: any) => {
+  return (dispatch: Dispatch) => {
       if (localStorage.getItem("accessToken") && localStorage.getItem('refreshToken')) {
           dispatch(getUser())
               .catch(() => {
