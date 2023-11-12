@@ -30,7 +30,7 @@ width: 840px;
   text-decoration: none;
   composes: mb-8 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
   margin-bottom: 32px;
-
+  cursor: 'pointer'
 }
 
 /* Add the underline to the <p> element on hover */

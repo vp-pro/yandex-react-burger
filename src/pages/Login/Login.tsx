@@ -50,9 +50,9 @@ const LoginPage: React.FC = () => {
             Войти
           </Button>
         </form>
-        
-        <div style={{ display: 'inline-block' }}className='mb-2'>
-          <span className="text text_type_text-medium" style={{ color: 'var(--text-inactive-color)' }}>
+
+        <div  className={styles.footerTitlesWithMargin}>
+          <span className={styles.footerText}>
             Вы - новый пользователь?
           </span>
           <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1" onClick={handleRegisterClick}>
@@ -60,11 +60,11 @@ const LoginPage: React.FC = () => {
           </Button>
         </div>
 
-        <div style={{ display: 'inline-block' }}>
-          <span className="text text_type_text-medium" style={{ color: 'var(--text-inactive-color)' }}>
+        <div  className={styles.footerTitles} >
+          <span className={styles.footerText}>
             Забыли пароль?
           </span>
-          <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1" onClick={handlePasswordResetClick} > 
+          <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1" onClick={handlePasswordResetClick} >
             Восстановить пароль
           </Button>
         </div>

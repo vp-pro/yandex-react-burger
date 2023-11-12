@@ -87,10 +87,7 @@ const IngredientCard: React.FC<IIngredient> = ( ingredient ) => {
     >
 
     <div
-      style={{
-        opacity: isDrag ? 0.5 : 1,
-        cursor: 'move',
-      }}
+      style={{opacity: isDrag ? 0.5 : 1, cursor: 'move'}}
       ref={currentBun || ingredient.type === 'bun' ? dragRef : null}
       onClick={handleIngredientOpen} className={styles.ignredientCard}>
       {

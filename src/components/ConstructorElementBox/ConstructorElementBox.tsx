@@ -82,15 +82,13 @@ const ConstructorElementBox: React.FC<ICard> = ({
     collect: (monitor) => ({ isDragging: monitor.isDragging() }),
   });
 
-  const opacity = isDragging ? 0.5 : 1;
-
   drag(drop(ref));
 
   return (
     <div
       className={styles.elementContainer }
       ref={isLocked ? null : ref}
-      style={{ opacity , }}
+      style={{opacity: isDragging ? 0.5 : 1 }}
     >
       {dndIcon && (
         <div className={styles.icon}>
