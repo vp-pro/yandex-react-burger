@@ -24,11 +24,11 @@ const ProfileOrdersPage: React.FC = () => {
     <div className={styles.container}>
       {userOrders.length>1 && <>
         <h1 className={styles.title}>Ваши заказы</h1>
-        <ul className={styles.ordersList}>
+        <div className={styles.ordersList}>
           {!userOrders ? <h1>Загрузка...</h1> : userOrders.map((order) => (
             <OrderCard key={order._id} {...order} />
           ))}
-        </ul>
+        </div>
       </>}
       {userOrders.length<1 && <p className={styles.loading}>Пока нет заказов...</p>}
 

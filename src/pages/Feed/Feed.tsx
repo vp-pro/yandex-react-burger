@@ -16,7 +16,7 @@ const FeedPage: React.FC = () => {
     dispatch(wsActions.wsConnect(wssUrl.feed));
 
     return () => {
-      dispatch(wsActions.wsConnect(wssUrl.feed));
+      dispatch(wsActions.wsDisconnect());
     };
   }, [dispatch]);
 

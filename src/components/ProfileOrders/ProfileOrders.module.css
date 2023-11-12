@@ -2,10 +2,9 @@
     width: min-content;
     display: flex;
     flex-grow: 1;
-    gap:10px;
+    gap:40px;
     flex-direction: column;
     align-items: end;
-
 }
 
 
@@ -17,7 +16,7 @@
 }
 .title{
     composes:  text_type_main-large from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
-margin-top: 0;
+    margin-top: 0;
     display: flex;
     flex-direction: row;
     flex-grow: 1;
@@ -30,7 +29,6 @@ margin-top: 0;
 .ordersList {
     max-height: calc(100vh - 230px); /* Adjust the height as needed */
     min-height: calc(300px); /* Adjust the height as needed */
-
     overflow-y: auto; /* Enable vertical scrolling when the content overflows the max height */
     composes: custom-scroll from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
     padding-right: 10px;
