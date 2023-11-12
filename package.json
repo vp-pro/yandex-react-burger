@@ -40,7 +40,6 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
-
   },
   "eslintConfig": {
     "extends": [
@@ -65,6 +64,7 @@
     "@types/react": "^18.2.33",
     "@types/react-dom": "^18.2.14",
     "@types/uuid": "^9.0.6",
+    "axios-mock-adapter": "^1.22.0",
     "cypress": "^13.5.0",
     "eslint-plugin-cypress": "^2.15.1",
     "fetch-mock": "^9.11.0",

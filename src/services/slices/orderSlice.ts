@@ -56,6 +56,8 @@ export const orderSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchOrderNumber.fulfilled, (state, action) => {
+      console.log('Fulfilled Action:', action);
+
       state.loading = false;
       state.error = null;
       const orderNumber = action.payload;
@@ -63,6 +65,8 @@ export const orderSlice = createSlice({
     });
 
     builder.addCase(fetchOrderNumber.pending, (state) => {
+      console.log('PENDING MTH');
+
       state.loading = true;
       state.error = null;
     });
@@ -98,6 +102,8 @@ export const fetchOrderNumber = createAsyncThunk('order/fetchOrderNumber',
         })
       };
       const response = await request(url.orders, requestOptions);
+      console.log('API Response:', response);
+
       const orderNumber = response.order.number
 
       return orderNumber;

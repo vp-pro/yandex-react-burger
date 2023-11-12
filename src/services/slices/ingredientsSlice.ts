@@ -47,6 +47,10 @@ export const ingredientsSlice = createSlice({
 
 })
 
+
+export type RootState = ReturnType<typeof ingredientsSlice.reducer>;
+
+
 export const {removeWatchingIngredient, setWatchingIngredient} = ingredientsSlice.actions;
 
 export const fetchIngredients = createAsyncThunk('ingredients/fetchIngredients',
