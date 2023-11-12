@@ -57,41 +57,43 @@ const BurgerConstructor: React.FC = () => {
   });
 
   const renderCard = (
-    index: number,   
-    type: "top" | "bottom" | undefined = undefined,  
+    index: number,
+    type: "top" | "bottom" | undefined = undefined,
     text: string,
     price: number,
     thumbnail: string,
     isLocked: boolean = false,
     id: string,
     extraClass: string,
+    uuid?: string,
     ) => {
-    return (
-      <ConstructorElementBox
-        type={type}
-        text={text}
-        price={price}
-        thumbnail={thumbnail}
-        // key={ingredient._id}
-        id={id}
-        index={index}
-        isLocked={isLocked}
-        extraClass={extraClass}
-        dndIcon
-        moveCard={moveCard}
-      />
-    )
+      const commonProps = {
+        key: uuid,
+        type,
+        text,
+        price,
+        thumbnail,
+        id,
+        index,
+        isLocked,
+        extraClass,
+        moveCard,
+        uuid: uuid
+      };
+
+      const cardProps = type === undefined ? { ...commonProps, dndIcon: true } : commonProps;
+
+      return <ConstructorElementBox {...cardProps} />;
   }
-  
+
 
   const moveCard = (dragIndex: number, hoverIndex: number) => {
-    const dragIngredients = ingredients[dragIndex];
+    const dragIngredient = ingredients[dragIndex];
     const newIngredients = [...ingredients];
     newIngredients.splice(dragIndex, 1);
-    newIngredients.splice(hoverIndex, 0, dragIngredients)
-
-    dispatch(setIngredients(newIngredients))
-  }
+    newIngredients.splice(hoverIndex, 0, dragIngredient);
+    dispatch(setIngredients(newIngredients));
+  };
 
   return (
     <section ref={drop} className={styles.container}>
@@ -101,29 +103,16 @@ const BurgerConstructor: React.FC = () => {
         <>
         {
         renderCard(
-          0,
+          -1,
           "top",
-          bun.name + ' (верх)', 
-          bun.price, 
-          bun.image, 
+          bun.name + ' (верх)',
+          bun.price,
+          bun.image,
           true,
           bun._id,
           styles.topSide
         )
       }
-          {/* <ConstructorElementBox
-            type="top"
-            isLocked={true}
-            text={}
-            price={bun.price}
-            thumbnail={bun.image}
-            extraClass={styles.topSide}
-            id={''}
-            index={0}
-            moveCard= {''}
-            dndIcon= {''}
-          /> */}
-
           <div className={styles.constructorList}>
             {ingredients?.length > 0 && bun && ingredients.map((ingredient, index) =>
               renderCard(
@@ -134,12 +123,13 @@ const BurgerConstructor: React.FC = () => {
                 ingredient.image,
                 false,
                 ingredient._id,
-                styles.middleIngredient
+                styles.middleIngredient,
+                ingredient.uuid
                 )
             )}
           </div>
           {renderCard(
-            0,
+            999,
             "bottom",
             bun.name+ ' (низ)',
             bun.price,
@@ -148,14 +138,6 @@ const BurgerConstructor: React.FC = () => {
             bun._id,
             styles.bottomSide
           )}
-          {/* <ConstructorElementBox
-            type="bottom"
-            isLocked={true}
-            text={bun.name + ' (низ)'}
-            price={bun.price}
-            thumbnail={bun.image}
-            extraClass={styles.bottomSide}
-          /> */}
           <div className={styles.sumContainer}>
             <div className={styles.sumAndIcon}>
               <p className="text text_type_digits-medium"> {totalPrice} </p>

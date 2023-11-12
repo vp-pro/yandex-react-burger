@@ -12,9 +12,9 @@ const ProfilePage: React.FC = () => {
   };
 
   return (
-    <Layout centered>
+    <Layout>
       <div className={styles.profileContainer}>
-        
+
         <nav className={styles.navigation}>
               <NavLink end className={({isActive}) => isActive ? styles.activeLink + " "+ styles.navLink: styles.inactiveLink + " "+ styles.navLink} to="/profile" >
                 Профиль
@@ -24,7 +24,7 @@ const ProfilePage: React.FC = () => {
                 История заказов
               </NavLink>
 
-              <div  onClick={handleLogout} style={{cursor: 'pointer'}} className={styles.inactiveLink + " "+ styles.navLink} >
+              <div  onClick={handleLogout} className={styles.inactiveLink + " "+ styles.navLink} >
                 Выход
               </div>
               {<p className={styles.lowerText + ' mt-20'}>В этом разделе вы можете изменить свои персональные данные</p>}

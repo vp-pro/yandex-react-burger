@@ -1,23 +1,21 @@
-.mainContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  /* width: 600px; */
-}
 
 .profileContainer {
   display: flex;
-  /* align-items: center; */
-  width: 840px;
-} 
+
+  width: fit-content;
+  justify-content: space-between;
+  margin-top: 40px;
+  /* width: 600px; */
+ width: 1140px;
+
+}
 
 .content {
-  width: 100%; /* Adjust as needed */
+width: 840px;
 }
 
 .navigation {
-  width: 500px; /* Width of the left navigation block */
+  width: 300px; /* Width of the left navigation block */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -32,7 +30,7 @@
   text-decoration: none;
   composes: mb-8 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
   margin-bottom: 32px;
-
+  cursor: 'pointer'
 }
 
 /* Add the underline to the <p> element on hover */

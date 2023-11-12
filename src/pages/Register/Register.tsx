@@ -12,9 +12,9 @@ const RegisterPage: React.FC = () => {
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
-  
+
   const navigate = useNavigate();
-  
+
   const handleLoginClick = () => {
     navigate('/login'); // Navigate to the '/register' route
   };
@@ -34,7 +34,7 @@ const RegisterPage: React.FC = () => {
         console.error('Registration error:', error);
       });
   };
-  
+
   return (
     <Layout centered={true}>
       <div className={styles.mainContainer}>
@@ -69,8 +69,8 @@ const RegisterPage: React.FC = () => {
           Зарегистрироваться
         </Button>
         </form>
-        <div style={{ display: 'inline-block' }}>
-          <span className="text text_type_text-medium" style={{ color: 'var(--text-inactive-color)' }}>
+        <div className={styles.footerTitles}>
+          <span className={styles.footerText}>
             Уже зарегистрировались?
           </span>
           <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1"   onClick={handleLoginClick}>

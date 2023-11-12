@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, Dispatch } from "@reduxjs/toolkit";
 import { url, request } from '../../utils/api'
 import {IIngredient} from '../../types/common'
 
@@ -32,16 +32,16 @@ export const orderSlice = createSlice({
     },
     addIngredient: (state, action) => {
       const ingredientToAdd = action.payload.ingredient;
-      const id = action.payload.uuid;
+      const uuid = action.payload.uuid;
 
-      let updatedIngredient = { ...ingredientToAdd, id };
+      let updatedIngredient = { ...ingredientToAdd, uuid };
       state.ingredients.push(updatedIngredient);
 
       state.totalPrice = calculateTotalPrice(state);
     },
     removeIngredient: (state, action) => {
-      const id = action.payload;
-      state.ingredients = state.ingredients.filter((ingredient) => ingredient._id !== id)
+      const uuid = action.payload;
+      state.ingredients = state.ingredients.filter((ingredient) => ingredient.uuid !== uuid)
       state.totalPrice = calculateTotalPrice(state);
     },
     setIngredients: (state, action) => {
@@ -76,17 +76,23 @@ export const orderSlice = createSlice({
 
 export const fetchOrderNumber = createAsyncThunk('order/fetchOrderNumber',
   async (_, { getState }) => {
-    try {
       const state = getState() as {order : IOrderState}
-      const ids = state.order.ingredients.map(ingredient => ingredient._id)
+      const ids = [];
       if (state.order.bun) {
         ids.push(state.order.bun._id);
-      }      
+      }
+      ids.push(...state.order.ingredients.map(ingredient => ingredient._id));
+      if (state.order.bun) {
+        ids.push(state.order.bun._id);
+      }
+
+      const headers = new Headers();
+      headers.append("Content-Type", "application/json; charset=utf-8");
+      headers.append("Authorization", localStorage.getItem("accessToken") || '');
+
       const requestOptions = {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: headers,
         body: JSON.stringify({
           ingredients: ids
         })
@@ -95,9 +101,6 @@ export const fetchOrderNumber = createAsyncThunk('order/fetchOrderNumber',
       const orderNumber = response.order.number
 
       return orderNumber;
-    } catch (error: any) {
-      throw new Error(error.message)
-    }
   })
 
   const calculateTotalPrice = (state: IOrderState) => {
@@ -110,10 +113,6 @@ export const fetchOrderNumber = createAsyncThunk('order/fetchOrderNumber',
 export const { setBun, addIngredient, removeIngredient, setIngredients, cleanOrder } = orderSlice.actions;
 
 
-export const clearOrder= () => async (dispatch: any) => {
-  try {
+export const clearOrder= () => async (dispatch: Dispatch) => {
     dispatch(cleanOrder());
-  } catch (error) {
-    console.error("Error fetching and setting ingredients:", error);
-  }
 };

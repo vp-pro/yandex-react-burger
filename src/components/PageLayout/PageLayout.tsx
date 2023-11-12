@@ -1,14 +1,14 @@
 import styles from './PageLayout.module.css'; // Import the CSS module
 
 interface ILayout{
-  centered: boolean,
+  centered?: boolean,
   children: React.ReactNode
 }
 
 const Layout: React.FC<ILayout> = ({centered, children}) => {
   return (
     <>
-    {centered ? 
+    {centered ?
         <div className={styles['centeredContainer']}>
             {children}
         </div>
@@ -18,8 +18,8 @@ const Layout: React.FC<ILayout> = ({centered, children}) => {
         </div>
     }
     </>
-    
-    
+
+
   );
 };
 

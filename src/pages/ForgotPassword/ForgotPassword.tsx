@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 const ForgotPasswordPage: React.FC = () => {
       const [email, setEmail] = React.useState<string>()
 
-      const navigate = useNavigate() 
+      const navigate = useNavigate()
 
       const handleResetPassword = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -25,7 +25,7 @@ const ForgotPasswordPage: React.FC = () => {
                   },
                   body: JSON.stringify(requestBody),
                 }
-              ); 
+              );
               if (response.ok) {
                 localStorage.setItem('reset_password_process', 'true');
                 navigate('/reset-password');
@@ -41,8 +41,8 @@ const ForgotPasswordPage: React.FC = () => {
         <Layout centered>
           <div className={styles.mainContainer}>
             <p className="text text_type_main-large mb-4">
-                  Восстановление пароля 
-            </p>     
+                  Восстановление пароля
+            </p>
             <form onSubmit={handleResetPassword}>
               <Input
                     type={'email'}
@@ -55,25 +55,25 @@ const ForgotPasswordPage: React.FC = () => {
                     size={'default'}
                     extraClass="mb-4"
               />
-      
+
               <Button htmlType='submit' extraClass="mb-10">
                 Восстановить
-              </Button>   
+              </Button>
             </form>
-    
-            <div style={{ display: 'inline-block' }}>
-              <span className="text text_type_text-medium" style={{color: 'var(--text-inactive-color)'}}>
+
+            <div className={styles.footerTitles}>
+              <span className={styles.restorePasswordText}>
                 Восстановить пароль?
               </span>
               <Button htmlType="button" type="secondary" size="medium" extraClass="m-1 p-1">
                 Войти
               </Button>
             </div>
-    
+
           </div>
         </Layout>
-           
-          
+
+
       );
 };
 

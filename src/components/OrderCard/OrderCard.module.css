@@ -1,0 +1,115 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    background-color: var(--background-element);
+    border-radius: 40px;
+    padding: 30px;
+    margin-bottom: 30px;
+
+
+}
+.mainLink{
+    text-decoration: none;
+     color: inherit;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.headerText{
+    composes:  text text_type_main-medium from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+.status{
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+.statusDone{
+    color: var(--colors-interface-success);
+}
+.statusPending{
+    color: var(--colors-interface-accent);
+}
+.statusCreated{
+    color: var(--colors-interface-error);
+}
+
+.headerOrderNumber {
+    composes:  text text_type_digits-default from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+}
+.headerDate {
+    composes:  text text_color_inactive text_type_default-default from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+}
+
+.iconArray {
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+    margin-top: 30px;
+}
+.iconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width: 70px;
+    height: 70px;
+    margin: -10px;
+    border: 3px solid var(--colors-interface-accent);
+    border-radius: 100%;
+    background-color: black;
+}
+
+.lastIconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width: 70px;
+    height: 70px;
+    margin: -10px;
+    border: 3px solid var(--colors-interface-accent);
+    border-radius: 100%;
+    background-color: black;
+    position: relative; /* Add this to create a positioning context for .remainingIngredientsText */
+  }
+
+  .remainingIngredientsText {
+    position: absolute; /* Position the text absolutely within the container */
+    top: -20px; /* Adjust the top value to place the text above the image */
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8); /* Add a semi-transparent background to the text for a dimming effect */
+    padding-top: 40px; /* Add padding to the text for better visibility */
+    z-index: 1; /* Ensure the text is in front of the image */
+    composes:  text text_type_digits-default from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+  }
+
+.icon {
+    margin-top: 5px;
+}
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+.priceContainer {
+    display: flex;
+}
+
+.footerPrice {
+    margin-right: 10px;
+    color: var(--colors-interface-success);
+    composes:  text text_type_digits-default from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+}
+
+.currencyIconContainer * {
+    /* width: 34px;
+    height: 34px; */
+}

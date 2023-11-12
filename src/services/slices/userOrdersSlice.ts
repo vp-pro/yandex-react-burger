@@ -1,32 +1,60 @@
-// userOrdersSlice.ts
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createReducer, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IHistoryOrder } from '../../types/common';
+import { createAction } from '@reduxjs/toolkit';
+import { socketMiddleware } from '../middlewares/socket-middleware';
+import { WebsocketStatus } from '../../types/common';
 
-interface UserOrder {
-  _id: string; // Replace with the actual ID type if it's not a string
-  ingredients: string[]; // Array of ingredient IDs
-  status: string; // Status type (e.g., "done")
-  number: number; // Order number
-  createdAt: string; // ISO 8601 date string
-  updatedAt: string; // ISO 8601 date string
-}
+export const wsActions = {
+  wsConnect: createAction<string, 'USER_ORDERS_CONNECT'>('USER_ORDERS_CONNECT'),
+  wsDisconnect: createAction('USER_ORDERS_DISCONNECT'),
+  wsConnecting: createAction('USER_ORDERS_WS_CONNECTING'),
+  onOpen: createAction('USER_ORDERS_WS_OPEN'),
+  onClose: createAction('USER_ORDERS_WS_CLOSE'),
+  onError: createAction<string, 'USER_ORDERS_WS_ERROR'>('USER_ORDERS_WS_ERROR'),
+  onMessage: createAction<'USER_ORDERS_WS_MESSAGE'>('USER_ORDERS_WS_MESSAGE'),
+  };
 
 interface UserOrdersState {
-  userOrders: UserOrder[];
+  status: WebsocketStatus,
+  userOrders: IHistoryOrder[];
 }
 
 const initialState: UserOrdersState = {
+  status: WebsocketStatus.OFFLINE,
   userOrders: [],
 };
 
-const userOrdersSlice = createSlice({
+export const userOrdersSlice = createSlice({
   name: 'userOrders',
   initialState,
-  reducers: {
-    setUserOrders: (state, action: PayloadAction<UserOrder[]>) => {
+  reducers:{
+    setUserOrders: (state, action: PayloadAction<IHistoryOrder[]>) => {
       state.userOrders = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder
+        .addCase(wsActions.wsConnecting, (state) => {
+          state.status = WebsocketStatus.CONNECTING;
+        })
+        .addCase(wsActions.onOpen, (state) => {
+          state.status = WebsocketStatus.ONLINE;
+        })
+        .addCase(wsActions.onClose, (state) => {
+          state.status = WebsocketStatus.OFFLINE;
+        })
+        .addCase(wsActions.onMessage, (state, action: any) => {
+            const data = action.payload;
+            if (data.success  && data.orders) {
+              if (data.orders) {
+                state.userOrders = data.orders;
+              }
+            }
+        })
+  }
 });
 
+
 export const { setUserOrders } = userOrdersSlice.actions;
-export default userOrdersSlice.reducer;
+export const userOrdersMiddleware = socketMiddleware(wsActions);
+

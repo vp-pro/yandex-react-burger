@@ -28,7 +28,7 @@ const AppHeader: React.FC = () => {
       <nav className={styles.header}>
         <div className={styles.left}>
           <NavLinkButton text={'Конструктор'} icon={<BurgerIcon type="primary"/>} to={'/'} />
-          <NavLinkButton text={'Лента заказов'} icon={<InfoIcon  type="primary"/>} to={'/orders'} />
+          <NavLinkButton text={'Лента заказов'} icon={<InfoIcon  type="primary"/>} to={'/feed'} />
         </div>
         <div className={styles.center}>
           <Logo />

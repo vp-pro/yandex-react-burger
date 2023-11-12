@@ -11,8 +11,8 @@ const ProfileContentPage: React.FC = () => {
   const dispatch = useAppDispatch()
   const user = useAppSelector((state) => state.user.user);
 
-  const [name, setName] = React.useState<string>(user?.name || ''); 
-  const [login, setLogin] = React.useState<string>(user?.email || ''); 
+  const [name, setName] = React.useState<string>(user?.name || '');
+  const [login, setLogin] = React.useState<string>(user?.email || '');
   const [password, setPassword] = React.useState<string>('');
 
   const [nameDisabled, setNameDisabled] = React.useState<boolean>(true);
@@ -49,7 +49,7 @@ const ProfileContentPage: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <form onSubmit={handleAcceptClick}>
         <Input
             type={'text'}
@@ -87,7 +87,7 @@ const ProfileContentPage: React.FC = () => {
           />
           <PasswordInput
             onChange={(e) => {
-              setButtonsDisabled(false) 
+              setButtonsDisabled(false)
               setPassword(e.target.value)
             }}
             disabled={passwordDisabled}

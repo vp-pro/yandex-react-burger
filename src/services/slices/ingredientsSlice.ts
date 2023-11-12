@@ -8,7 +8,7 @@ import {IIngredient} from '../../types/common'
     loading: boolean;
     error: string | null;
   }
-  
+
   const initialState: IngredientsState = {
     ingredients: [],
     watchingIngredient: null,
@@ -49,14 +49,10 @@ export const ingredientsSlice = createSlice({
 
 export const {removeWatchingIngredient, setWatchingIngredient} = ingredientsSlice.actions;
 
-export const fetchIngredients = createAsyncThunk('ingredients/fetchIngredients', 
+export const fetchIngredients = createAsyncThunk('ingredients/fetchIngredients',
 async () => {
-    try {
         const response = await request(url.ingredients);
         const ingredients = response.data
 
         return ingredients;
-    } catch (error: any) {
-        throw new Error(error.message)
-    }
 })

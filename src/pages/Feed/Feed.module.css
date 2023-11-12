@@ -1,6 +1,76 @@
-.container{
-    display:flex; 
-    align-self:center; 
-    justify-content: center;
+.mainContainer{
+    display:flex;
+    flex-direction: column;
+    align-self:center;
+    /*  justify-content: center; */
+    gap: 40px;
+    overflow: hidden;
+    width: 1140px;
+    height: 0px;
+    flex-grow: 1;
+    composes: mt-10 mb-10 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+
 
 }
+
+.loading {
+    margin:auto;
+    composes:  text_type_main-large from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+
+}
+.container{
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    height: 0px;
+}
+
+.orderNumber{
+    margin: 0px;
+    padding-bottom: 2px;
+    composes:  text text_type_digits-default from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+}
+
+.success {
+   color: var(--colors-interface-success);
+ }
+
+
+
+.header{
+    composes:  text_type_main-large from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+    margin: 0
+}
+
+.leftSection{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    composes: custom-scroll from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css'    ;
+    padding-right: 10px;
+    width: fit-content;
+}
+
+.rightSection {
+    width: 400px;
+    composes: pl-10 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+
+}
+
+.ordersLists {
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+}
+
+.orderList{
+
+}
+
+.miniTitle{
+    composes:  text_type_main-medium from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+}
+
+.total{
+    composes:  text text_type_digits-large from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/common.css';
+}
+

@@ -1,56 +1,68 @@
-// OrdersComponent.tsx
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Order, setOrders } from "../../services/slices/ordersSlice";
-import { RootState } from "../../services/store";
+import { useAppDispatch, useAppSelector } from "../../services/store";
+import { IHistoryOrder } from "../../types/common";
+import OrderCard from "../../components/OrderCard/OrderCard";
+import styles from './Feed.module.css'
+import {wsActions} from '../../services/slices/ordersSlice'
+import { wssUrl } from '../../utils/api';
 
 const FeedPage: React.FC = () => {
-  const dispatch = useDispatch();
-  const orders = useSelector((state: RootState) => state.orders.orders);
+  const dispatch = useAppDispatch();
+  const orders = useAppSelector((state) => state.orders.orders);
+  const total = useAppSelector((state) => state.orders.total);
+  const totalToday = useAppSelector((state) => state.orders.totalToday);
 
   useEffect(() => {
-    dispatch({ type: 'websocket/connect', payload: { url: 'wss://norma.nomoreparties.space/orders/all' }});
+    dispatch(wsActions.wsConnect(wssUrl.feed));
 
     return () => {
-      dispatch({ type: 'websocket/disconnect' });
+      dispatch(wsActions.wsConnect(wssUrl.feed));
     };
   }, [dispatch]);
 
-  useEffect(() => {
-    if (orders.length === 0) {
-      // Send a request to get the list of orders when connected
-      const websocket = new WebSocket('wss://norma.nomoreparties.space/orders/all');
-
-      websocket.onopen = () => {
-        websocket.send('your_request_here'); // Send the request when the WebSocket is open
-      };
-
-      websocket.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        dispatch(setOrders(data.orders)); // Dispatch the "setOrders" action
-      };
-    }
-  }, [dispatch, orders]);
   return (
-    <div>
-      <h1>List of Orders</h1>
-      <ul>
-        {orders.map((order: Order) => (
-          <>
-          <h1>{order.name}</h1>
-          <li key={order._id}>{order.createdAt}</li>
-          <li key={order._id}>{order.updatedAt}</li>
-          <li key={order._id}>{order.status}</li>
-          <li key={order._id}>{order.number}</li>
+    <section className={styles.mainContainer}>
+      {orders.length>1 && <>
+      <h1 className={styles.header}>Лента заказов</h1>
+      <div className={styles.container}>
+        <div className={styles.leftSection}>
+          {orders.map((order: IHistoryOrder) => (
+            <OrderCard  key={order._id} {...order}/>
+          ))}
+        </div>
+        <section  className={styles.rightSection}>
+          <div className={styles.ordersLists}>
+            <div className={styles.orderList}>
+            <p className={styles.miniTitle}>Готовы:</p>
+            {orders
+            .filter((order: IHistoryOrder) => order.status === "done")
+            .slice(0, 10) // Slice the array to get the first 10 elements
+            .map((order: IHistoryOrder) => (
+              <p className={styles.orderNumber + ' ' + styles.success} key={order.number}>{order.number}</p>
+            ))}
+            </div>
+            <div className={styles.orderList}>
+            <p className={styles.miniTitle}>Готовятся:</p>
+            {orders
+            .filter((order: IHistoryOrder) => order.status !== "done")
+            .slice(0, 10) // Slice the array to get the first 10 elements
+            .map((order: IHistoryOrder) => (
+              <p className={styles.orderNumber } key={order.number}>{order.number}</p>
+            ))}
+            </div>
+          </div>
+          <p className={styles.miniTitle}>Выполнено за все время:</p>
+          <p className={styles.total}>{total}</p>
+          <p className={styles.miniTitle}>Выполнено за все сегодня:</p>
+          <p className={styles.total}>{totalToday}</p>
+        </section>
+      </div>
+      </>}
+              {orders.length<1 && <p className={styles.loading}>Loading...</p>}
+    </section>
 
-          </>
 
-
-        ))}
-      </ul>
-    </div>
   );
 };
-
 
 export default FeedPage;
