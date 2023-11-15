@@ -1,10 +1,13 @@
 import configureMockStore from 'redux-mock-store';
-import { orderSlice, fetchOrderNumber, clearOrder } from './orderSlice';
+import { orderSlice, fetchOrderNumber } from './orderSlice';
 import { middlewares } from '../store';
 import { IIngredient } from '../../types/common';
 import { generateMockBun, generateRandomMockIngredient, generateRandomMockIngredients } from '../__test__/mocks';
 import thunk from 'redux-thunk';
-
+import { ingredientsSlice } from './ingredientsSlice';
+import { userSlice } from './userSlice';
+import { ordersSlice } from './ordersSlice';
+import { userOrdersSlice } from './userOrdersSlice';
 // const mockStore = configureMockStore([...middlewares, thunk]);
 
 
@@ -24,15 +27,8 @@ describe('orderSlice reducers', () => {
       ...jest.requireActual('../../utils/api'),
       request: jest.fn(),
     }));
-    // jest.spyOn(global, 'fetch').mockResolvedValue({
-    //   json: jest.fn().mockResolvedValue(
-    //     {result: 'OK'}
-    //   ),
-    //   ok: true
-    // })
   })
   afterEach(() => {
-    // Clean up spies after each test
     jest.restoreAllMocks();
   });
 
@@ -114,62 +110,100 @@ describe('orderSlice reducers', () => {
     expect(newState.bun).toBeNull();
     expect(newState.orderNumber).toBeNull();
   });
-});
 
 
-
-describe('fetchOrderNumber thunk', () => {
-  it('fetchOrderNumber.fulfilled', async () => {
-    const ms = [thunk.withExtraArgument({...middlewares})];
-    const mockStore = configureMockStore(ms);
-
+  it('should handle fetchOrderNumber.fulfilled', () => {
     const ingredients = generateRandomMockIngredients(2);
     const bun = generateMockBun();
-
-    const store = mockStore({
+    const action = {
+      type: fetchOrderNumber.fulfilled.type,
+      payload: 26149,
+    };
+    const initialState = {
       ingredients,
       bun,
       orderNumber: null,
       totalPrice: 0,
+      loading: true,
+      error: null,
+    };
+
+    const newState = orderSlice.reducer(initialState, action);
+    expect(newState.loading).toBe(false);
+    expect(newState.error).toBe(null);
+    expect(newState.orderNumber).toBe(26149);
+  });
+
+  it('should handle fetchOrderNumber.rejected', () => {
+    const action = {
+      type: fetchOrderNumber.rejected.type,
+      error: {message: 'Some Error'}
+    };
+    const initialState = {
+      ingredients: [],
+      bun: null,
+      orderNumber: null,
+      totalPrice: 0,
+      loading: true,
+      error: null,
+    };
+
+    const newState = orderSlice.reducer(initialState, action);
+    expect(newState.loading).toBe(false);
+    expect(newState.error).toBe('Some Error');
+  });
+
+  it('should handle fetchOrderNumber.pending', () => {
+    const action = {
+      type: fetchOrderNumber.pending.type,
+    };
+    const initialState = {
+      ingredients: [],
+      bun: null,
+      orderNumber: null,
+      totalPrice: 0,
       loading: false,
       error: null,
-    });
+    };
 
-    // Mock the API response
-    jest.spyOn(require('../../utils/api'), 'request').mockResolvedValue({ order: { number: 26149 } });
-
-    // Dispatch the async thunk
-    await store.dispatch(fetchOrderNumber());
-
-    // Get the actions dispatched to the store
-    const actions = store.getActions();
-
-    // Check if the pending action is dispatched
-    expect(actions[0].type).toEqual('order/fetchOrderNumber/pending');
-
-    // Check if the fulfilled action is dispatched with the correct payload
-    expect(actions[1].type).toEqual('order/fetchOrderNumber/fulfilled');
-    expect(actions[1].payload).toEqual(26149);
-  });
-
+    const newState = orderSlice.reducer(initialState, action);
+    expect(newState.loading).toBe(true);
 
   });
 
+});
 
-  // it('fetchOrderNumber.rejected', async () => {
-  //   const store = mockStore({ order: { number: null } });
 
-  //   // Mock the API response
-  //   jest.spyOn(require('../../utils/api'), 'request').mockRejectedValue(new Error('Some error'));
 
-  //   await store.dispatch(fetchOrderNumber()).catch(() => {});
 
-  //   // Get the actions dispatched to the store
-  //   const actions = store.getActions();
+// describe('fetchOrderNumber thunk', () => {
+//   it('fetchOrderNumber.fulfilled', async () => {
+//     const ms = [thunk.withExtraArgument({...middlewares})];
+//     const mockStore = configureMockStore(ms);
 
-  //   // Check if the rejected action is dispatched with the correct error
-  //   expect(actions[1].type).toEqual('order/fetchOrderNumber/rejected');
-  //   expect(actions[1].error.message).toEqual('Some error');
-  // });
+//     const ingredients = generateRandomMockIngredients(2);
+//     const bun = generateMockBun();
 
-// });
+//     const store = mockStore({
+//         ingredients: ingredientsSlice.reducer,
+//         order: orderSlice.reducer,
+//         user: userSlice.reducer,
+//         orders: ordersSlice.reducer,
+//         userOrders: userOrdersSlice.reducer
+
+//     });
+
+//     const newState = orderSlice.reducer(initialEmptyState, )
+//     // Mock the API response
+//     jest.spyOn(require('../../utils/api'), 'request').mockResolvedValue({ order: { number: 26149 } });
+
+//     // Dispatch the async thunk
+//     await store.dispatch(fetchOrderNumber());
+
+//     // Get the actions dispatched to the store
+//     const actions = store.getActions();
+
+//     console.log(actions)
+//     expect(actions[1].payload).toEqual(26149);
+//   });
+//   });

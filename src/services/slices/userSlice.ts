@@ -12,9 +12,16 @@ interface IUser {
   email: string | null
 }
 
-const initialState = {
-  user: null as IUser | null,
-  isAuthChecked: null as boolean | null,
+interface IUserState {
+  user: IUser | null;
+  isAuthChecked: boolean | null;
+  error: string | null;
+}
+
+const initialState: IUserState = {
+  user: null,
+  isAuthChecked: null,
+  error: null,
 };
 
 export const userSlice = createSlice({
@@ -44,7 +51,8 @@ export const userSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(register.rejected, (state, action) => {
-        console.error('Registration rejected:', action.error); // Access the error property
+        state.error = action.error.message || null;
+        // console.error('Registration rejected:', action.error); // Access the error property
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.user = action.payload;
