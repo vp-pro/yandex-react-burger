@@ -49,15 +49,16 @@ export const orderSlice = createSlice({
       state.totalPrice = calculateTotalPrice(state)
     },
     cleanOrder: (state) => {
+      // console.log('cleanOrder')
       state.orderNumber = null
       state.ingredients = []
       state.bun = null
+      state.totalPrice = 0
+
     }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchOrderNumber.fulfilled, (state, action) => {
-      console.log('Fulfilled Action:', action);
-
       state.loading = false;
       state.error = null;
       const orderNumber = action.payload;
@@ -65,8 +66,6 @@ export const orderSlice = createSlice({
     });
 
     builder.addCase(fetchOrderNumber.pending, (state) => {
-      console.log('PENDING MTH');
-
       state.loading = true;
       state.error = null;
     });
@@ -80,8 +79,11 @@ export const orderSlice = createSlice({
 
 export const fetchOrderNumber = createAsyncThunk('order/fetchOrderNumber',
   async (_, { getState }) => {
+      debugger; // Add this line
+
       const state = getState() as {order : IOrderState}
       const ids = [];
+
       if (state.order.bun) {
         ids.push(state.order.bun._id);
       }
@@ -101,9 +103,9 @@ export const fetchOrderNumber = createAsyncThunk('order/fetchOrderNumber',
           ingredients: ids
         })
       };
+      // console.log(requestOptions)
       const response = await request(url.orders, requestOptions);
       console.log('API Response:', response);
-
       const orderNumber = response.order.number
 
       return orderNumber;

@@ -49,7 +49,8 @@ export const socketMiddleware = (wsActions: TwsActionTypes): Middleware<{}, Root
           };
 
           socket.onclose = event => {
-            if (event.code !== 1000) {
+            // if (event.code !== 1000) {
+            if (event.code >= 1000) {
               console.log('error')
               dispatch(onError(event.code.toString()));
             }
@@ -76,7 +77,7 @@ export const socketMiddleware = (wsActions: TwsActionTypes): Middleware<{}, Root
             isConnected = false;
             reconnectTimer = 0;
             socket.close();
-            dispatch(onClose());
+            // dispatch(onClose());
           }
         }
 

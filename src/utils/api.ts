@@ -20,9 +20,9 @@ export const wssUrl = {
   userOrders: wssBase+ '/orders',
 }
 
-export const checkResponse = (response: Response) => {
+export const checkResponse = (response: Response) => { 
     if (!response.ok) {
-      console.log(response)
+      // console.log(response)
       throw new Error(`Server Error: ${response.status} ${response.statusText}`);
     }
     return response.json(); // Return the response if it is ok

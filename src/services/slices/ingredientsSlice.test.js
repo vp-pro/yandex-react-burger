@@ -1,54 +1,54 @@
-import { configureStore, createAsyncThunk } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { fetchIngredients, ingredientsSlice, removeWatchingIngredient, setWatchingIngredient } from './ingredientsSlice';
 import { RootState } from "./ingredientsSlice";
+import { generateRandomMockIngredient  } from "../__test__/mocks";
+const ingredientsReducer = ingredientsSlice.reducer;
 
-const ingredientsReducer = ingredientsSlice.reducer
 // Mock the API request function
 jest.mock('../../utils/api', () => ({
   ...jest.requireActual('../../utils/api'),
   request: jest.fn(),
 }));
 
-// Mock the API response
-const mockedApiResponse = {
+const mockedFetchResponse = {
   data: [
     {
-      _id: '1',
-      name: 'Mocked Ingredient',
-      type: 'Mocked Type',
-      proteins: 10,
-      fat: 5,
-      carbohydrates: 20,
-      calories: 150,
-      price: 2.5,
-      image: 'mocked-image.jpg',
-      image_mobile: 'mocked-image-mobile.jpg',
-      image_large: 'mocked-image-large.jpg',
-      __v: '1',
+      _id: '643d69a5c3f7b9001cfa093c',
+      name: 'Краторная булка N-200i',
+      type: 'bun',
+      proteins: 80,
+      fat: 24,
+      carbohydrates: 53,
+      calories: 420,
+      price: 1255,
+      image: 'https://code.s3.yandex.net/react/code/bun-02.png',
+      image_mobile: 'https://code.s3.yandex.net/react/code/bun-02-mobile.png',
+      image_large: 'https://code.s3.yandex.net/react/code/bun-02-large.png',
+      __v: 0,
     },
+    {
+      _id: '643d69a5c3f7b9001cfa0941',
+      name: 'Биокотлета из марсианской Магнолии',
+      type: 'main',
+      proteins: 420,
+      fat: 142,
+      carbohydrates: 242,
+      calories: 4242,
+      price: 424,
+      image: 'https://code.s3.yandex.net/react/code/meat-01.png',
+      image_mobile: 'https://code.s3.yandex.net/react/code/meat-01-mobile.png',
+      image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
+      __v: 0,
+    },
+    // Add more mocked ingredients as needed
   ],
-};               
-
-// Mock Ingredient object
-const mockIngredient = {
-  _id: '2',
-  name: 'Mock Ingredient',
-  type: 'Mock Type',
-  proteins: 12,
-  fat: 6,
-  carbohydrates: 18,
-  calories: 160,
-  price: 2.0,
-  image: 'mock-image.jpg',
-  image_mobile: 'mock-image-mobile.jpg',
-  image_large: 'mock-image-large.jpg',
-  __v: '2',
 };
 
 describe('ingredients reducer', () => {
   let store;
 
   beforeEach(() => {
+    // Arrange: Create a Redux store with the ingredientsReducer
     store = configureStore({
       reducer: {
         ingredients: ingredientsReducer,
@@ -56,53 +56,70 @@ describe('ingredients reducer', () => {
     });
   });
 
-  it('should handle setWatchingIngredient', () => {
-    store.dispatch(setWatchingIngredient(mockIngredient));
+  afterEach(() => {
+    // Clean up spies after each test
+    jest.restoreAllMocks();
+  });
 
+  it('should handle setWatchingIngredient', () => {
+    // Act: Dispatch the setWatchingIngredient action
+    const ingredient = generateRandomMockIngredient()
+    store.dispatch(setWatchingIngredient(ingredient));
+
+    // Assert: Check if the watchingIngredient state is updated as expected
     const { watchingIngredient: updatedWatchingIngredient } = store.getState().ingredients;
-    expect(updatedWatchingIngredient).toEqual(mockIngredient);
+    expect(updatedWatchingIngredient).toEqual(ingredient);
   });
 
   it('should handle removeWatchingIngredient', () => {
-    // Set an initial watchingIngredient
-    store.dispatch(setWatchingIngredient(mockIngredient));
+    // Arrange: Set an initial watchingIngredient
+    const ingredient = generateRandomMockIngredient()
+    store.dispatch(setWatchingIngredient(ingredient));
 
+    // Act: Dispatch the removeWatchingIngredient action
     store.dispatch(removeWatchingIngredient());
 
+    // Assert: Check if the watchingIngredient state is set to null
     const { watchingIngredient: updatedWatchingIngredient } = store.getState().ingredients;
     expect(updatedWatchingIngredient).toBeNull();
   });
 
   it('should handle fetchIngredients.pending', () => {
+    // Act: Dispatch the fetchIngredients action
     store.dispatch(fetchIngredients());
 
-    const { ingredients } = store.getState().ingredients;
+    // Assert: Check if the loading state is set to true and other state properties are as expected
+    const { ingredients, loading, error } = store.getState().ingredients;
     expect(ingredients).toEqual([]);
-    expect(store.getState().ingredients.loading).toBe(true);
-    expect(store.getState().ingredients.error).toBeNull();
+    expect(loading).toBe(true);
+    expect(error).toBeNull();
   });
 
   it('should handle fetchIngredients.fulfilled', async () => {
-    // Mock the API response
-    jest.spyOn(require('../../utils/api'), 'request').mockResolvedValue(mockedApiResponse);
+    // Arrange: Mock the API response
+    jest.spyOn(require('../../utils/api'), 'request').mockResolvedValue(mockedFetchResponse);
 
+    // Act: Dispatch the fetchIngredients action (asynchronous)
     await store.dispatch(fetchIngredients());
 
-    const { ingredients } = store.getState().ingredients;
-    expect(ingredients).toEqual(mockedApiResponse.data);
-    expect(store.getState().ingredients.loading).toBe(false);
-    expect(store.getState().ingredients.error).toBeNull();
+    // Assert: Check if the state is updated as expected after the asynchronous action is fulfilled
+    const { ingredients, loading, error } = store.getState().ingredients;
+    expect(ingredients).toEqual(mockedFetchResponse.data);
+    expect(loading).toBe(false);
+    expect(error).toBeNull();
   });
 
   it('should handle fetchIngredients.rejected', async () => {
-    // Mock a rejected API response
+    // Arrange: Mock a rejected API response
     jest.spyOn(require('../../utils/api'), 'request').mockRejectedValue(new Error('Mocked error'));
 
+    // Act: Dispatch the fetchIngredients action (asynchronous)
     await store.dispatch(fetchIngredients());
 
-    const { ingredients } = store.getState().ingredients;
+    // Assert: Check if the state is updated as expected after the asynchronous action is rejected
+    const { ingredients, loading, error } = store.getState().ingredients;
     expect(ingredients).toEqual([]);
-    expect(store.getState().ingredients.loading).toBe(false);
-    expect(store.getState().ingredients.error).toEqual('Mocked error');
+    expect(loading).toBe(false);
+    expect(error).toEqual('Mocked error');
   });
 });

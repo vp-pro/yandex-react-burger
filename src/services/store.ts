@@ -13,9 +13,11 @@ const logger = reduxLogger.createLogger()
 
 export type RootState = ReturnType<typeof rootReducer>
 
+export const middlewares = [logger, userOrdersMiddleware, feedMiddleware]
+
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware)=> getDefaultMiddleware().concat(logger, userOrdersMiddleware, feedMiddleware),
+  middleware: (getDefaultMiddleware)=> getDefaultMiddleware().concat(...middlewares),
 })
 
 

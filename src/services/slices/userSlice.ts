@@ -130,7 +130,7 @@ export const resetPassword = createAsyncThunk(
           }),
         }
       );
-      console.log(response?.success)
+      // console.log(response?.success)
   }
 );
 
