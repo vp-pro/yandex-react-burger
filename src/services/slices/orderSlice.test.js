@@ -176,34 +176,41 @@ describe('orderSlice reducers', () => {
 
 
 
-// describe('fetchOrderNumber thunk', () => {
-//   it('fetchOrderNumber.fulfilled', async () => {
-//     const ms = [thunk.withExtraArgument({...middlewares})];
-//     const mockStore = configureMockStore(ms);
+describe('fetchOrderNumber thunk', () => {
+  it('fetchOrderNumber.fulfilled', async () => {
+    const ms = [thunk.withExtraArgument({...middlewares})];
+    const mockStore = configureMockStore(ms);
 
-//     const ingredients = generateRandomMockIngredients(2);
-//     const bun = generateMockBun();
+    const ingredients = generateRandomMockIngredients(2);
+    const bun = generateMockBun();
 
-//     const store = mockStore({
-//         ingredients: ingredientsSlice.reducer,
-//         order: orderSlice.reducer,
-//         user: userSlice.reducer,
-//         orders: ordersSlice.reducer,
-//         userOrders: userOrdersSlice.reducer
+    const store = mockStore({
+      orderSlice: {
+          ingredients,
+          bun,
+          orderNumber: null,
+          totalPrice: 0,
+          loading: false,
+          error: null,
+        }
+    });
 
-//     });
+    const action = {
+      type: fetchOrderNumber,
+    };
 
-//     const newState = orderSlice.reducer(initialEmptyState, )
-//     // Mock the API response
-//     jest.spyOn(require('../../utils/api'), 'request').mockResolvedValue({ order: { number: 26149 } });
+    const newState = orderSlice.reducer(initialEmptyState, action)
+    // Mock the API response
+    jest.spyOn(require('../../utils/api'), 'request').mockResolvedValue({ order: { number: 26149 } });
 
-//     // Dispatch the async thunk
-//     await store.dispatch(fetchOrderNumber());
+    // Dispatch the async thunk
+    await store.dispatch(fetchOrderNumber());
 
-//     // Get the actions dispatched to the store
-//     const actions = store.getActions();
+    // Get the actions dispatched to the store
+    const actions = store.getActions();
 
-//     console.log(actions)
-//     expect(actions[1].payload).toEqual(26149);
-//   });
-//   });
+    console.log(actions)
+    expect(actions[1].payload).toEqual(26149);
+  });
+});
+
