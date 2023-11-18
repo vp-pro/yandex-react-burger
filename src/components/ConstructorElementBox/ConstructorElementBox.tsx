@@ -86,6 +86,7 @@ const ConstructorElementBox: React.FC<ICard> = ({
 
   return (
     <div
+      data-testid="ingredient-in-constructor"
       className={styles.elementContainer }
       ref={isLocked ? null : ref}
       style={{opacity: isDragging ? 0.5 : 1 }}

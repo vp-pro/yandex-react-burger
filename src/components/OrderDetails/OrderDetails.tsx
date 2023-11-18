@@ -8,17 +8,17 @@ const OrderDetails: React.FC = () => {
 
   return (
     <>
-    {loading &&  <p>Loading...</p>} 
-    {orderNumber &&  <div className={styles.container}> 
+    {loading &&  <p>Loading...</p>}
+    {orderNumber &&  <div className={styles.container}>
 
-    <p className={styles.orderNumber}>{orderNumber}</p>
+    <p data-testid="order-number" className={styles.orderNumber}>{orderNumber}</p>
           <p className={styles.orderNumberTitle}>идентификатор заказа</p>
           <div className={styles.icon}>
               <CheckMarkIcon type='primary'/>
           </div>
           <p className={styles.readyText}>Ваш заказ начали готовить</p>
           <p className={styles.waitText}>Дождитесь готовности на орбитальной станции</p>
-    </div> 
+    </div>
     }
     </>
   )
