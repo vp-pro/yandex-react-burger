@@ -80,11 +80,10 @@ const BurgerConstructor: React.FC = () => {
         moveCard,
         uuid: uuid
       };
-
       const cardProps = type === undefined ? { ...commonProps, dndIcon: true } : commonProps;
-
-      return <ConstructorElementBox {...cardProps} />;
-  }
+      const data_testid =  type === undefined ? "constructor-ingredient" : "constructor-bun"
+      return <ConstructorElementBox data-testid={data_testid} {...cardProps} />;
+    }
 
 
   const moveCard = (dragIndex: number, hoverIndex: number) => {
@@ -96,7 +95,9 @@ const BurgerConstructor: React.FC = () => {
   };
 
   return (
-    <section ref={drop} className={styles.container}>
+    <section
+      data-testid="constructor-drop-area"
+     ref={drop} className={styles.container}>
       {loading && <h1> Loading...</h1>}
       {!bun && <h1>Пожалуйста, перенесите сюда булку</h1>}
       {bun &&

@@ -95,17 +95,17 @@ const BurgerIngredients: React.FC = () => {
 
           <p className={styles.ingredientsTitle} ref={sectionsRef.buns}>Булки</p>
           <div className={styles.typeIngredientsContainer}>
-            {buns.map(ingredient => <IngredientCard key={ingredient._id} {...ingredient} />)}
+            {buns.map(ingredient => <IngredientCard data-testid="bun_card" key={ingredient._id} {...ingredient} />)}
           </div>
 
           <p className={styles.ingredientsTitle} ref={sectionsRef.sauces}>Соусы</p>
           <div className={styles.typeIngredientsContainer}>
-            {sauces.map(ingredient => <IngredientCard key={ingredient._id} {...ingredient} />)}
+            {sauces.map(ingredient => <IngredientCard  data-testid="ingredient-card" key={ingredient._id} {...ingredient} />)}
           </div>
 
           <p className={styles.ingredientsTitle} ref={sectionsRef.mains}>Основное</p>
           <div className={styles.typeIngredientsContainer}>
-            {mains.map(ingredient => <IngredientCard key={ingredient._id} {...ingredient} />)}
+            {mains.map(ingredient => <IngredientCard  data-testid="ingredient-card" key={ingredient._id} {...ingredient} />)}
           </div>
 
         </div>

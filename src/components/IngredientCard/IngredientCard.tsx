@@ -12,6 +12,8 @@ import { useAppDispatch, useAppSelector } from '../../services/store'
 
 const IngredientCard: React.FC<IIngredient> = ( ingredient ) => {
 
+  const dataTestid =  ingredient.type === "bun" ? "bun_card" : "ingredient_card"
+
   const dispatch = useAppDispatch()
   const [numberToOrder, setNumberToOrder] = useState<number>(0)
 
@@ -87,6 +89,7 @@ const IngredientCard: React.FC<IIngredient> = ( ingredient ) => {
     >
 
     <div
+      data-testid={dataTestid}
       style={{opacity: isDrag ? 0.5 : 1, cursor: 'move'}}
       ref={currentBun || ingredient.type === 'bun' ? dragRef : null}
       onClick={handleIngredientOpen} className={styles.ignredientCard}>

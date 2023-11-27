@@ -79,7 +79,7 @@ export const orderSlice = createSlice({
 
 export const fetchOrderNumber = createAsyncThunk('order/fetchOrderNumber',
   async (_, { getState }) => {
-      debugger; // Add this line
+      // debugger;
 
       const state = getState() as {order : IOrderState}
       const ids = [];
